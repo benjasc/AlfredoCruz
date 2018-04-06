@@ -1,0 +1,266 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    text-rendering: optimize-speed;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+body{
+    font-family: Helvetica,Arial,sans-serif;
+    font-size:11px;
+}
+/*td{
+        padding:0px 10px;	
+}*/
+td td{
+    padding:0px 0px;	
+}
+.subtitulo{
+    color:#9e5e02;
+    width:100%;
+    font-weight: bold;
+    font-size: 11pt;
+}
+.linea_rayas{
+    width:100%;
+    text-align:center;
+    border-bottom: 1pt dashed #FFFFFF; 
+}
+.linea_solida{
+    width:100%;
+    text-align:center;
+    border-bottom: 1pt solid #FFFFFF;
+}
+.linea_solida_osc{
+    width:100%;
+    text-align:center;
+    border-bottom: 1pt solid #0e151d;
+}
+.nro_apunte{
+    color:#f29400;
+    font-weight:bold;
+    font-size:11px;
+}
+.nro_apunte_pie{
+    color:#f29400;
+    font-weight:bold;
+    font-size:10px;
+}
+.letra1{
+    color: #525e64;
+    font-size:12px;
+}
+.letraPrimeraCol{
+    font-size:11px;
+}
+.caractFondo td{
+    height:14px;
+    vertical-align:middle;
+    padding-top:2px;
+    padding-bottom:2px;
+}
+.caractFondoCeldaIzq{
+    padding-left:13px;
+}
+.caractFondoCeldaDer{
+    padding-right:13px;
+}
+.dosPuntos{
+    width:1%;
+    padding-right:2px;
+}
+.tablaCaractFondo td{
+    vertical-align:top;
+}
+.letra2 td{
+    color: #485258;
+    font-size:11px;
+}
+td.tituloAnio{
+    background-color:white; 
+    text-align:center; 
+    vertical-align:bottom; 
+    height:15px; 
+    color:#485258; 
+    font-weight:bold;
+}
+
+td.pag2{
+    height:14px; 
+}
+
+tr.conLinea td{
+    border-bottom:1pt dashed #9fa1a5; /*#586064;*/
+}
+tr.conLineaAbajo td{
+    border-bottom:1pt solid #9fa1a5; /*#586064;*/
+}
+tr.conLineaAbajoPunt td{
+    border-bottom:1pt dashed #9fa1a5; /*#586064;*/
+}
+tr.conLineaArriba td{
+    border-bottom:1pt solid #9fa1a5; /*#586064;*/
+}
+tr.conLineaArribaPunt td{
+    border-bottom:1pt dashed #9fa1a5; /*#586064;*/
+}
+tr.conLineaCafe td{
+    border-bottom:2pt solid #9fa1a5; /*#AE9962;*/
+}
+.porcentaje{
+    padding-right:10px;
+    text-align:right;
+    height:15px;
+    vertical-align:middle;
+}
+.rentab{
+    padding-left:10px;
+    text-align:left;
+    height:15px;
+    vertical-align:middle;
+    background-color: #E8EDED;
+}
+.fondoMorado{
+    /*background-color:#f7f4ed;*/
+    text-align:center;
+}
+.tablaTotalPorFondo{
+    width:100%;
+    font-size:12px;
+}
+.totalPorFondoNombre{
+    width:42%;
+    height:28px;
+}
+.totalPorFondoDosPuntos{
+    width:5%;
+    text-align: left;
+}
+.totalPorFondoValor{
+    /*width:20%;*/
+    text-align: left;
+}
+.porcetajeIndustria{
+    text-align: right;
+    font-weight: bold;
+}
+.contieneSource{
+    color: #707f87;
+    font-style: italic;
+    vertical-align: middle;
+    padding-top: 7px;
+    text-align: justify;
+}
+.contieneSource2{
+    color: #707f87;
+    font-style: italic;
+    vertical-align: middle;
+    padding-top: 5px;
+    text-align: justify;
+}
+.source{
+    color: #485258;
+    font-weight:bold;
+}
+.celdaGris{
+    background-color: #E8EDED;
+}
+td.titulotablagris{
+    padding-left: 10px; 
+    font-weight: bold; 
+    font-size: 11px; 
+    background-color: #E9EBED; 
+    vertical-align: middle;
+    height: 19px; 
+    color: #678584;
+}
+td.titulotablagris2{
+    padding-left: 10px; 
+    font-weight: bold; 
+    font-size: 11px; 
+    background-color: #E9EBED; 
+    vertical-align: middle;
+    height: 17px; 
+    color: #678584;
+}
+td.empresaInversionista {
+    font-size:10px;
+    text-transform: uppercase;
+}
+td.empresaSecurity {
+    font-size:10px;
+}
+#tabla_RentNominal td.porcentaje, #tabla_RentAnios td.porcentaje {
+    text-align: center;
+    padding-right: 0px;
+}
+td.padR0{
+    padding-right: 0px;
+}
+td.padL0{
+    padding-left: 0px;
+}
+td.padT0{
+    padding-top: 0px;
+}
+td.padB0{
+    padding-bottom: 0px;
+}
+
+/*td.tituloAnio{
+    background-color:white; 
+    text-align:center; 
+    vertical-align:bottom; 
+    height:15px; 
+    color:#485258; 
+    font-weight:bold;
+}*/
+
+#tabla_utilidades td.tituloAnio{
+    padding-right:10px;
+    text-align:right;
+    vertical-align:middle;
+}
+
+span.notaNombreFondo span{
+    color:#FFFFFF;
+}

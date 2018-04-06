@@ -1,56 +1,102 @@
+from django.contrib import admin
 from django.db import models
 
-class CategoriaGrupo(models.Model): #broadCategoryGroup
+
+class categoriaGrupo(models.Model): #broadCategoryGroup
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=50)
+class categoriaGrupoAdmin(admin.ModelAdmin):
+    list_display = ['nombre','codigo']
+    search_fields = ['nombre','codigo']
+admin.site.register(categoriaGrupo, categoriaGrupoAdmin)
 
-class CategoriaMoneda(models.Model):#CategoryCurrency
+class categoriaMoneda(models.Model):#CategoryCurrency
     id = models.CharField(max_length=10, primary_key=True)
     codigo = models.CharField(max_length=50)
     nombre = models.CharField(max_length=50)
-    CategoriaGrupo = models.ForeignKey('CategoriaGrupo', on_delete=models.CASCADE)
+    categoriaGrupo = models.ForeignKey(categoriaGrupo, on_delete=models.CASCADE)
+class categoriaMonedaAdmin(admin.ModelAdmin):
+    list_display = ['codigo','nombre','categoriaGrupo']
+    search_fields = ['codigo','nombre','categoriaGrupo']
+admin.site.register(categoriaMoneda, categoriaMonedaAdmin)
 
-class Domicilio(models.Model):#Domicile
+class domicilio(models.Model):#Domicile
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
+class domicilioAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
+    search_fields = ['nombre']
+admin.site.register(domicilio, domicilioAdmin)
 
-class Moneda(models.Model):#Currency
+class moneda(models.Model):#Currency
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
+class monedaAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
+    search_fields = ['nombre']
+admin.site.register(moneda, monedaAdmin)
 
-class TipoFondo(models.Model):
+class tipoFondo(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
     descripcion = models.CharField(max_length=50)
+class tipoFondoAdmin(admin.ModelAdmin):
+    list_display = ['descripcion']
+    search_fields = ['descripcion']
+admin.site.register(tipoFondo, tipoFondoAdmin)
 
-class Fund(models.Model):#Fund
+class fund(models.Model):#Fund
     id  = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
     nombre_legal = models.CharField(max_length=50)
     fecha_inicio = models.DateField()
-    Domicilio = models.ForeignKey('Domicilio', on_delete=models.CASCADE)
-    Moneda = models.ForeignKey('Moneda', on_delete=models.CASCADE)
-    CategoriaMoneda = models.ForeignKey('CategoriaMoneda', on_delete=models.CASCADE)
-    TipoFondo = models.ForeignKey('TipoFondo', on_delete=models.CASCADE)
+    domicilio = models.ForeignKey(domicilio, on_delete=models.CASCADE)
+    moneda = models.ForeignKey(moneda, on_delete=models.CASCADE)
+    categoriaMoneda = models.ForeignKey(categoriaMoneda, on_delete=models.CASCADE)
+    tipoFondo = models.ForeignKey(tipoFondo, on_delete=models.CASCADE)
+class fundAdmin(admin.ModelAdmin):
+    list_display = ['nombre','nombre_legal','fecha_inicio','domicilio','moneda','categoriaMoneda','tipoFondo']
+    search_fields = ['nombre','nombre_legal','fecha_inicio','domicilio','moneda','categoriaMoneda','tipoFondo']
+admin.site.register(fund, fundAdmin)
 
-class EstadoDistribucion(models.Model):#DistributionStatus
+class estadoDistribucion(models.Model):#DistributionStatus
     estado = models.CharField(max_length=50)
+class estadoDistribucionAdmin(admin.ModelAdmin):
+    list_display = ['estado']
+    search_fields = ['estado']
+admin.site.register(estadoDistribucion, estadoDistribucionAdmin)
 
-class FrecuenciaDistribucion(models.Model):#DistributionFrecuency
+class frecuenciaDistribucion(models.Model):#DistributionFrecuency
     frecuencia = models.CharField(max_length=50)
+class frecuenciaDistribucionAdmin(admin.ModelAdmin):
+    list_display = ['frecuencia']
+    search_fields = ['frecuencia']
+admin.site.register(frecuenciaDistribucion, frecuenciaDistribucionAdmin)
 
 class marca(models.Model): #Branding
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
+class marcaAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
+    search_fields = ['nombre']
+admin.site.register(marca, marcaAdmin)
 
-class Proveedor(models.Model):#ProviderCompany
+class proveedor(models.Model):#ProviderCompany
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
+class proveedorAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
+    search_fields = ['nombre']
+admin.site.register(proveedor, proveedorAdmin)
 
-class Rendimiento(models.Model):#Performance
+class rendimiento(models.Model):#Performance
     id = models.CharField(max_length=10, primary_key=True)
     estado = models.IntegerField()
+class rendimientoAdmin(admin.ModelAdmin):
+    list_display = ['estado']
+    search_fields = ['estado']
+admin.site.register(rendimiento, rendimientoAdmin)
 
-class RentaFija(models.Model):#FixedIncome (excel)
+class rentaFija(models.Model):#FixedIncome (excel)
     id = models.CharField(max_length=10, primary_key=True)
     descripcion = models.CharField(max_length=50)
     bsed = models.IntegerField()#BondStatisticsEffectiveDuration
@@ -62,20 +108,28 @@ class RentaFija(models.Model):#FixedIncome (excel)
     crmd = models.IntegerField()#CoverageRatioModifiedDuration
     crym = models.IntegerField()#CoverageRatioYieldToMaturity
     portafolio_fecha = models.DateField()
+class rentaFijaAdmin(admin.ModelAdmin):
+    list_display = ['descripcion','bsed','bsem','bsmd','bsym','cred','crem','crmd','crym','portafolio_fecha']
+    search_fields = ['descripcion','bsed','bsem','bsmd','bsym','cred','crem','crmd','crym','portafolio_fecha']
+admin.site.register(rentaFija, rentaFijaAdmin)
 
-class AsignacionActivos(models.Model):#AssetAllocation
+class asignacionActivo(models.Model):#AssetAllocation
     id = models.CharField(max_length=10, primary_key=True)
     red_bono = models.IntegerField()#BondNet
     red_efectivo = models.IntegerField()#CashNet
     red_convertible = models.IntegerField()#ConvertibleNet
-    red_preferida = models.IntegerField()#PreferredNet
+    red_preferida = models.IntegerField()#PreferredNet #2veces
     red_acciones = models.IntegerField()#PreferredNet
     red_preferida = models.IntegerField()#StockNet
     red_otra = models.IntegerField()#OtherNet
     portafolio_fecha = models.DateField()#portfolioDate
+class asignacionActivoAdmin(admin.ModelAdmin):
+    list_display = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
+    search_fields = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
+admin.site.register(asignacionActivo, asignacionActivoAdmin)
 
 
-class Sector(models.Model):#AssetAllocation
+class sector(models.Model):#AssetAllocation
     id = models.CharField(max_length=10, primary_key=True)
     materiales_basicos =  models.IntegerField()#BasicMaterials
     servicio_comunicacion = models.IntegerField()#CommunicationService
@@ -89,20 +143,40 @@ class Sector(models.Model):#AssetAllocation
     bienes_raices = models.IntegerField()#RealEstate
     tecnologia = models.IntegerField()#Technology
     utilidades = models.IntegerField()#Utilities
+class sectorAdmin(admin.ModelAdmin):
+    list_display = ['materiales_basicos','servicio_comunicacion','ciclico_consumidor']#definir que atributos se ocuparan
+    search_fields = ['materiales_basicos','servicio_comunicacion','ciclico_consumidor']#definir que atributos se ocuparan
+admin.site.register(sector, sectorAdmin)
 
-class Morningstar(models.Model):
+class morningstar(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
     country_exposure = models.TextField()
-    Sector = models.ForeignKey('Sector',on_delete=models.CASCADE)
-    AsignacionActivos = models.ForeignKey('AsignacionActivos',on_delete=models.CASCADE)
+    sector = models.ForeignKey(sector,on_delete=models.CASCADE)
+    asignacionActivo = models.ForeignKey(asignacionActivo,on_delete=models.CASCADE)
+class morningstarAdmin(admin.ModelAdmin):
+    list_display = ['country_exposure','sector']
+    search_fields = ['country_exposure','sector']
+admin.site.register(morningstar, morningstarAdmin)
 
-class Fondo(models.Model):
+class fondo(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
-    Marca = models.ForeignKey('Marca', on_delete=models.CASCADE)
-    Proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
-    Fund = models.ForeignKey('Fund', on_delete=models.CASCADE)
-    EstadoDistribucion = models.ForeignKey('EstadoDistribucion', on_delete=models.CASCADE)
-    FrecuenciaDistribucion = models.ForeignKey('FrecuenciaDistribucion', on_delete=models.CASCADE)
-    Rendimiento = models.ForeignKey('Rendimiento', on_delete=models.CASCADE)
-    RentaFija = models.ForeignKey('RentaFija', on_delete=models.CASCADE)
-    Morningstar = models.ForeignKey('Morningstar',on_delete=models.CASCADE)
+    marca = models.ForeignKey(marca, on_delete=models.CASCADE)
+    proveedor = models.ForeignKey(proveedor, on_delete=models.CASCADE)
+    fund = models.ForeignKey(fund, on_delete=models.CASCADE)
+    estadoDistribucion = models.ForeignKey(estadoDistribucion, on_delete=models.CASCADE)
+    frecuenciaDistribucion = models.ForeignKey(frecuenciaDistribucion, on_delete=models.CASCADE)
+    rendimiento = models.ForeignKey(rendimiento, on_delete=models.CASCADE)
+    rentaFija = models.ForeignKey(rentaFija, on_delete=models.CASCADE)
+    morningstar = models.ForeignKey(morningstar,on_delete=models.CASCADE)
+class fondoAdmin(admin.ModelAdmin):
+    list_display = ['marca','proveedor','fund','estadoDistribucion','frecuenciaDistribucion']#definir cuales se necesitan
+    search_fields = ['marca','proveedor','fund','estadoDistribucion','frecuenciaDistribucion']#definir cuales se necesitan
+admin.site.register(fondo, fondoAdmin)
+
+class pais(models.Model):#Performance
+    id = models.CharField(max_length=10, primary_key=True)
+    nombre = models.IntegerField()
+class paisAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
+    search_fields = ['nombre']
+admin.site.register(pais, paisAdmin)
