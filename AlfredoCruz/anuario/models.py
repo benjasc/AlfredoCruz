@@ -24,8 +24,8 @@ class domicilio(models.Model):#Domicile
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
 class domicilioAdmin(admin.ModelAdmin):
-    list_display = ['nombre']
-    search_fields = ['nombre']
+    list_display = ['id','nombre']
+    search_fields = ['id','nombre']
 admin.site.register(domicilio, domicilioAdmin)
 
 class moneda(models.Model):#Currency
