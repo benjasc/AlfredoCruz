@@ -120,7 +120,6 @@ class asignacionActivo(models.Model):#AssetAllocation
     red_convertible = models.IntegerField()#ConvertibleNet
     red_preferida = models.IntegerField()#PreferredNet #2veces
     red_acciones = models.IntegerField()#PreferredNet
-    red_preferida = models.IntegerField()#StockNet
     red_otra = models.IntegerField()#OtherNet
     portafolio_fecha = models.DateField()#portfolioDate
 class asignacionActivoAdmin(admin.ModelAdmin):
