@@ -16,13 +16,15 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
-from anuario.views import login, index_user, index
-from django.contrib.auth.views import login
+from anuario.views import login, perfil, index
+#from django.contrib.auth.views import login
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',login, name='login' ),
-    path('perfil/',index_user, name='perfil' ),
-    path('index/',index, {'template_name:login.html'},name='login' ),
+    path('perfil/',perfil, name='perfil' ),
+    path('index/',index,name='index'),
+
 ]
