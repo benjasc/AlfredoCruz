@@ -32,3 +32,15 @@ def perfil(request):
 
 def index(request):
     return render(request,"index.html")
+
+def SaldoInicial(request):
+    return render(request,"SaldoInicial.html")
+
+def tipoMovimiento(request):
+    return render(request,"tipoMovimiento.html")
+
+def tipoInversion(request):
+    return render(request,"tipoInversion.html")
+
+def Instrumento(request):
+    return render(request,"Instrumento.html")
