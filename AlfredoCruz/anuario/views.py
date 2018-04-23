@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from AlfredoCruz.forms import LoginForm
+from AlfredoCruz.forms import LoginForm, ModalForm
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -31,7 +31,9 @@ def perfil(request):
     return render(request,"index_user.html")
 
 def index(request):
-    return render(request,"index.html")
+    form = ModalForm()
+    contexto = {'form':form}
+    return render(request,'index.html',contexto)
 
 def SaldoInicial(request):
     return render(request,"SaldoInicial.html")

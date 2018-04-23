@@ -8,6 +8,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
+
   {% include 'libheader.html' %}
 
   {% include "header.html" %}
@@ -126,7 +127,7 @@
                             <thead>
                             <tr>
                                 <td class="text-left">Fondo</td>
-                                <td class="text-left">Empresa</a>                        
+                                <td class="text-left">Empresa</a>
                                 <td class="text-left">Usuario</td>
                                 <td class="text-left">Tiene formulario asociado</td>
                             </tr>
@@ -180,7 +181,7 @@
                                 </td>
                                 <td>
                                   <a href="/perfil/fondo/{{lista.runsvs}}" data-toggle="tooltip" title="Editar formulario" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                                    
+
                                     {% if user.is_staff and user.is_superuser %}
                                     <a href="/perfil/asignar_fondo/{{lista.runsvs}}" data-toggle="tooltip" title="Asignar fondo a usuario" class="btn btn-primary"><i class="fa fa-male"></i>
                                     {% endif %}
@@ -205,7 +206,7 @@
               <div class="pagination">
                   <span class="step-links">
                       {% if contacts.has_previous %}
-                          
+
                           {% if filter_name  %}
 
                           <a href="?filter_name={{ filter_user }}&page={{ contacts.previous_page_number }}"><< </a>
@@ -235,7 +236,7 @@
         </div>
         </div>
 
-  
+
         </div>
       </div>
           </div>
@@ -249,7 +250,10 @@
 
 
 {% include "asidebar.html" %}
-
 {% include 'footer.html' %}
+<!--VENTANAS MODALES-->
+{% include 'saldoInicial.html' %}
+{% include 'movimiento.html' %}
+
 </body>
 </html>

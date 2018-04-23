@@ -1,0 +1,185 @@
+<div class="container">
+  <br>
+
+  <div class="modal fade" id="movimiento">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- header de la ventana -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Movimiento</h4>
+        </div>
+        <!-- Contenido de la ventana -->
+        <div class="modal-body">
+
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Cliente</label>
+                <select class="form-control" id="">
+                  <option disabled selected="true">Seleccione</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+            </select>
+              </div>
+              <div class="col-md-6">
+                <label>Ver o crear movimiento</label>
+
+                <select class="form-control" id="select-mov">
+                  <option disabled selected="true">Seleccione</option>
+                  <option>Nuevo movimiento</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </div><br>
+            <div id="contenido1" style="display: none;">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Fecha</label>
+                  <div class="input-group date" id="datepicker1">
+                    <input type="text" class="form-control">
+                    <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Tipo Instrumento</label>
+
+                  <select class="form-control" id="">
+                    <option disabled selected="true">Seleccione</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+              </div><br>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Administrador</label>
+                  <select class="form-control" id="">
+                    <option disabled selected="true">Seleccione</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label>Fondo</label>
+
+                  <select class="form-control" id="">
+                    <option disabled selected="true">Seleccione</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+              </div><br>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Monto</label>
+                  <input type="number" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label>Tipo Inversión</label>
+
+                  <select class="form-control" id="">
+                    <option disabled selected="true">Seleccione</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+              </div><br>
+            </div>
+            <div id="contenido2" style="display: none;">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Fecha</label>
+                  <div class="input-group date" id="datepicker2">
+                    <input type="text" class="form-control" readonly>
+                    <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label>Tipo Inversión</label>
+
+                  <select class="form-control" id="">
+                    <option disabled selected="true">Seleccione</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+              </div><br>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Tipo movimiento</label>
+                  <select class="form-control" id="">
+                    <option disabled selected="true">Seleccione</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label>Monto</label>
+                  <input type="number" class="form-control" value="">
+                </div>
+              </div><br>
+            </div>
+          </form>
+
+        </div>
+        <!-- footer de a ventana-->
+        <div class="modal-footer">
+          <button type="button" id="btn-actualizar" class="btn btn-primary" style="display:none;">Actualizar</button>
+          <button type="button" id="btn-guardar" class="btn btn-primary" style="display:none;">Guardar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#datepicker1').datepicker({
+      format: 'mm/dd/yyyy',
+      startDate: '-3d'
+    });
+    $('#datepicker2').datepicker({
+      format: 'mm/dd/yyyy',
+      startDate: '-3d',
+      enableOnReadonly: false
+    });
+
+    $("#select-mov").change(function() {
+      var seleccion = $("#select-mov").prop('selectedIndex');
+      if (seleccion === 1) {
+        $("#btn-actualizar").hide();
+        $("#contenido2").hide();
+        $("#contenido1").show();
+        $("#btn-guardar").show();
+      } else if (seleccion != 1) {
+        $("#contenido1").hide();
+        $("#btn-guardar").hide();
+        $("#btn-actualizar").show();
+        $("#contenido2").show();
+      }
+
+    });
+  });
+</script>

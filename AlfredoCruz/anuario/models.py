@@ -1,20 +1,19 @@
 from django.contrib import admin
 from django.db import models
-#definimos las dos tablas mas importantes, morningstar y bindex
-class morningstar(models.Model):
-    id = models.CharField(max_length=15, primary_key=True)
-    country_exposure = models.TextField() #como json
-class morningstarAdmin(admin.ModelAdmin):
-    list_display = ['country_exposure']
-    search_fields = ['country_exposure']
-admin.site.register(morningstar, morningstarAdmin)
+'''
+# class morningstar(models.Model):
+#     id = models.CharField(max_length=15, primary_key=True)
+#     country_exposure = models.TextField() #como json
+# class morningstarAdmin(admin.ModelAdmin):
+#     list_display = ['country_exposure']
+#     search_fields = ['country_exposure']
+# admin.site.register(morningstar, morningstarAdmin)'''
 
 class bindex(models.Model):
-    id = models.AutoField(primary_key=True)
-    morningstar = models.ForeignKey(morningstar, on_delete=models.CASCADE)
+    country_exposure = models.TextField() #como json
 class bindexAdmin(admin.ModelAdmin):
-    list_display = ['id','morningstar']
-    search_fields = ['id','morningstar']
+    list_display = ['id']
+    search_fields = ['id']
 admin.site.register(bindex, bindexAdmin)
 
 class moneda(models.Model):#Currency
@@ -101,15 +100,15 @@ admin.site.register(rendimiento, rendimientoAdmin)
 
 class proveedor(models.Model):#ProviderCompany
     id = models.CharField(max_length=10, primary_key=True)
-    json = models.TextField()
+    datos = models.TextField() #como json
 class proveedorAdmin(admin.ModelAdmin):
-    list_display = ['json']
-    search_fields = ['json']
+    list_display = ['datos']
+    search_fields = ['datos']
 admin.site.register(proveedor, proveedorAdmin)
 
 class pais(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
-    nombre = models.IntegerField()
+    nombre = models.CharField(max_length=50)
 class paisAdmin(admin.ModelAdmin):
     list_display = ['nombre']
     search_fields = ['nombre']
@@ -124,7 +123,7 @@ class instrumento(models.Model):
     rendimiento = models.ForeignKey(rendimiento, on_delete=models.CASCADE) #Performance
     run_svs = models.CharField(max_length=50)
     clase_proveedor = models.CharField(max_length=50)
-    operation_ready = models.BooleanField()
+    operation_ready = models.IntegerField()
 class instrumentoAdmin(admin.ModelAdmin):
     list_display = ['bindex','fondo','proveedor','branding','frecuenciaDistribucion','rendimiento',
     'run_svs','clase_proveedor','operation_ready']
@@ -134,14 +133,14 @@ admin.site.register(instrumento,instrumentoAdmin)
 
 class rentaFija(models.Model):#FixedIncome (excel)
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE, primary_key=True)
-    bsed = models.BooleanField()#BondStatisticsEffectiveDuration
-    bsem = models.BooleanField()#BondStatisticsEffectiveMaturity
-    bsmd = models.BooleanField()#BondStatisticsModifiedDuration
-    bsym = models.BooleanField()#BondStatisticsYieldToMaturity
-    cred = models.BooleanField()#CoverageRatioEffectiveDuration
-    crem = models.BooleanField()#CoverageRatioEffectiveMaturity
-    crmd = models.BooleanField()#CoverageRatioModifiedDuration
-    crym = models.BooleanField()#CoverageRatioYieldToMaturity
+    bsed = models.FloatField()#BondStatisticsEffectiveDuration
+    bsem = models.FloatField()#BondStatisticsEffectiveMaturity
+    bsmd = models.FloatField()#BondStatisticsModifiedDuration
+    bsym = models.FloatField()#BondStatisticsYieldToMaturity
+    cred = models.FloatField()#CoverageRatioEffectiveDuration
+    crem = models.FloatField()#CoverageRatioEffectiveMaturity
+    crmd = models.FloatField()#CoverageRatioModifiedDuration
+    crym = models.FloatField()#CoverageRatioYieldToMaturity
     portafolio_fecha = models.DateField()
 class rentaFijaAdmin(admin.ModelAdmin):
     list_display = ['bsed','bsem','bsmd','bsym','cred','crem','crmd','crym','portafolio_fecha']
@@ -150,17 +149,17 @@ admin.site.register(rentaFija, rentaFijaAdmin)
 
 class sector(models.Model):#SectorExposure
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE,primary_key=True)
-    materiales_basicos =  models.BooleanField()#BasicMaterials
-    servicio_comunicacion = models.BooleanField()#CommunicationService
-    ciclico_consumidor = models.BooleanField()#consumercyclical
-    defensa_consumidor = models.BooleanField()#consumerDefensive
-    energia = models.BooleanField()#Energy
-    servicios_financieros = models.BooleanField()#FinancialServices
-    cuidado_salud = models.BooleanField()#HealthCare
-    acciones_industriales = models.BooleanField()#industrials
-    bienes_raices = models.BooleanField()#RealEstate
-    tecnologia = models.BooleanField()#Technology
-    utilidades = models.BooleanField()#Utilities
+    materiales_basicos = models.FloatField() #BasicMaterials
+    servicio_comunicacion = models.FloatField()#CommunicationService
+    ciclico_consumidor = models.FloatField()#consumercyclical
+    defensa_consumidor = models.FloatField() #consumerDefensive
+    energia = models.FloatField() #Energy
+    servicios_financieros = models.FloatField() #FinancialServices
+    cuidado_salud = models.FloatField()#HealthCare
+    acciones_industriales = models.FloatField()#industrials
+    bienes_raices = models.FloatField()#RealEstate
+    tecnologia = models.FloatField()#Technology
+    utilidades = models.FloatField()#Utilities
     portafolio_fecha = models.DateField()
 class sectorAdmin(admin.ModelAdmin):
     list_display = ['materiales_basicos','servicio_comunicacion','ciclico_consumidor']#definir que atributos se ocuparan
@@ -169,13 +168,13 @@ admin.site.register(sector, sectorAdmin)
 
 class asignacionActivo(models.Model):#AssetAllocation
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE, primary_key=True)
-    red_bono = models.BooleanField()#BondNet
-    red_efectivo = models.BooleanField()#CashNet
-    red_convertible = models.BooleanField()#ConvertibleNet
-    red_preferida = models.BooleanField()#PreferredNet #2veces
-    red_acciones = models.BooleanField()#PreferredNet
-    red_otra = models.BooleanField()#OtherNet
-    portafolio_fecha = models.DateField()#portfolioDate
+    red_bono = models.FloatField()#BondNet
+    red_efectivo = models.FloatField()#CashNet
+    red_convertible = models.FloatField()#ConvertibleNet
+    red_preferida = models.FloatField()#PreferredNet #2veces
+    red_acciones = models.FloatField()#PreferredNet
+    red_otra = models.FloatField()#OtherNet
+    portafolio_fecha = models.FloatField()#portfolioDate
 class asignacionActivoAdmin(admin.ModelAdmin):
     list_display = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
     search_fields = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
@@ -184,18 +183,18 @@ admin.site.register(asignacionActivo, asignacionActivoAdmin)
 class valorCuota(models.Model):
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE,primary_key=True)
     anio = models.CharField(max_length=50)
-    json = models.TextField()
+    datos = models.TextField()
 class valorCuotaAdmin(admin.ModelAdmin):
-    list_display = ['bindex','anio','json']
-    search_fields = ['bindex','anio','json']
+    list_display = ['bindex','anio','datos']
+    search_fields = ['bindex','anio','datos']
 admin.site.register(valorCuota, valorCuotaAdmin)
 
 class claseActivo(models.Model):
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE,primary_key=True)
-    json = models.TextField()
+    datos = models.TextField()
 class claseActivoAdmin(admin.ModelAdmin):
-    list_display = ['bindex','json']
-    search_fields = ['bindex','json']
+    list_display = ['bindex','datos']
+    search_fields = ['bindex','datos']
 admin.site.register(claseActivo, claseActivoAdmin)
 
 class tipoInversion(models.Model):
@@ -222,7 +221,7 @@ admin.site.register(cliente, clienteAdmin)
 
 class carteraCliente(models.Model):
     fecha = models.DateField()
-    saldo =  models.BooleanField()
+    saldo = models.IntegerField()
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
@@ -232,9 +231,9 @@ class carteraClienteAdmin(admin.ModelAdmin):
 admin.site.register(carteraCliente, carteraClienteAdmin)
 
 class saldoInicial(models.Model):
-    saldo = models.BooleanField()
+    saldo = models.IntegerField()
     fecha = models.CharField(max_length=50)
-    numero_cuotas =  models.BooleanField()
+    numero_cuotas =  models.IntegerField()
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
     bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
@@ -245,7 +244,7 @@ admin.site.register(saldoInicial, saldoInicialAdmin)
 
 class movimiento(models.Model):
     fecha = models.CharField(max_length=50)
-    numero_cuotas =  models.BooleanField()
+    numero_cuotas =  models.IntegerField()
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
     tipoMovimiento = models.ForeignKey(tipoMovimiento, on_delete=models.CASCADE)
