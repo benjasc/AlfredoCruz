@@ -50,17 +50,9 @@ def tipoInversion(request):
 def Instrumento(request):
     return render(request,"Instrumento.html")
 
-def getFondo(request): #ajax
+def getFondo(request):
     proveedor_id = request.GET['id']
-    instrumento_proveedor = instrumento.objects.values('fondo').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
-    fondos = fondo.objects.filter(pk__in = instrumento_proveedor)
-    f = serializers.serialize('json', fondos)
-    return JsonResponse(f)
-    '''print(fondos)'''
-    '''aux = '<select name="fondo" class="form-control" id="id_fondo">'
-    for l in fondos:
-        aux += '<option value="'+l.id+'">'+str(l.nombre_legal)+'</option>'
-        #aux+= str(l.nombre_legal)+'   '+str(l.fecha_inicio)+"<br>"
-    aux += "</select>"'''
-'''    return HttpResponse(aux)
-'''
+    instrumentos = instrumento.objects.values('fondo').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
+    fondos = fondo.objects.filter(pk__in = instrumentos)
+    data = serializers.serialize('json',fondos, fields=("id","nombre"))
+    return HttpResponse(data, content_type="application/json")

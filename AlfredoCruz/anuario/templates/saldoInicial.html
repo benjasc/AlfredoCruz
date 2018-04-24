@@ -82,6 +82,10 @@ $(document).ready(function() {
          $("#id_proveedor").append(`<option value=${element.id}> ${element.datos} </option>`);
        });
      });*/
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5fe8454fa58f77b6866cd7cbfe8408626dbcb63c
      var token = $("#token").val();
      var id = event.target.value;
      $.ajax({
@@ -91,12 +95,21 @@ $(document).ready(function() {
        },
        type: 'GET',
        data: {'id': id},
+<<<<<<< HEAD
        success:function(response) {
          $("#id_fondo").empty();
          response.forEach(element => {
            $("#id_fondo").append(`<option value=${element.id}> ${element.nombre} </option>`);
          });
      }
+=======
+       success:function(res) {
+         $("#id_fondo").empty();
+          for (var i = 0; i < res.length; i++) {
+             $("#id_fondo").append("<option value='"+res[i].fields.id+"'>"+res[i].fields.nombre+"</option>");
+          }
+       }
+>>>>>>> 5fe8454fa58f77b6866cd7cbfe8408626dbcb63c
 
      });
    });
