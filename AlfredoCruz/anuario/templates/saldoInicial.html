@@ -13,6 +13,7 @@
         <div class="modal-body">
 
           <form>
+            <input type="hidden" id="token" name="_token" value="{{ csrf_token }}">
             <div class="row">
               <div class="col-md-6">
                 <label>Cliente</label>
@@ -30,18 +31,18 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="inputPassword4">Tipo Instrumento</label>
-                {{form.tipoInstrumento}}
+                <label for="inputPassword4">Administrador</label>
+                {{form.proveedor}}
               </div>
             </div>
             <div class="row"><br>
               <div class="col-md-6">
-                <label for="inputEmail4">Administrador</label>
-                {{form.proveedor}}
+                <label for="inputEmail4">Fondo</label>
+                {{form.fondo}}
               </div>
               <div class="col-md-6">
-                <label for="inputPassword4">Fondo</label>
-                {{form.fondo}}
+                <label for="inputPassword4">Tipo de Instrumento</label>
+                {{form.tipoInstrumento}}
               </div>
             </div>
 
@@ -74,6 +75,33 @@ $(document).ready(function() {
     startDate: '-3d',
   });
    // $('#datepicker > .form-control').prop('readonly', true);
+   $("#id_proveedor").change(function(event) {
+  /* $.get("fondo/" + event.target.value + "", function(response) {
+       $("#id_proveedor").empty();
+       response.forEach(element => {
+         $("#id_proveedor").append(`<option value=${element.id}> ${element.datos} </option>`);
+       });
+     });*/
+
+     var token = $("#token").val();
+     var id = event.target.value;
+     $.ajax({
+       url: '/fondo/',
+       headers: {
+         'X-CSRF-Token': token
+       },
+       type: 'GET',
+       data: {'id': id},
+       success:function(res) {
+         $("#id_fondo").empty();
+          for (var i = 0; i < res.length; i++) {
+             $("#id_fondo").append("<option value='"+res[i].fields.id+"'>"+res[i].fields.nombre+"</option>");
+          }
+       }
+
+     });
+   });
 
 });
+
 </script>

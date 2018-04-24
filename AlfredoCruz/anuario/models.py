@@ -232,7 +232,7 @@ admin.site.register(carteraCliente, carteraClienteAdmin)
 
 class saldoInicial(models.Model):
     saldo = models.IntegerField()
-    fecha = models.CharField(max_length=50)
+    fecha = models.DateField(auto_now_add=True)
     numero_cuotas =  models.IntegerField()
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
