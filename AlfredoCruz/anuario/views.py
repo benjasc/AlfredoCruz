@@ -4,7 +4,7 @@ from django.template import RequestContext
 from AlfredoCruz.forms import LoginForm, ModalForm
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from .models import fondo, instrumento
+from .models import fondo, instrumento, tipoInstrumento
 import json
 from django.http import JsonResponse
 # Create your views here.
@@ -53,6 +53,7 @@ def Instrumento(request):
 def getFondo(request):
     proveedor_id = request.GET['id']
     instrumentos = instrumento.objects.values('fondo').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
-    fondos = fondo.objects.filter(pk__in = instrumentos)
-    data = serializers.serialize('json',fondos, fields=("id","nombre"))
+    #fondos = fondo.objects.filter(pk__in = instrumentos)
+    fondos = fondo.objects.all().select_related("tipoInstrumento")
+    data = serializers.serialize('json',fondos, fields=("id","nombre","tipoInstrumento","estadoDistribucion"))
     return HttpResponse(data, content_type="application/json")
