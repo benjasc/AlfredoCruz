@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from AlfredoCruz.forms import LoginForm, ModalForm
 from django.contrib.auth import authenticate, login
-
+from django.core import serializers
+from .models import fondo, instrumento
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 def login(request):
@@ -46,3 +49,18 @@ def tipoInversion(request):
 
 def Instrumento(request):
     return render(request,"Instrumento.html")
+
+def getFondo(request): #ajax
+    proveedor_id = request.GET['id']
+    instrumento_proveedor = instrumento.objects.values('fondo').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
+    fondos = fondo.objects.filter(pk__in = instrumento_proveedor)
+    f = serializers.serialize('json', fondos)
+    return JsonResponse(f)
+    '''print(fondos)'''
+    '''aux = '<select name="fondo" class="form-control" id="id_fondo">'
+    for l in fondos:
+        aux += '<option value="'+l.id+'">'+str(l.nombre_legal)+'</option>'
+        #aux+= str(l.nombre_legal)+'   '+str(l.fecha_inicio)+"<br>"
+    aux += "</select>"'''
+'''    return HttpResponse(aux)
+'''
