@@ -8,7 +8,7 @@ class LoginForm(forms.Form):
 class ModalForm(forms.Form):
     cliente = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= cliente.objects.values_list('nombre','nombre'))
     fecha   = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
-    tipoInstrumento = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= tipoInstrumento.objects.values_list('id','estructura_legal'))
+    tipoInstrumento = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}))
     proveedor = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= proveedor.objects.values_list('id','datos'))
     fondo  = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}))
     monto = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={"class" : "form-control", 'placeholder': ''}))

@@ -55,6 +55,9 @@ class tipoInstrumento(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
     estructura_legal = models.CharField(max_length=50)
     estado_distribucion = models.CharField(max_length=50)
+    def __str__(self):
+        return self.estado_distribucion+' -- '+self.estructura_legal
+
 class tipoInstrumentoAdmin(admin.ModelAdmin):
     list_display = ['estructura_legal','estado_distribucion']
     search_fields = ['estructura_legal','estado_distribucion']
