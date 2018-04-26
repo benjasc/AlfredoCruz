@@ -53,12 +53,17 @@ def Instrumento(request):
 def getFondo(request):
     proveedor_id = request.GET['id']
     instrumentos = instrumento.objects.values('fondo').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
-    fondos = fondo.objects.select_related('tipoInstrumento').filter(pk__in=instrumentos)
+    fondos = fondo.objects.filter(pk__in=instrumentos)
+    data = serializers.serialize('json',fondos, fields=("id","nombre","tipoInstrumento"))
+    return HttpResponse(data, content_type="application/json")
+
+def getTipoInstrumento(request):
+    fondo_id = request.GET['id']
+    x = fondo.objects.values('tipoInstrumento').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
+    tipoInstrumento = fondo.objects.select_related('tipoInstrumento').filter(pk__in=fondo_id)
     list = []
-    for row in fondos:
+    for row in tipoInstrumento:
         list.append({
-        'fondo_id':row.id,
-        'fondo_nombre':row.nombre,
         'tipoInstrumento__id':row.tipoInstrumento.id,
         'tipoInstrumento__estructura_legal':row.tipoInstrumento.estructura_legal,
         'tipoInstrumento__estado_distribucion':row.tipoInstrumento.estado_distribucion,

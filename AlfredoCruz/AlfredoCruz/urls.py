@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
-from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion, getFondo,Instrumento
+from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion, getFondo,Instrumento,getTipoInstrumento
 
 #from django.contrib.auth.views import login
 
@@ -34,6 +34,7 @@ urlpatterns = [
     path('Instrumento/',Instrumento,name='index'),
 
     path('fondo/',getFondo),#ajax
+    path('tipoInstrumento/',getTipoInstrumento),#ajax
 
 
 ]

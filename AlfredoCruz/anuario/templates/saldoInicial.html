@@ -88,33 +88,45 @@ $(document).ready(function() {
        data: {'id': id},
 
        success:function(res) {
-         data = $.parseJSON(res);
-         console.log(data);
-      $("#id_fondo").empty();
-          for (var i = 0; i < data.length; i++) {
-            $("#id_fondo").empty();
-            $("#id_tipoInstrumento").empty();
-            $("#id_fondo").append("<option value='"+data[i].fondo_id+"'>"+data[i].fondo_nombre+"</option>");
-            $("#id_tipoInstrumento").append("<option value='"+data[i].tipoInstrumento__id+"'>"+data[i].tipoInstrumento__estructura_legal+' / '+data[i].tipoInstrumento__estado_distribucion+"</option>");
 
-
+         console.log(res);
+        $("#id_fondo").empty();
+        $("#id_tipoInstrumento").empty();
+          for (var i = 0; i < res.length; i++) {
+            $("#id_fondo").append("<option value='"+res[i].pk+"'>"+res[i].fields.nombre+"</option>");
           }
        }
 
      });
-/*
-     var id2 = $("#idtipoinstrumento").val();
+
+   });
+
+
+   $("#id_fondo").change(function(event) {
+
+     var token = $("#token").val();
+     var id = event.target.value;
+     console.log(id);
      $.ajax({
        url: '/tipoInstrumento/',
        headers: {
          'X-CSRF-Token': token
        },
        type: 'GET',
-       data: {'id': id2},
+       data: {'id': id},
+
        success:function(res) {
-        console.log(res);
+         data = $.parseJSON(res);
+         console.log(data);
+
+        $("#id_tipoInstrumento").empty();
+          for (var i = 0; i < data.length; i++) {
+            $("#id_tipoInstrumento").append("<option value='"+data[i].tipoInstrumento__id+"'>"+data[i].tipoInstrumento__estructura_legal+"</option>");
+          }
        }
-     });*/
+
+     });
+
    });
 });
 
