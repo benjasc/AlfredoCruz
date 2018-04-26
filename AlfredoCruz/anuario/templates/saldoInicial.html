@@ -38,11 +38,17 @@
             <div class="row"><br>
               <div class="col-md-6">
                 <label for="inputEmail4">Fondo</label>
-                {{form.fondo}}
+                <select id="id_fondo" name="" class="form-control">
+                  <option>----------</option>
+
+                </select>
               </div>
               <div class="col-md-6">
                 <label for="inputPassword4">Tipo de Instrumento</label>
-                {{form.tipoInstrumento}}
+                <select id="id_tipoInstrumento" name="" class="form-control">
+                  <option>----------</option>
+
+                </select>
               </div>
             </div>
 
@@ -90,10 +96,12 @@ $(document).ready(function() {
        success:function(res) {
 
          console.log(res);
-        $("#id_fondo").empty();
-        $("#id_tipoInstrumento").empty();
+
+         $("#id_fondo").empty();
+         $("#id_fondo").append("<option selected disabled  >Seleccione</option>");
+
           for (var i = 0; i < res.length; i++) {
-            $("#id_fondo").append("<option value='"+res[i].pk+"'>"+res[i].fields.nombre+"</option>");
+            $("#id_fondo").append("<option  class='options-fondo' value='"+res[i].pk+"'>"+res[i].fields.nombre+"</option>");
           }
        }
 
@@ -120,6 +128,7 @@ $(document).ready(function() {
          console.log(data);
 
         $("#id_tipoInstrumento").empty();
+
           for (var i = 0; i < data.length; i++) {
             $("#id_tipoInstrumento").append("<option value='"+data[i].tipoInstrumento__id+"'>"+data[i].tipoInstrumento__estructura_legal+"</option>");
           }

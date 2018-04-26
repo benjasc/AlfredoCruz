@@ -59,10 +59,9 @@ def getFondo(request):
 
 def getTipoInstrumento(request):
     fondo_id = request.GET['id']
-    x = fondo.objects.values('tipoInstrumento').filter(proveedor__id=proveedor_id).order_by('fondo__nombre').distinct()
-    tipoInstrumento = fondo.objects.select_related('tipoInstrumento').filter(pk__in=fondo_id)
+    tipoInst = fondo.objects.select_related('tipoInstrumento').filter(id=fondo_id)
     list = []
-    for row in tipoInstrumento:
+    for row in tipoInst:
         list.append({
         'tipoInstrumento__id':row.tipoInstrumento.id,
         'tipoInstrumento__estructura_legal':row.tipoInstrumento.estructura_legal,
