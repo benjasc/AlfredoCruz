@@ -16,8 +16,7 @@
             <input type="hidden" id="token" name="_token" value="{{ csrf_token }}">
             <div class="row">
               <div class="col-md-6">
-                <label>Cliente</label>
-                  {{form.cliente}}
+                <label>Cliente</label> {{form.cliente}}
               </div>
             </div><br>
             <div class="row">
@@ -31,35 +30,33 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <label for="inputPassword4">Administrador</label>
-                {{form.proveedor}}
+                <label for="inputPassword4">Tipo de Instrumento</label> {{form.tipoInstrumento}}
               </div>
             </div>
+
             <div class="row"><br>
+              <div class="col-md-6">
+                <label for="inputPassword4">Administrador</label>
+                <select class="form-control" id="id_proveedor" name="">
+                  <option disabled selected>----------</option>
+                </select>
+              </div>
               <div class="col-md-6">
                 <label for="inputEmail4">Fondo</label>
                 <select id="id_fondo" name="" class="form-control">
-                  <option>----------</option>
+                  <option disabled selected>----------</option>
 
                 </select>
               </div>
-              <div class="col-md-6">
-                <label for="inputPassword4">Tipo de Instrumento</label>
-                <select id="id_tipoInstrumento" name="" class="form-control">
-                  <option>----------</option>
 
-                </select>
-              </div>
             </div>
 
             <div class="row"><br>
               <div class="col-md-6">
-                <label for="inputEmail4">Monto</label>
-              {{form.monto}}
+                <label for="inputEmail4">Monto</label> {{form.monto}}
               </div>
               <div class="col-md-6">
-                <label for="inputPassword4">Tipo Inversión</label>
-                {{form.tipoInversion}}
+                <label for="inputPassword4">Tipo Inversión</label> {{form.tipoInversion}}
               </div>
             </div>
           </form>
@@ -67,76 +64,174 @@
         </div>
         <!-- footer de a ventana-->
         <div class="modal-footer">
-          <button type="button" id="btn-guardar" class="btn btn-primary" >Guardar</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <div class="row">
+            <div class="col-md-5">
+              <p style="color:green;" hidden id="exito">Datos guardados correctamente!</p>
+            </div>
+            <div class="col-md-7">
+              <button type="button" id="btn-guardar" class="btn btn-primary" onclick="guardarSaldo()">Guardar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function() {
-  $('#datepicker').datepicker({
-    format: 'mm/dd/yyyy',
-    startDate: '-3d',
-  });
-   // $('#datepicker > .form-control').prop('readonly', true);
-   $("#id_proveedor").change(function(event) {
+  $(document).ready(function() {
+    $('#datepicker').datepicker({
+      format: 'mm/dd/yyyy',
+      startDate: '-3d',
+    });
+    // $('#datepicker > .form-control').prop('readonly', true);
+    /* $("#id_proveedor").change(function(event) {
 
-     var token = $("#token").val();
-     var id = event.target.value;
-     $.ajax({
-       url: '/fondo/',
-       headers: {
-         'X-CSRF-Token': token
-       },
-       type: 'GET',
-       data: {'id': id},
+       var token = $("#token").val();
+       var id = event.target.value;
+       $.ajax({
+         url: '/fondo/',
+         headers: {
+           'X-CSRF-Token': token
+         },
+         type: 'GET',
+         data: {'id': id},
 
-       success:function(res) {
+         success:function(res) {
 
-         console.log(res);
+           console.log(res);
 
-         $("#id_fondo").empty();
-         $("#id_fondo").append("<option selected disabled  >Seleccione</option>");
+           $("#id_fondo").empty();
+           $("#id_fondo").append("<option selected disabled  >Seleccione</option>");
+           $("#id_tipoInstrumento").empty();
+           $("#id_tipoInstrumento").append("<option selected disabled  >----------</option>");
 
+            for (var i = 0; i < res.length; i++) {
+              $("#id_fondo").append("<option  class='options-fondo' value='"+res[i].pk+"'>"+res[i].fields.nombre+"</option>");
+            }
+         }
+
+       });
+
+     });*/
+
+
+    /* $("#id_fondo").change(function(event) {
+
+       var token = $("#token").val();
+       var id = event.target.value;
+       console.log(id);
+       $.ajax({
+         url: '/tipoInstrumento/',
+         headers: {
+           'X-CSRF-Token': token
+         },
+         type: 'GET',
+         data: {'id': id},
+
+         success:function(res) {
+           data = $.parseJSON(res);
+           console.log(data);
+          $("#id_tipoInstrumento").empty();
+          $("#id_tipoInstrumento").append("<option selected disabled  >Seleccione</option>");
+            for (var i = 0; i < data.length; i++) {
+              $("#id_tipoInstrumento").append("<option value='"+data[i].tipoInstrumento__id+"'>"+data[i].tipoInstrumento__estructura_legal+"</option>");
+
+            }
+         }
+
+       });
+
+     });*/
+    $("#id_tipoInstrumento").change(function(event) {
+
+      var token = $("#token").val();
+      var id = event.target.value;
+      console.log(id);
+      $.ajax({
+        url: '/proveedor/',
+        headers: {
+          'X-CSRF-Token': token
+        },
+        type: 'GET',
+        data: {
+          'id': id
+        },
+        success: function(res) {
+          console.log(res);
+          $("#id_proveedor").empty();
+          $("#id_proveedor").append("<option selected disabled  >Seleccione</option>");
           for (var i = 0; i < res.length; i++) {
-            $("#id_fondo").append("<option  class='options-fondo' value='"+res[i].pk+"'>"+res[i].fields.nombre+"</option>");
+            $("#id_proveedor").append("<option value='" + res[i].pk + "'>" + res[i].fields.datos + "</option>");
           }
-       }
+        }
+      });
+    });
 
-     });
+    $("#id_proveedor").change(function(event) {
 
-   });
+      var token = $("#token").val();
+      var id = event.target.value;
+      var id_tipoInstrumento = $("#id_tipoInstrumento").val();
 
+      $.ajax({
+        url: '/fondos/',
+        headers: {
+          'X-CSRF-Token': token
+        },
+        type: 'GET',
+        data: {
+          'id': id,
+          'id_tipoInstrumento': id_tipoInstrumento
+        },
+        success: function(res) {
+          $("#id_fondo").empty();
+          $("#id_fondo").append("<option selected disabled  >Seleccione</option>");
+          for (var i = 0; i < res.length; i++) {
+            $("#id_fondo").append("<option value='" + res[i].pk + "'>" + res[i].fields.nombre + "</option>");
 
-   $("#id_fondo").change(function(event) {
-
-     var token = $("#token").val();
-     var id = event.target.value;
-     console.log(id);
-     $.ajax({
-       url: '/tipoInstrumento/',
-       headers: {
-         'X-CSRF-Token': token
-       },
-       type: 'GET',
-       data: {'id': id},
-
-       success:function(res) {
-         data = $.parseJSON(res);
-         console.log(data);
-
-        $("#id_tipoInstrumento").empty();
-
-          for (var i = 0; i < data.length; i++) {
-            $("#id_tipoInstrumento").append("<option value='"+data[i].tipoInstrumento__id+"'>"+data[i].tipoInstrumento__estructura_legal+"</option>");
           }
-       }
+        }
+      });
 
-     });
+    });
+  });
 
-   });
-});
+  function guardarSaldo() {
+    var id_cliente = $("#id_cliente").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var monto = $("#id_monto").val();
+    var id_tipoInversion = $("#id_tipoInversion").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_proveedor = $("#id_proveedor").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_fondo = $("#id_fondo").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_tipoInstrumento = $("#id_tipoInstrumento").val(); //debemos obtener la id, ya que la tabla asi lo requiere
 
+    $.ajax({
+      url: '/guardarSaldo/',
+      headers: {
+        'X-CSRF-Token': token
+      },
+      type: 'GET',
+      data: {
+        'id_cliente':id_cliente,
+        'monto':monto,
+        'id_tipoInversion':id_tipoInversion,
+        'id_proveedor':id_proveedor,
+        'id_fondo':id_fondo,
+        'id_tipoInstrumento':id_tipoInstrumento,
+      },success:function(res){
+        $('#id_cliente').prop('selectedIndex',0);
+        $('#id_tipoInstrumento').prop('selectedIndex',0);
+        $("#id_proveedor").empty();
+        $("#id_proveedor").append("<option selected disabled  >----------</option>");
+        $("#id_fondo").empty();
+        $("#id_fondo").append("<option selected disabled  >----------</option>");
+        $("#id_monto").val('');
+        $("#id_tipoInversion").prop('selectedIndex',0);
+        $("#exito").show().delay(5000).fadeOut();
+
+      }
+    });
+
+  }
 </script>

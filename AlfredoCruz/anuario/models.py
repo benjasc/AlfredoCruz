@@ -63,18 +63,26 @@ class tipoInstrumentoAdmin(admin.ModelAdmin):
     search_fields = ['estructura_legal','estado_distribucion']
 admin.site.register(tipoInstrumento, tipoInstrumentoAdmin)
 
+class proveedor(models.Model):#ProviderCompany
+    id = models.CharField(max_length=10, primary_key=True)
+    datos = models.TextField() #como json
+class proveedorAdmin(admin.ModelAdmin):
+    list_display = ['datos']
+    search_fields = ['datos']
+admin.site.register(proveedor, proveedorAdmin)
+
 class fondo(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
     nombre = models.CharField(max_length=50)
     nombre_legal = models.CharField(max_length=50)
-    fecha_inicio = models.CharField(max_length=50)
+    fecha_inicio = models.DateField()
     domicilio = models.ForeignKey(domicilio, on_delete=models.CASCADE)
     categoria = models.ForeignKey(categoria, on_delete=models.CASCADE)
     moneda = models.ForeignKey(moneda, on_delete=models.CASCADE)
-    tipoInstrumento = models.ForeignKey(tipoInstrumento, on_delete=models.CASCADE)
+
 class fondoAdmin(admin.ModelAdmin):
-    list_display = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda','tipoInstrumento']#definir cuales se necesitan
-    search_fields = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda','tipoInstrumento']#definir cuales se necesitan
+    list_display = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda']#definir cuales se necesitan
+    search_fields = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda']#definir cuales se necesitan
 admin.site.register(fondo, fondoAdmin)
 #fondo quien contiene a otras tablas va como fk en instrumento, ahora proseguimos
 #haciendo mas tablas que van como fk en instrumento, pero la mayoria de estas no contiene otras tablas
@@ -101,14 +109,6 @@ class rendimientoAdmin(admin.ModelAdmin):
     search_fields = ['estado']
 admin.site.register(rendimiento, rendimientoAdmin)
 
-class proveedor(models.Model):#ProviderCompany
-    id = models.CharField(max_length=10, primary_key=True)
-    datos = models.TextField() #como json
-class proveedorAdmin(admin.ModelAdmin):
-    list_display = ['datos']
-    search_fields = ['datos']
-admin.site.register(proveedor, proveedorAdmin)
-
 class pais(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
@@ -119,18 +119,20 @@ admin.site.register(pais, paisAdmin)
 
 class instrumento(models.Model):
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE, primary_key=True)
-    fondo = models.ForeignKey(fondo, on_delete=models.CASCADE)
-    proveedor = models.ForeignKey(proveedor, on_delete=models.CASCADE)
-    branding = models.ForeignKey(branding, on_delete=models.CASCADE)
-    frecuenciaDistribucion = models.ForeignKey(frecuenciaDistribucion, on_delete=models.CASCADE)
-    rendimiento = models.ForeignKey(rendimiento, on_delete=models.CASCADE) #Performance
     run_svs = models.CharField(max_length=50)
     clase_proveedor = models.CharField(max_length=50)
     operation_ready = models.IntegerField()
+    branding = models.ForeignKey(branding, on_delete=models.CASCADE)
+    frecuenciaDistribucion = models.ForeignKey(frecuenciaDistribucion, on_delete=models.CASCADE)
+    rendimiento = models.ForeignKey(rendimiento, on_delete=models.CASCADE) #Performance
+    proveedor = models.ForeignKey(proveedor, on_delete=models.CASCADE)
+    tipoInstrumento = models.ForeignKey(tipoInstrumento, on_delete=models.CASCADE)
+    fondo = models.ForeignKey(fondo, on_delete=models.CASCADE)
+
 class instrumentoAdmin(admin.ModelAdmin):
-    list_display = ['bindex','fondo','proveedor','branding','frecuenciaDistribucion','rendimiento',
+    list_display = ['bindex','fondo','branding','frecuenciaDistribucion','rendimiento',
     'run_svs','clase_proveedor','operation_ready']
-    search_fields = ['bindex','fondo','proveedor','branding','frecuenciaDistribucion','rendimiento',
+    search_fields = ['bindex','fondo','branding','frecuenciaDistribucion','rendimiento',
     'run_svs','clase_proveedor','operation_ready']
 admin.site.register(instrumento,instrumentoAdmin)
 
@@ -177,7 +179,7 @@ class asignacionActivo(models.Model):#AssetAllocation
     red_preferida = models.FloatField()#PreferredNet #2veces
     red_acciones = models.FloatField()#PreferredNet
     red_otra = models.FloatField()#OtherNet
-    portafolio_fecha = models.FloatField()#portfolioDate
+    portafolio_fecha = models.DateField()#portfolioDate
 class asignacionActivoAdmin(admin.ModelAdmin):
     list_display = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
     search_fields = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
@@ -233,26 +235,15 @@ class carteraClienteAdmin(admin.ModelAdmin):
     search_fields = ['id','saldo','tipoInversion','cliente','bindex']
 admin.site.register(carteraCliente, carteraClienteAdmin)
 
-class saldoInicial(models.Model):
-    saldo = models.IntegerField()
-    fecha = models.DateField(auto_now_add=True)
-    numero_cuotas =  models.IntegerField()
-    cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
-    tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
-    bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
-class saldoInicialAdmin(admin.ModelAdmin):
-    list_display = ['id','fecha','numero_cuotas','cliente','tipoInversion','bindex']
-    search_fields = ['id','fecha','numero_cuotas','cliente','tipoInversion','bindex']
-admin.site.register(saldoInicial, saldoInicialAdmin)
-
 class movimiento(models.Model):
-    fecha = models.CharField(max_length=50)
+    monto = models.IntegerField()
+    fecha = models.DateField()
     numero_cuotas =  models.IntegerField()
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
-    tipoMovimiento = models.ForeignKey(tipoMovimiento, on_delete=models.CASCADE)
+    tipoMovimiento = models.ForeignKey(tipoMovimiento, default=1, on_delete=models.CASCADE)
     bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
 class movimientoAdmin(admin.ModelAdmin):
-    list_display = ['id','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
-    search_fields = ['id','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
+    list_display = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
+    search_fields = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
 admin.site.register(movimiento, movimientoAdmin)

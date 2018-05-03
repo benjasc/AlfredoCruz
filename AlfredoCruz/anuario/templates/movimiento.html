@@ -16,138 +16,63 @@
             <div class="row">
               <div class="col-md-6">
                 <label>Cliente</label>
-                <select class="form-control" id="">
-                  <option disabled selected="true">Seleccione</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-            </select>
+                {{form.cliente}}
               </div>
               <div class="col-md-6">
-                <label>Ver o crear movimiento</label>
+                <label>Tipo de Movimiento</label>
+                {{form.tipoMovimiento}}
+              </div>
+            </div><br>
 
-                <select class="form-control" id="select-mov">
-                  <option disabled selected="true">Seleccione</option>
-                  <option>Nuevo movimiento</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Fecha</label>
+                <div class="input-group date" id="datepicker2">
+                  {{form.fecha}}
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label>Tipo de Instrumento</label>
+                <select class="form-control" name="">
+
                 </select>
               </div>
             </div><br>
-            <div id="contenido1" style="display: none;">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Fecha</label>
-                  <div class="input-group date" id="datepicker1">
-                    <input type="text" class="form-control">
-                    <div class="input-group-addon">
-                      <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label>Tipo Instrumento</label>
 
-                  <select class="form-control" id="">
-                    <option disabled selected="true">Seleccione</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-              </div><br>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Administrador</label>
-                  <select class="form-control" id="">
-                    <option disabled selected="true">Seleccione</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label>Fondo</label>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Administradora</label>
+                {{form.proveedor}}
+              </div>
 
-                  <select class="form-control" id="">
-                    <option disabled selected="true">Seleccione</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-              </div><br>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Monto</label>
-                  <input type="number" class="form-control">
-                </div>
-                <div class="col-md-6">
-                  <label>Tipo Inversión</label>
+              <div class="col-md-6">
+                <label>Fondo</label>
+                <select class="form-control" name="">
 
-                  <select class="form-control" id="">
-                    <option disabled selected="true">Seleccione</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-              </div><br>
-            </div>
-            <div id="contenido2" style="display: none;">
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Fecha</label>
-                  <div class="input-group date" id="datepicker2">
-                    <input type="text" class="form-control" readonly>
-                    <div class="input-group-addon">
-                      <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label>Tipo Inversión</label>
+                </select>
+              </div>
+            </div><br>
 
-                  <select class="form-control" id="">
-                    <option disabled selected="true">Seleccione</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-              </div><br>
-              <div class="row">
-                <div class="col-md-6">
-                  <label>Tipo movimiento</label>
-                  <select class="form-control" id="">
-                    <option disabled selected="true">Seleccione</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label>Monto</label>
-                  <input type="number" class="form-control" value="">
-                </div>
-              </div><br>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="inputEmail4">Monto</label>
+              {{form.monto}}
+              </div>
+              <div class="col-md-6">
+                <label for="inputPassword4">Tipo Inversión</label>
+                {{form.tipoInversion}}
+              </div>
             </div>
           </form>
 
         </div>
         <!-- footer de a ventana-->
         <div class="modal-footer">
-          <button type="button" id="btn-actualizar" class="btn btn-primary" style="display:none;">Actualizar</button>
-          <button type="button" id="btn-guardar" class="btn btn-primary" style="display:none;">Guardar</button>
+          <button type="button" id="btn-guardar" class="btn btn-primary" >Guardar</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
