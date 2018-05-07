@@ -226,13 +226,13 @@ admin.site.register(cliente, clienteAdmin)
 
 class carteraCliente(models.Model):
     fecha = models.DateField()
-    saldo = models.IntegerField()
+    monto = models.IntegerField()
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
 class carteraClienteAdmin(admin.ModelAdmin):
-    list_display = ['id','saldo','tipoInversion','cliente','bindex']
-    search_fields = ['id','saldo','tipoInversion','cliente','bindex']
+    list_display = ['id','monto','tipoInversion','cliente','bindex']
+    search_fields = ['id','monto','tipoInversion','cliente','bindex']
 admin.site.register(carteraCliente, carteraClienteAdmin)
 
 class movimiento(models.Model):
@@ -241,7 +241,7 @@ class movimiento(models.Model):
     numero_cuotas =  models.IntegerField()
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
-    tipoMovimiento = models.ForeignKey(tipoMovimiento, default=1, on_delete=models.CASCADE)
+    tipoMovimiento = models.ForeignKey(tipoMovimiento, on_delete=models.CASCADE)
     bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
 class movimientoAdmin(admin.ModelAdmin):
     list_display = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']

@@ -13,4 +13,4 @@ class ModalForm(forms.Form):
     #fondo  = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}))
     monto = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={"class" : "form-control", 'placeholder': ''}))
     tipoInversion  = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= tipoInversion.objects.values_list('id','nombre').order_by('id'))
-    tipoMovimiento = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= tipoMovimiento.objects.values_list('id','nombre'))
+    tipoMovimiento = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= tipoMovimiento.objects.values_list('id','nombre').filter(id__gte=2))

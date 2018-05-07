@@ -27,7 +27,7 @@
             <div class="row">
               <div class="col-md-6">
                 <label>Fecha</label>
-                <div class="input-group date" id="datepicker2">
+                <div class="input-group date" id="datepicker1">
                   {{form.fecha}}
                   <div class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
@@ -37,21 +37,22 @@
 
               <div class="col-md-6">
                 <label>Tipo de Instrumento</label>
-                <select class="form-control" name="">
-
-                </select>
+                {{form.tipoInstrumento}}
               </div>
             </div><br>
 
             <div class="row">
               <div class="col-md-6">
                 <label>Administradora</label>
-                {{form.proveedor}}
+                <select class="form-control" id="id_proveedor" name="">
+                  <option disabled selected>----------</option>
+                </select>
               </div>
 
               <div class="col-md-6">
                 <label>Fondo</label>
-                <select class="form-control" name="">
+                <select id="id_fondo" name="" class="form-control">
+                  <option disabled selected>----------</option>
 
                 </select>
               </div>
@@ -72,8 +73,15 @@
         </div>
         <!-- footer de a ventana-->
         <div class="modal-footer">
-          <button type="button" id="btn-guardar" class="btn btn-primary" >Guardar</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <div class="row">
+            <div class="col-md-5">
+              <p style="color:green;" hidden id="exito">Datos guardados correctamente!</p>
+            </div>
+            <div class="col-md-7">
+              <button type="button" id="btn-guardar" class="btn btn-primary" onclick="guardarSaldo()">Guardar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -82,29 +90,110 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#datepicker1').datepicker({
-      format: 'mm/dd/yyyy',
-      startDate: '-3d'
-    });
-    $('#datepicker2').datepicker({
-      format: 'mm/dd/yyyy',
+      format: 'dd/mm/yyyy',
       startDate: '-3d',
-      enableOnReadonly: false
+      autoclose: true,
     });
 
-    $("#select-mov").change(function() {
-      var seleccion = $("#select-mov").prop('selectedIndex');
-      if (seleccion === 1) {
-        $("#btn-actualizar").hide();
-        $("#contenido2").hide();
-        $("#contenido1").show();
-        $("#btn-guardar").show();
-      } else if (seleccion != 1) {
-        $("#contenido1").hide();
-        $("#btn-guardar").hide();
-        $("#btn-actualizar").show();
-        $("#contenido2").show();
-      }
+    $("#id_tipoInstrumento").change(function(event) {
+      $("#id_fondo").empty();
+      $("#id_fondo").append("<option selected disabled  >----------</option>");
+      var token = $("#token").val();
+      var id = event.target.value;
+      console.log(id);
+      $.ajax({
+        url: '/proveedor/',
+        headers: {
+          'X-CSRF-Token': token
+        },
+        type: 'GET',
+        data: {
+          'id': id
+        },
+        success: function(res) {
+          console.log(res);
+          $("#id_proveedor").empty();
+          $("#id_proveedor").append("<option selected disabled  >Seleccione</option>");
+          for (var i = 0; i < res.length; i++) {
+            $("#id_proveedor").append("<option value='" + res[i].pk + "'>" + res[i].fields.datos + "</option>");
+          }
+        }
+      });
+    });
+
+    $("#id_proveedor").change(function(event) {
+
+      var token = $("#token").val();
+      var id = event.target.value;
+      var id_tipoInstrumento = $("#id_tipoInstrumento").val();
+
+      $.ajax({
+        url: '/fondos/',
+        headers: {
+          'X-CSRF-Token': token
+        },
+        type: 'GET',
+        data: {
+          'id': id,
+          'id_tipoInstrumento': id_tipoInstrumento
+        },
+        success: function(res) {
+          $("#id_fondo").empty();
+          $("#id_fondo").append("<option selected disabled  >Seleccione</option>");
+          for (var i = 0; i < res.length; i++) {
+            $("#id_fondo").append("<option value='" + res[i].pk + "'>" + res[i].fields.nombre + "</option>");
+
+          }
+        }
+      });
 
     });
+
   });
+
+  function guardarSaldo() {
+
+  var id_cliente = $("#id_cliente").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var monto = $("#id_monto").val();
+    var fechaOriginal = nuevaFecha($("#id_fecha").val());
+    var id_tipoInversion = $("#id_tipoInversion").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_proveedor = $("#id_proveedor").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_fondo = $("#id_fondo").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_tipoInstrumento = $("#id_tipoInstrumento").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+
+    $.ajax({
+      url: '/guardarSaldo/',
+      headers: {
+        'X-CSRF-Token': token
+      },
+      type: 'GET',
+      data: {
+        'id_cliente':id_cliente,
+        'monto':monto,
+        'fecha':fechaOriginal,
+        'id_tipoInversion':id_tipoInversion,
+        'id_proveedor':id_proveedor,
+        'id_fondo':id_fondo,
+        'id_tipoInstrumento':id_tipoInstrumento,
+      },success:function(res){
+        $('#id_cliente').prop('selectedIndex',0);
+        $('#id_tipoInstrumento').prop('selectedIndex',0);
+        $("#id_proveedor").empty();
+        $("#id_proveedor").append("<option selected disabled  >----------</option>");
+        $("#id_fondo").empty();
+        $("#id_fondo").append("<option selected disabled  >----------</option>");
+        $("#id_monto").val('');
+        $("#id_fecha").val('');
+        $("#id_tipoInversion").prop('selectedIndex',0);
+        $("#exito").show().delay(5000).fadeOut();
+
+      }
+    });
+  }
+
+  function nuevaFecha(fecha){ //convierte las fechas 02/09/2018 a 2018-09-02 ya que es el formato que recibe mysql
+    var split = fecha.split('/');
+    var nuevaFecha = split[2]+"-"+split[1]+"-"+split[0];
+    return nuevaFecha;
+  }
 </script>

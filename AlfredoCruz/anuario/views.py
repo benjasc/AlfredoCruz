@@ -41,8 +41,8 @@ def index(request):
 def SaldoInicial(request):
     return render(request,"SaldoInicial.html")
 
-def tipoMovimiento(request):
-    return render(request,"tipoMovimiento.html")
+#def tipoMovimiento(request):
+    #return render(request,"tipoMovimiento.html")
 
 #def tipoInversion(request):
 #    return render(request,"tipoInversion.html")
@@ -73,8 +73,9 @@ def guardarSaldo(request):
     bindex_id = bindex.objects.get(pk=instrumentos[0]['bindex'])
     cliente_id = cliente.objects.get(pk=request.GET['id_cliente'])
     tipoInversion_id = tipoInversion.objects.get(pk=request.GET['id_tipoInversion'])
-    tipoMovimiento_id = tipoInversion.objects.get(pk=request.GET['id_tipoInversion'])
+    tipoMovimiento_id = tipoMovimiento.objects.get(pk=1)
     monto = request.GET['monto']
-    movimientoInicial = movimiento(bindex=bindex_id, cliente=cliente_id, tipoInversion=tipoInversion_id,saldo=monto)
+    fecha = request.GET['fecha']
+    movimientoInicial = movimiento(bindex=bindex_id,numero_cuotas=0,tipoMovimiento=tipoMovimiento_id, cliente=cliente_id, tipoInversion=tipoInversion_id,monto=monto,fecha=fecha)
     movimientoInicial.save()
     return HttpResponse("ok")

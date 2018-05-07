@@ -32,14 +32,12 @@ urlpatterns = [
     path('tipoMovimiento/',tipoMovimiento,name='index'),
     path('tipoInversion/',tipoInversion,name='index'),
     path('Instrumento/',Instrumento,name='index'),
-#-------------SaldoInicial
+#-------------movimiento-----> SaldoInicial
     path('proveedor/',getProveedor),
     path('fondos/',getFondos),
     path('guardarSaldo/',guardarSaldo)
 #-------------FinSaldoInicial
-#-------------Movimiento
 
-#-------------FinMovimiento
 
 
 

@@ -82,8 +82,10 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#datepicker').datepicker({
-      format: 'mm/dd/yyyy',
+      format: 'dd/mm/yyyy',
       startDate: '-3d',
+      autoclose: true,
+      
     });
     // $('#datepicker > .form-control').prop('readonly', true);
     /* $("#id_proveedor").change(function(event) {
@@ -145,7 +147,8 @@
 
      });*/
     $("#id_tipoInstrumento").change(function(event) {
-
+      $("#id_fondo").empty();
+      $("#id_fondo").append("<option selected disabled  >----------</option>");
       var token = $("#token").val();
       var id = event.target.value;
       console.log(id);
@@ -199,8 +202,10 @@
   });
 
   function guardarSaldo() {
-    var id_cliente = $("#id_cliente").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+
+  var id_cliente = $("#id_cliente").val(); //debemos obtener la id, ya que la tabla asi lo requiere
     var monto = $("#id_monto").val();
+    var fechaOriginal = nuevaFecha($("#id_fecha").val());
     var id_tipoInversion = $("#id_tipoInversion").val(); //debemos obtener la id, ya que la tabla asi lo requiere
     var id_proveedor = $("#id_proveedor").val(); //debemos obtener la id, ya que la tabla asi lo requiere
     var id_fondo = $("#id_fondo").val(); //debemos obtener la id, ya que la tabla asi lo requiere
@@ -215,6 +220,7 @@
       data: {
         'id_cliente':id_cliente,
         'monto':monto,
+        'fecha':fechaOriginal,
         'id_tipoInversion':id_tipoInversion,
         'id_proveedor':id_proveedor,
         'id_fondo':id_fondo,
@@ -227,11 +233,17 @@
         $("#id_fondo").empty();
         $("#id_fondo").append("<option selected disabled  >----------</option>");
         $("#id_monto").val('');
+        $("#id_fecha").val('');
         $("#id_tipoInversion").prop('selectedIndex',0);
         $("#exito").show().delay(5000).fadeOut();
 
       }
     });
+  }
 
+  function nuevaFecha(fecha){ //convierte las fechas 02/09/2018 a 2018-09-02 ya que es el formato que recibe mysql
+    var split = fecha.split('/');
+    var nuevaFecha = split[2]+"-"+split[1]+"-"+split[0];
+    return nuevaFecha;
   }
 </script>
