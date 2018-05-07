@@ -85,7 +85,7 @@
       format: 'dd/mm/yyyy',
       startDate: '-3d',
       autoclose: true,
-      
+
     });
     // $('#datepicker > .form-control').prop('readonly', true);
     /* $("#id_proveedor").change(function(event) {
@@ -210,7 +210,10 @@
     var id_proveedor = $("#id_proveedor").val(); //debemos obtener la id, ya que la tabla asi lo requiere
     var id_fondo = $("#id_fondo").val(); //debemos obtener la id, ya que la tabla asi lo requiere
     var id_tipoInstrumento = $("#id_tipoInstrumento").val(); //debemos obtener la id, ya que la tabla asi lo requiere
-
+    var id_tipoMovimiento = 1;
+ /*en la bd tenemos la tabla tipoMovimiento que tiene los campos saldoInicial(1),aporte(2) y retiro(3),
+ entonces, en el formulario saldo inicial no debe haber un campo tipoMovimiento(se da por hecho que es saldo incial)
+ por lo tanto se guarda con saldoInicial=1 por defecto*/
     $.ajax({
       url: '/guardarSaldo/',
       headers: {
@@ -225,6 +228,7 @@
         'id_proveedor':id_proveedor,
         'id_fondo':id_fondo,
         'id_tipoInstrumento':id_tipoInstrumento,
+        'id_tipoMovimiento':id_tipoMovimiento,
       },success:function(res){
         $('#id_cliente').prop('selectedIndex',0);
         $('#id_tipoInstrumento').prop('selectedIndex',0);

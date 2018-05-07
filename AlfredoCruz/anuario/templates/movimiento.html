@@ -16,11 +16,11 @@
             <div class="row">
               <div class="col-md-6">
                 <label>Cliente</label>
-                {{form.cliente}}
+                {{form2.cliente2}}
               </div>
               <div class="col-md-6">
                 <label>Tipo de Movimiento</label>
-                {{form.tipoMovimiento}}
+                {{form2.tipoMovimiento2}}
               </div>
             </div><br>
 
@@ -28,7 +28,7 @@
               <div class="col-md-6">
                 <label>Fecha</label>
                 <div class="input-group date" id="datepicker1">
-                  {{form.fecha}}
+                  {{form2.fecha2}}
                   <div class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
                   </div>
@@ -37,21 +37,21 @@
 
               <div class="col-md-6">
                 <label>Tipo de Instrumento</label>
-                {{form.tipoInstrumento}}
+                {{form2.tipoInstrumento2}}
               </div>
             </div><br>
 
             <div class="row">
               <div class="col-md-6">
                 <label>Administradora</label>
-                <select class="form-control" id="id_proveedor" name="">
+                <select class="form-control" id="id_proveedor2" name="">
                   <option disabled selected>----------</option>
                 </select>
               </div>
 
               <div class="col-md-6">
                 <label>Fondo</label>
-                <select id="id_fondo" name="" class="form-control">
+                <select id="id_fondo2" name="" class="form-control">
                   <option disabled selected>----------</option>
 
                 </select>
@@ -61,11 +61,11 @@
             <div class="row">
               <div class="col-md-6">
                 <label for="inputEmail4">Monto</label>
-              {{form.monto}}
+              {{form2.monto2}}
               </div>
               <div class="col-md-6">
                 <label for="inputPassword4">Tipo Inversión</label>
-                {{form.tipoInversion}}
+                {{form2.tipoInversion2}}
               </div>
             </div>
           </form>
@@ -75,10 +75,10 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-md-5">
-              <p style="color:green;" hidden id="exito">Datos guardados correctamente!</p>
+              <p style="color:green;" hidden id="exito2">Datos guardados correctamente!</p>
             </div>
             <div class="col-md-7">
-              <button type="button" id="btn-guardar" class="btn btn-primary" onclick="guardarSaldo()">Guardar</button>
+              <button type="button" id="btn-guardar" class="btn btn-primary" onclick="guardarSaldo2()">Guardar</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
@@ -95,9 +95,9 @@
       autoclose: true,
     });
 
-    $("#id_tipoInstrumento").change(function(event) {
-      $("#id_fondo").empty();
-      $("#id_fondo").append("<option selected disabled  >----------</option>");
+    $("#id_tipoInstrumento2").change(function(event) {
+      $("#id_fondo2").empty();
+      $("#id_fondo2").append("<option selected disabled  >----------</option>");
       var token = $("#token").val();
       var id = event.target.value;
       console.log(id);
@@ -112,20 +112,20 @@
         },
         success: function(res) {
           console.log(res);
-          $("#id_proveedor").empty();
-          $("#id_proveedor").append("<option selected disabled  >Seleccione</option>");
+          $("#id_proveedor2").empty();
+          $("#id_proveedor2").append("<option selected disabled  >Seleccione</option>");
           for (var i = 0; i < res.length; i++) {
-            $("#id_proveedor").append("<option value='" + res[i].pk + "'>" + res[i].fields.datos + "</option>");
+            $("#id_proveedor2").append("<option value='" + res[i].pk + "'>" + res[i].fields.datos + "</option>");
           }
         }
       });
     });
 
-    $("#id_proveedor").change(function(event) {
+    $("#id_proveedor2").change(function(event) {
 
       var token = $("#token").val();
       var id = event.target.value;
-      var id_tipoInstrumento = $("#id_tipoInstrumento").val();
+      var id_tipoInstrumento = $("#id_tipoInstrumento2").val();
 
       $.ajax({
         url: '/fondos/',
@@ -138,10 +138,10 @@
           'id_tipoInstrumento': id_tipoInstrumento
         },
         success: function(res) {
-          $("#id_fondo").empty();
-          $("#id_fondo").append("<option selected disabled  >Seleccione</option>");
+          $("#id_fondo2").empty();
+          $("#id_fondo2").append("<option selected disabled  >Seleccione</option>");
           for (var i = 0; i < res.length; i++) {
-            $("#id_fondo").append("<option value='" + res[i].pk + "'>" + res[i].fields.nombre + "</option>");
+            $("#id_fondo2").append("<option value='" + res[i].pk + "'>" + res[i].fields.nombre + "</option>");
 
           }
         }
@@ -151,15 +151,17 @@
 
   });
 
-  function guardarSaldo() {
 
-  var id_cliente = $("#id_cliente").val(); //debemos obtener la id, ya que la tabla asi lo requiere
-    var monto = $("#id_monto").val();
-    var fechaOriginal = nuevaFecha($("#id_fecha").val());
-    var id_tipoInversion = $("#id_tipoInversion").val(); //debemos obtener la id, ya que la tabla asi lo requiere
-    var id_proveedor = $("#id_proveedor").val(); //debemos obtener la id, ya que la tabla asi lo requiere
-    var id_fondo = $("#id_fondo").val(); //debemos obtener la id, ya que la tabla asi lo requiere
-    var id_tipoInstrumento = $("#id_tipoInstrumento").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+  function guardarSaldo2() {
+
+  var id_cliente = $("#id_cliente2").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var monto = $("#id_monto2").val();
+    var fechaOriginal = nuevaFecha($("#id_fecha2").val());
+    var id_tipoInversion = $("#id_tipoInversion2").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_proveedor = $("#id_proveedor2").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_fondo = $("#id_fondo2").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_tipoInstrumento = $("#id_tipoInstrumento2").val(); //debemos obtener la id, ya que la tabla asi lo requiere
+    var id_tipoMovimiento = $("#id_tipoMovimiento2").val();
 
     $.ajax({
       url: '/guardarSaldo/',
@@ -175,17 +177,18 @@
         'id_proveedor':id_proveedor,
         'id_fondo':id_fondo,
         'id_tipoInstrumento':id_tipoInstrumento,
+        'id_tipoMovimiento':id_tipoMovimiento,
       },success:function(res){
-        $('#id_cliente').prop('selectedIndex',0);
-        $('#id_tipoInstrumento').prop('selectedIndex',0);
-        $("#id_proveedor").empty();
-        $("#id_proveedor").append("<option selected disabled  >----------</option>");
-        $("#id_fondo").empty();
-        $("#id_fondo").append("<option selected disabled  >----------</option>");
-        $("#id_monto").val('');
-        $("#id_fecha").val('');
-        $("#id_tipoInversion").prop('selectedIndex',0);
-        $("#exito").show().delay(5000).fadeOut();
+        $('#id_cliente2').prop('selectedIndex',0);
+        $('#id_tipoInstrumento2').prop('selectedIndex',0);
+        $("#id_proveedor2").empty();
+        $("#id_proveedor2").append("<option selected disabled  >----------</option>");
+        $("#id_fondo2").empty();
+        $("#id_fondo2").append("<option selected disabled  >----------</option>");
+        $("#id_monto2").val('');
+        $("#id_fecha2").val('');
+        $("#id_tipoInversion2").prop('selectedIndex',0);
+        $("#exito2").show().delay(5000).fadeOut();
 
       }
     });
@@ -196,4 +199,6 @@
     var nuevaFecha = split[2]+"-"+split[1]+"-"+split[0];
     return nuevaFecha;
   }
+
+
 </script>

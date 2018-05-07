@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
-from AlfredoCruz.forms import LoginForm, ModalForm
+from AlfredoCruz.forms import LoginForm, ModalForm, ModalForm2
 from django.contrib.auth import authenticate, login
 from django.core import serializers
 from .models import fondo, instrumento, tipoInstrumento, proveedor,bindex,tipoInversion,cliente,movimiento,tipoMovimiento
@@ -35,7 +35,8 @@ def perfil(request):
 
 def index(request):
     form = ModalForm()
-    contexto = {'form':form}
+    form2 = ModalForm2()
+    contexto = {'form':form,'form2':form2}
     return render(request,'index.html',contexto)
 
 def SaldoInicial(request):
@@ -49,7 +50,7 @@ def SaldoInicial(request):
 
 def Instrumento(request):
     return render(request,"Instrumento.html")
-
+#----------------SaldoInicial
 def getProveedor(request):
     id_tipoInstrumento = request.GET['id']
     instrumentos = instrumento.objects.values('proveedor').filter(tipoInstrumento__id = id_tipoInstrumento)
@@ -73,9 +74,10 @@ def guardarSaldo(request):
     bindex_id = bindex.objects.get(pk=instrumentos[0]['bindex'])
     cliente_id = cliente.objects.get(pk=request.GET['id_cliente'])
     tipoInversion_id = tipoInversion.objects.get(pk=request.GET['id_tipoInversion'])
-    tipoMovimiento_id = tipoMovimiento.objects.get(pk=1)
+    tipoMovimiento_id = tipoMovimiento.objects.get(pk=request.GET['id_tipoMovimiento'])
     monto = request.GET['monto']
     fecha = request.GET['fecha']
     movimientoInicial = movimiento(bindex=bindex_id,numero_cuotas=0,tipoMovimiento=tipoMovimiento_id, cliente=cliente_id, tipoInversion=tipoInversion_id,monto=monto,fecha=fecha)
     movimientoInicial.save()
     return HttpResponse("ok")
+#----------------FinSaldoInicial
