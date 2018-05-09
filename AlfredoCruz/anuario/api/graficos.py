@@ -5,23 +5,30 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import HttpResponse
 import json
+import datetime
+
 
 @api_view(['GET'])
 
-def grafico1(request,id):
+def resumenCuentas(request,cliente_id):
+    x = list(movimiento.objects.values('cliente__nombre','monto','tipoInversion__nombre','fecha').filter(cliente=cliente_id))
+    return HttpResponse(json.dumps(x,indent=4),content_type="application/json")
 
 
-    grafico2  = movimiento.objects.filter(cliente=2)
-    for s in grafico2:
-        print()
-    #grafico = list(movimiento.objects.filter(cliente=id)
-        #      .filter(Q(tipoMovimiento=1)|Q(tipoMovimiento=2))
-        #      .order_by('tipoInversion')
-        #      .annotate(Sum('monto'))
-        #      .values('tipoMovimiento__nombre','tipoInversion__nombre','cliente__nombre','monto'))
 
-    return HttpResponse(json.dumps(grafico,indent=4),content_type="application/json")
-    
+# def grafico1(request,id):
+#
+#     total=(movimiento.objects.values('cliente__nombre','tipoInversion__nombre').filter(cliente=id).annotate(saldo=Sum('monto')).order_by('tipoInversion')
+#     list = []
+#     for row in total:
+#         list.append({
+#         'cliente':row.cliente__nombre,
+#         'tipo_inversion':row.tipoInversion__nombre,
+#         'saldo':row.saldo,
+#         })
+#
+#     return HttpResponse(json.dumps(list,indent=4),content_type="application/json")
+
 
 # def getFondo(request):
 #     proveedor_id = request.GET['id']

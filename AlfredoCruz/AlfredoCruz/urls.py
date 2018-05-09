@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento, getProveedor,getFondos,guardarSaldo
-from anuario.api.patrimonioConsolidado import grafico1
+from anuario.api.graficos import resumenCuentas
 #from django.contrib.auth.views import login
 
 
@@ -37,6 +37,6 @@ urlpatterns = [
     path('fondos/',getFondos),
     path('guardarSaldo/',guardarSaldo),
 #-------------FinSaldoInicial
-    path('api/<id>',grafico1),
+    path('api/resumencuentas/<cliente_id>',resumenCuentas),
 
 ]
