@@ -9,11 +9,16 @@ from django.db import models
 #     search_fields = ['country_exposure']
 # admin.site.register(morningstar, morningstarAdmin)'''
 
+# *** = CAMBIOS EN COMPARACION AL MODELO ANTERIOR
+
+#***
+#se agrega morningstar_id y se elimina el campo country_exposure,
+# ya que se decide que debe tener su propia tabla
 class bindex(models.Model):
-    country_exposure = models.TextField() #como json
+    morningstar_id = models.CharField(max_length=15)
 class bindexAdmin(admin.ModelAdmin):
-    list_display = ['id']
-    search_fields = ['id']
+    list_display = ['id','morningstar_id']
+    search_fields = ['id','morningstar_id']
 admin.site.register(bindex, bindexAdmin)
 
 class moneda(models.Model):#Currency
@@ -51,24 +56,28 @@ class domicilioAdmin(admin.ModelAdmin):
     search_fields = ['id','nombre']
 admin.site.register(domicilio, domicilioAdmin)
 
+#***
+#se eliminan los campos estructura_legal y estado_distribucion
+#se agregan los campos FFMM Nacional y FFMM Internacional
 class tipoInstrumento(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
-    estructura_legal = models.CharField(max_length=50)
-    estado_distribucion = models.CharField(max_length=50)
-    def __str__(self):
-        return self.estado_distribucion+' -- '+self.estructura_legal
+    nombre = models.CharField(max_length=50)
 
 class tipoInstrumentoAdmin(admin.ModelAdmin):
-    list_display = ['estructura_legal','estado_distribucion']
-    search_fields = ['estructura_legal','estado_distribucion']
+    list_display = ['nombre']
+    search_fields = ['nombre']
 admin.site.register(tipoInstrumento, tipoInstrumentoAdmin)
 
+#***
+#se agregan los campos nombre y run
 class proveedor(models.Model):#ProviderCompany
     id = models.CharField(max_length=10, primary_key=True)
+    nombre = models.CharField(max_length=50)
+    run= models.CharField(max_length=50)
     datos = models.TextField() #como json
 class proveedorAdmin(admin.ModelAdmin):
-    list_display = ['datos']
-    search_fields = ['datos']
+    list_display = ['id','nombre','run','datos']
+    search_fields = ['id','nombre','run','datos']
 admin.site.register(proveedor, proveedorAdmin)
 
 class fondo(models.Model):
@@ -84,8 +93,7 @@ class fondoAdmin(admin.ModelAdmin):
     list_display = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda']#definir cuales se necesitan
     search_fields = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda']#definir cuales se necesitan
 admin.site.register(fondo, fondoAdmin)
-#fondo quien contiene a otras tablas va como fk en instrumento, ahora proseguimos
-#haciendo mas tablas que van como fk en instrumento, pero la mayoria de estas no contiene otras tablas
+
 class frecuenciaDistribucion(models.Model):#DistributionFrecuency
     frecuencia = models.CharField(max_length=50)
 class frecuenciaDistribucionAdmin(admin.ModelAdmin):
@@ -218,10 +226,10 @@ admin.site.register(tipoMovimiento, tipoMovimientoAdmin)
 
 class cliente(models.Model):
     nombre = models.CharField(max_length=50)
-    tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
+    #tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
 class clienteAdmin(admin.ModelAdmin):
-    list_display = ['id','nombre','tipoInversion']
-    search_fields = ['id','nombre','tipoInversion']
+    list_display = ['id','nombre']
+    search_fields = ['id','nombre']
 admin.site.register(cliente, clienteAdmin)
 
 class carteraCliente(models.Model):
@@ -247,3 +255,17 @@ class movimientoAdmin(admin.ModelAdmin):
     list_display = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
     search_fields = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
 admin.site.register(movimiento, movimientoAdmin)
+
+class saldoActualizado(models.Model):
+    cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
+    bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
+    monto = models.IntegerField()
+    fecha = models.DateField()
+
+class saldoMensual(models.Model):
+    cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
+    tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
+    anio = models.CharField(max_length=50)
+    mes = models.CharField(max_length=50)
+    saldoCierre = models.IntegerField()
