@@ -1,4 +1,4 @@
-from anuario.models import cliente, movimiento, saldoActualizado
+from anuario.models import cliente, movimiento, saldoActualizado,saldoMensual
 from rest_framework import serializers
 from django.db.models import Sum, Q,Count
 from rest_framework.decorators import api_view
@@ -6,10 +6,50 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 import json
 import datetime
+import time
+from datetime import datetime, date, time, timedelta
+import calendar
+
+@api_view(['GET'])
+def patrimonioConsolidado(request, id, date):
+	ls = date.split('-')
+	date = ls[2]+'-' +ls[1]+'-'+ls[0]
+
+	donBoolean = id.isdigit()
+
+	if donBoolean == True:
+		query = saldoActualizado.objects.filter(cliente=id, fecha=date ).values('cliente__nombre', 'monto', 'tipoInversion__nombre').order_by('tipoInversion')
+		return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
+	else:
+		return HttpResponse(json.dumps("El Cliente id " +id+ " ingresado no tiene movimientos registrados o no existe"), content_type= "application/json")
 
 
 @api_view(['GET'])
-
 def evolucionPatrimonio(request,cliente_id):
-    query = list(saldoActualizado.objects.values('cliente').filter(cliente=cliente_id))
-    return HttpResponse(json.dumps(x,indent=4),content_type="application/json")
+    total = saldoMensual.objects.values('cliente__nombre','tipoInversion__nombre','anio','mes','saldoCierre').filter(cliente=cliente_id).filter(Q(tipoInversion=1)|Q(tipoInversion=2))
+    list = []
+    for x in total:
+        list.append({
+        'Cliente':x['cliente__nombre'],
+        'Tipo_inversion':x['tipoInversion__nombre'],
+        'Anio':x['anio'],
+        'Mes':x['mes'],
+        'Saldo_cierre':x['saldoCierre'],
+        })
+
+    return HttpResponse(json.dumps(list,indent=4),content_type="application/json")
+
+
+@api_view(['GET'])
+def resumenCuentas(request, cliente_id):
+	actual = time.strftime("%m/%Y")
+	ls     = actual.split('/')
+	x = time.strftime("%d/%m/%Y")
+	anterior 	= x - timedelta(days=1)
+	print(x)
+	print(anterior)
+	query1 = saldoMensual.objects.filter(cliente=cliente_id, anio=ls[1],mes=[0]).values('saldoCierre','tipoInversion__nombre').order_by('tipoInversion')
+	#query2 = saldoMensual.objects.filter(cliente=cliente_id, anio=ls[1],mes=[0]).values('saldoCierre','tipoInversion__nombre').order_by('tipoInversion')
+
+
+	return HttpResponse(json.dumps(list(query1),indent=4), content_type= "application/json")
