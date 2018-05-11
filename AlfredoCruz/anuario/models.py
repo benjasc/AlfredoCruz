@@ -40,12 +40,11 @@ admin.site.register(broadCategory, broadCategoryAdmin)
 class categoria(models.Model):#CategoryCurrency
     id = models.CharField(max_length=15, primary_key=True)
     nombre = models.CharField(max_length=50)
-    codigo = models.CharField(max_length=50)
     broadCategory = models.ForeignKey(broadCategory, on_delete=models.CASCADE)
     moneda = models.ForeignKey(moneda, on_delete=models.CASCADE)
 class categoriaAdmin(admin.ModelAdmin):
-    list_display = ['nombre','codigo','broadCategory','moneda']
-    search_fields = ['nombre','codigo','broadCategory','moneda']
+    list_display = ['nombre','broadCategory','moneda']
+    search_fields = ['nombre','broadCategory','moneda']
 admin.site.register(categoria, categoriaAdmin)
 
 class domicilio(models.Model):#Domicile
