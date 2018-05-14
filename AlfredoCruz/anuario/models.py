@@ -72,11 +72,10 @@ admin.site.register(tipoInstrumento, tipoInstrumentoAdmin)
 class proveedor(models.Model):#ProviderCompany
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
-    run= models.CharField(max_length=50)
     datos = models.TextField() #como json
 class proveedorAdmin(admin.ModelAdmin):
-    list_display = ['id','nombre','run','datos']
-    search_fields = ['id','nombre','run','datos']
+    list_display = ['id','nombre','datos']
+    search_fields = ['id','nombre','datos']
 admin.site.register(proveedor, proveedorAdmin)
 
 class fondo(models.Model):
