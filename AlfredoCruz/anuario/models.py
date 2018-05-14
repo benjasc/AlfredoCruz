@@ -265,6 +265,6 @@ class saldoActualizado(models.Model):
 class saldoMensual(models.Model):
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
-    anio = models.CharField(max_length=50)
-    mes = models.CharField(max_length=50)
+    anio = models.IntegerField()
+    mes = models.IntegerField()
     saldoCierre = models.IntegerField()

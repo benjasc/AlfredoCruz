@@ -25,7 +25,12 @@ def patrimonioConsolidado(request, id, date):
 
 @api_view(['GET'])
 def evolucionPatrimonio(request,cliente_id):
-    total = saldoMensual.objects.values('cliente__nombre','tipoInversion__nombre','anio','mes','saldoCierre').filter(cliente=cliente_id).filter(Q(tipoInversion=1)|Q(tipoInversion=2))
+    fecha_actual = datetime.datetime.now()
+    anio_actual = fecha_actual.year
+    mes_actual = fecha_actual.month
+    año_anterior = fecha_actual.year
+
+    total = saldoMensual.objects.values('cliente__nombre','tipoInversion__nombre','anio','mes','saldoCierre').filter(cliente=cliente_id).filter(Q(tipoInversion=1)|Q(tipoInversion=2)).filter(mes__lte=mes_actual,anio__)
     list = []
     for x in total:
         list.append({
@@ -47,8 +52,7 @@ def resumenCuentas(request, cliente_id):
 	año_anterior = fecha_actual.year-1
 	mes_anterior = fecha_actual.month-1
 
-	if condition:
-		
+
 
 
 	#query1 = saldoMensual.objects.filter(cliente=cliente_id, anio=ls[1],mes=[0]).values('saldoCierre','tipoInversion__nombre').order_by('tipoInversion')

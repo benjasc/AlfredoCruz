@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-05-2018 a las 12:15:32
+-- Tiempo de generación: 14-05-2018 a las 16:47:35
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -21,34 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `acruz`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_asignacionactivo`
---
-
-CREATE TABLE `anuario_asignacionactivo` (
-  `bindex_id` int(11) NOT NULL,
-  `red_bono` double NOT NULL,
-  `red_efectivo` double NOT NULL,
-  `red_convertible` double NOT NULL,
-  `red_preferida` double NOT NULL,
-  `red_acciones` double NOT NULL,
-  `red_otra` double NOT NULL,
-  `portafolio_fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_bindex`
---
-
-CREATE TABLE `anuario_bindex` (
-  `id` int(11) NOT NULL,
-  `morningstar_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_bindex`
@@ -2547,17 +2519,6 @@ INSERT INTO `anuario_bindex` (`id`, `morningstar_id`) VALUES
 (2490, 'F000002YVN'),
 (2491, 'F000002YVM');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_branding`
---
-
-CREATE TABLE `anuario_branding` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_branding`
 --
@@ -2585,17 +2546,6 @@ INSERT INTO `anuario_branding` (`id`, `nombre`) VALUES
 ('BN00000HAU', 'Credicorp Capital'),
 ('BN00000J2R', 'Vision');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_broadcategory`
---
-
-CREATE TABLE `anuario_broadcategory` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_broadcategory`
 --
@@ -2607,34 +2557,6 @@ INSERT INTO `anuario_broadcategory` (`id`, `nombre`) VALUES
 ('$BCG$FXINC', 'Fixed Income'),
 ('$BCG$MISCL', 'Miscellaneous'),
 ('$BCG$MNMKT', 'Money Market');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_carteracliente`
---
-
-CREATE TABLE `anuario_carteracliente` (
-  `id` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `monto` int(11) NOT NULL,
-  `bindex_id` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL,
-  `tipoInversion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_categoria`
---
-
-CREATE TABLE `anuario_categoria` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `broadCategory_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `moneda_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_categoria`
@@ -2666,28 +2588,6 @@ INSERT INTO `anuario_categoria` (`id`, `nombre`, `broadCategory_id`, `moneda_id`
 ('CLCA000031', 'Latin America Equity', '$BCG$EQUTY', 'CU$$$$$CLP'),
 ('CLCA000032', 'Alternative Strategies', '$BCG$ALTER', 'CU$$$$$CLP');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_claseactivo`
---
-
-CREATE TABLE `anuario_claseactivo` (
-  `bindex_id` int(11) NOT NULL,
-  `datos` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_cliente`
---
-
-CREATE TABLE `anuario_cliente` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_cliente`
 --
@@ -2714,39 +2614,12 @@ INSERT INTO `anuario_cliente` (`id`, `nombre`) VALUES
 (19, 'charles'),
 (20, 'jackson');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_domicilio`
---
-
-CREATE TABLE `anuario_domicilio` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_domicilio`
 --
 
 INSERT INTO `anuario_domicilio` (`id`, `nombre`) VALUES
 ('CU$$$$$CHL', 'Chile');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_fondo`
---
-
-CREATE TABLE `anuario_fondo` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre_legal` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `categoria_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `domicilio_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `moneda_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_fondo`
@@ -2875,17 +2748,6 @@ INSERT INTO `anuario_fondo` (`id`, `nombre`, `nombre_legal`, `fecha_inicio`, `ca
 ('FSUSA0BAH0', 'Principal Gestión Estratégica A LP180', 'Fondo Mutuo Principal Gestión Estratégica A LP180', '2011-01-26', 'CLCA000022', 'CU$$$$$CHL', 'CU$$$$$CLP'),
 ('FSUSA0BAH1', 'Banchile Alianza Pacífico Accionario B', 'Fondo Mutuo Alianza Pacífico Accionario B', '2011-01-25', 'CLCA000002', 'CU$$$$$CHL', 'CU$$$$$CLP');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_frecuenciadistribucion`
---
-
-CREATE TABLE `anuario_frecuenciadistribucion` (
-  `id` int(11) NOT NULL,
-  `frecuencia` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_frecuenciadistribucion`
 --
@@ -2893,25 +2755,6 @@ CREATE TABLE `anuario_frecuenciadistribucion` (
 INSERT INTO `anuario_frecuenciadistribucion` (`id`, `frecuencia`) VALUES
 (1, 'Accumulated'),
 (2, 'Income');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_instrumento`
---
-
-CREATE TABLE `anuario_instrumento` (
-  `bindex_id` int(11) NOT NULL,
-  `run_svs` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `clase_proveedor` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `operation_ready` int(11) NOT NULL,
-  `branding_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `fondo_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `frecuenciaDistribucion_id` int(11) NOT NULL,
-  `proveedor_id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `rendimiento_id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `tipoInstrumento_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_instrumento`
@@ -2969,17 +2812,6 @@ INSERT INTO `anuario_instrumento` (`bindex_id`, `run_svs`, `clase_proveedor`, `o
 (49, 'runSVS49', 'claseProveedor49', 0, 'BN0000084D', 'FSUSA09YDO', 1, '0C000020IM', '0P0000KA2F', '2'),
 (50, 'runSVS50', 'claseProveedor50', 0, 'BN00000EPZ', 'FSUSA09YDO', 1, '0C00003625', '0P0000KA2C', '2');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_moneda`
---
-
-CREATE TABLE `anuario_moneda` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_moneda`
 --
@@ -2988,47 +2820,6 @@ INSERT INTO `anuario_moneda` (`id`, `nombre`) VALUES
 ('CU$$$$$CLP', 'Chilean Peso'),
 ('CU$$$$$EUR', 'Euro'),
 ('CU$$$$$USD', 'US Dollar');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_movimiento`
---
-
-CREATE TABLE `anuario_movimiento` (
-  `id` int(11) NOT NULL,
-  `monto` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `numero_cuotas` int(11) NOT NULL,
-  `bindex_id` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL,
-  `tipoInversion_id` int(11) NOT NULL,
-  `tipoMovimiento_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_pais`
---
-
-CREATE TABLE `anuario_pais` (
-  `id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_proveedor`
---
-
-CREATE TABLE `anuario_proveedor` (
-  `id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `run` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `datos` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_proveedor`
@@ -3056,17 +2847,6 @@ INSERT INTO `anuario_proveedor` (`id`, `nombre`, `run`, `datos`) VALUES
 ('0C00006ETR', 'AFP Modelo S.A.', '6272', 'JSON12'),
 ('0C0000APW2', 'Credicorp Capital Asset Management S.A. AGF', '5889', 'JSON19'),
 ('0C0000B54U', 'AGF Vision Advisors S.A.', '6236', 'JSON20');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_rendimiento`
---
-
-CREATE TABLE `anuario_rendimiento` (
-  `id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_rendimiento`
@@ -5565,40 +5345,6 @@ INSERT INTO `anuario_rendimiento` (`id`, `estado`) VALUES
 ('0P0001CR76', 1),
 ('0P0001CR78', 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_rentafija`
---
-
-CREATE TABLE `anuario_rentafija` (
-  `bindex_id` int(11) NOT NULL,
-  `bsed` double NOT NULL,
-  `bsem` double NOT NULL,
-  `bsmd` double NOT NULL,
-  `bsym` double NOT NULL,
-  `cred` double NOT NULL,
-  `crem` double NOT NULL,
-  `crmd` double NOT NULL,
-  `crym` double NOT NULL,
-  `portafolio_fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_saldoactualizado`
---
-
-CREATE TABLE `anuario_saldoactualizado` (
-  `id` int(11) NOT NULL,
-  `monto` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `bindex_id` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL,
-  `tipoInversion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_saldoactualizado`
 --
@@ -5905,269 +5651,221 @@ INSERT INTO `anuario_saldoactualizado` (`id`, `monto`, `fecha`, `bindex_id`, `cl
 (299, 2515289, '2018-05-28', 299, 15, 2),
 (300, 2515290, '2018-05-29', 300, 20, 4);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_saldomensual`
---
-
-CREATE TABLE `anuario_saldomensual` (
-  `id` int(11) NOT NULL,
-  `anio` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `mes` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `saldoCierre` int(11) NOT NULL,
-  `cliente_id` int(11) NOT NULL,
-  `tipoInversion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_saldomensual`
 --
 
 INSERT INTO `anuario_saldomensual` (`id`, `anio`, `mes`, `saldoCierre`, `cliente_id`, `tipoInversion_id`) VALUES
-(1, '2018', '1', 4125182, 1, 4),
-(2, '2018', '2', 12659399, 1, 2),
-(3, '2018', '2', 5566882, 1, 3),
-(4, '2018', '2', 5030380, 1, 4),
-(5, '2018', '3', 8206993, 1, 2),
-(6, '2018', '3', 2515214, 1, 3),
-(7, '2018', '4', 2515092, 1, 4),
-(8, '2018', '5', 2515123, 1, 2),
-(9, '2018', '5', 2515280, 1, 3),
-(10, '2018', '1', 2515165, 2, 1),
-(11, '2018', '1', 2691576, 2, 3),
-(12, '2018', '1', 3567548, 2, 4),
-(13, '2018', '2', 4965920, 2, 3),
-(14, '2018', '3', 2515231, 2, 1),
-(15, '2018', '3', 4573576, 2, 2),
-(16, '2018', '3', 2515202, 2, 3),
-(17, '2018', '3', 2575650, 2, 4),
-(18, '2018', '4', 2515252, 2, 1),
-(19, '2018', '4', 5030348, 2, 2),
-(20, '2018', '5', 2515266, 2, 2),
-(21, '2018', '5', 2515140, 2, 3),
-(22, '2018', '1', 9100548, 3, 3),
-(23, '2018', '1', 3977122, 3, 4),
-(24, '2018', '2', 2515175, 3, 1),
-(25, '2018', '2', 2515196, 3, 2),
-(26, '2018', '3', 2515206, 3, 3),
-(27, '2018', '3', 2515229, 3, 4),
-(28, '2018', '4', 8928222, 3, 2),
-(29, '2018', '5', 2515281, 3, 2),
-(30, '2018', '5', 5030537, 3, 4),
-(31, '2018', '1', 2515146, 4, 3),
-(32, '2018', '2', 2515182, 4, 1),
-(33, '2018', '2', 2515179, 4, 2),
-(34, '2018', '3', 1382788, 4, 1),
-(35, '2018', '3', 3671098, 4, 3),
-(36, '2018', '4', 9781108, 4, 1),
-(37, '2018', '4', 7545590, 4, 2),
-(38, '2018', '4', 2515245, 4, 3),
-(39, '2018', '5', 7545358, 4, 1),
-(40, '2018', '5', 2515273, 4, 3),
-(41, '2018', '5', 2515270, 4, 4),
-(42, '2018', '1', 2176721, 5, 3),
-(43, '2018', '1', 2515142, 5, 4),
-(44, '2018', '2', 9944828, 5, 1),
-(45, '2018', '2', 2515198, 5, 3),
-(46, '2018', '3', 3533595, 5, 2),
-(47, '2018', '3', 5030449, 5, 3),
-(48, '2018', '4', 2515257, 5, 1),
-(49, '2018', '4', 2515104, 5, 2),
-(50, '2018', '4', 2747965, 5, 3),
-(51, '2018', '5', 2515116, 5, 3),
-(52, '2018', '5', 2515263, 5, 4),
-(53, '2018', '1', 2515160, 6, 1),
-(54, '2018', '1', 1239393, 6, 4),
-(55, '2018', '2', 5417060, 6, 3),
-(56, '2018', '3', 3342214, 6, 1),
-(57, '2018', '3', 10040461, 6, 2),
-(58, '2018', '3', 2515225, 6, 3),
-(59, '2018', '4', 7047087, 6, 2),
-(60, '2018', '5', 2515267, 6, 2),
-(61, '2018', '5', 5030235, 6, 3),
-(62, '2018', '1', 7611620, 7, 2),
-(63, '2018', '3', 12978760, 7, 2),
-(64, '2018', '3', 2515218, 7, 3),
-(65, '2018', '4', 2515106, 7, 2),
-(66, '2018', '4', 2515251, 7, 4),
-(67, '2018', '5', 2515136, 7, 1),
-(68, '2018', '5', 2515117, 7, 2),
-(69, '2018', '5', 5030401, 7, 3),
-(70, '2018', '5', 10060818, 7, 4),
-(71, '2018', '1', 2515159, 8, 1),
-(72, '2018', '1', 2061517, 8, 2),
-(73, '2018', '1', 2515149, 8, 3),
-(74, '2018', '1', 2515166, 8, 4),
-(75, '2018', '2', 3550227, 8, 2),
-(76, '2018', '3', 2515226, 8, 2),
-(77, '2018', '3', 2515221, 8, 3),
-(78, '2018', '3', 9150707, 8, 4),
-(79, '2018', '4', 2515103, 8, 4),
-(80, '2018', '5', 7545364, 8, 1),
-(81, '2018', '5', 2515135, 8, 3),
-(82, '2018', '1', 1559282, 9, 1),
-(83, '2018', '2', 1700538, 9, 1),
-(84, '2018', '3', 4580198, 9, 1),
-(85, '2018', '3', 2515216, 9, 3),
-(86, '2018', '4', 2515099, 9, 4),
-(87, '2018', '1', 2515162, 10, 1),
-(88, '2018', '1', 4908404, 10, 2),
-(89, '2018', '1', 4796567, 10, 3),
-(90, '2018', '2', 2027246, 10, 1),
-(91, '2018', '2', 3478145, 10, 2),
-(92, '2018', '2', 3552645, 10, 3),
-(93, '2018', '2', 5636873, 10, 4),
-(94, '2018', '3', 4616747, 10, 2),
-(95, '2018', '3', 2515228, 10, 3),
-(96, '2018', '3', 1997131, 10, 4),
-(97, '2018', '4', 5030473, 10, 2),
-(98, '2018', '4', 5030344, 10, 3),
-(99, '2018', '5', 5030567, 10, 1),
-(100, '2018', '5', 2515129, 10, 2),
-(101, '2018', '1', 1509848, 11, 1),
-(102, '2018', '1', 2515161, 11, 2),
-(103, '2018', '1', 4913556, 11, 3),
-(104, '2018', '2', 5030373, 11, 1),
-(105, '2018', '2', 5030363, 11, 2),
-(106, '2018', '2', 2575629, 11, 4),
-(107, '2018', '3', 5030435, 11, 1),
-(108, '2018', '4', 2515097, 11, 1),
-(109, '2018', '4', 2515101, 11, 3),
-(110, '2018', '4', 4953447, 11, 4),
-(111, '2018', '5', 2515125, 11, 4),
-(112, '2018', '1', 5030321, 12, 3),
-(113, '2018', '1', 2515172, 12, 4),
-(114, '2018', '2', 2515197, 12, 1),
-(115, '2018', '2', 2515187, 12, 4),
-(116, '2018', '3', 5233026, 12, 1),
-(117, '2018', '3', 2515222, 12, 3),
-(118, '2018', '3', 5030442, 12, 4),
-(119, '2018', '4', 2515089, 12, 2),
-(120, '2018', '4', 2515091, 12, 3),
-(121, '2018', '4', 5030516, 12, 4),
-(122, '2018', '5', 2515278, 12, 4),
-(123, '2018', '1', 13113876, 13, 1),
-(124, '2018', '1', 4668102, 13, 4),
-(125, '2018', '2', 3566373, 13, 1),
-(126, '2018', '2', 5372641, 13, 2),
-(127, '2018', '3', 3250506, 13, 3),
-(128, '2018', '3', 2515208, 13, 4),
-(129, '2018', '4', 2515239, 13, 1),
-(130, '2018', '4', 2515094, 13, 2),
-(131, '2018', '4', 2515235, 13, 3),
-(132, '2018', '5', 2515288, 13, 1),
-(133, '2018', '5', 5030393, 13, 2),
-(134, '2018', '5', 2515269, 13, 4),
-(135, '2018', '1', 3946539, 14, 1),
-(136, '2018', '1', 6387546, 14, 4),
-(137, '2018', '2', 12874804, 14, 1),
-(138, '2018', '2', 3030702, 14, 2),
-(139, '2018', '2', 4847887, 14, 3),
-(140, '2018', '2', 3853989, 14, 4),
-(141, '2018', '4', 2515254, 14, 1),
-(142, '2018', '4', 4128053, 14, 3),
-(143, '2018', '4', 5030351, 14, 4),
-(144, '2018', '5', 2515128, 14, 2),
-(145, '2018', '5', 5030403, 14, 3),
-(146, '2018', '5', 5030386, 14, 4),
-(147, '2018', '1', 2515163, 15, 2),
-(148, '2018', '3', 2515217, 15, 1),
-(149, '2018', '3', 6203206, 15, 2),
-(150, '2018', '3', 2515213, 15, 3),
-(151, '2018', '3', 4909180, 15, 4),
-(152, '2018', '4', 2515237, 15, 1),
-(153, '2018', '4', 2515232, 15, 2),
-(154, '2018', '4', 5030504, 15, 4),
-(155, '2018', '5', 5030419, 15, 1),
-(156, '2018', '5', 2515289, 15, 2),
-(157, '2018', '1', 10060628, 16, 1),
-(158, '2018', '1', 5030325, 16, 2),
-(159, '2018', '1', 2515147, 16, 4),
-(160, '2018', '2', 3891028, 16, 1),
-(161, '2018', '2', 8728150, 16, 3),
-(162, '2018', '3', 6773672, 16, 2),
-(163, '2018', '3', 5030421, 16, 3),
-(164, '2018', '4', 5030368, 16, 1),
-(165, '2018', '4', 2515247, 16, 2),
-(166, '2018', '4', 2515243, 16, 4),
-(167, '2018', '5', 2515277, 16, 1),
-(168, '2018', '5', 2515131, 16, 2),
-(169, '2018', '5', 2515274, 16, 3),
-(170, '2018', '2', 2505546, 17, 1),
-(171, '2018', '2', 2515194, 17, 2),
-(172, '2018', '2', 2515192, 17, 3),
-(173, '2018', '4', 5030195, 17, 3),
-(174, '2018', '4', 1406941, 17, 4),
-(175, '2018', '1', 10151622, 18, 1),
-(176, '2018', '1', 2294153, 18, 2),
-(177, '2018', '2', 1292304, 18, 3),
-(178, '2018', '3', 4971604, 18, 2),
-(179, '2018', '3', 3105696, 18, 3),
-(180, '2018', '4', 2515241, 18, 1),
-(181, '2018', '4', 2515093, 18, 2),
-(182, '2018', '4', 2515259, 18, 4),
-(183, '2018', '5', 2515134, 18, 1),
-(184, '2018', '5', 2515130, 18, 2),
-(185, '2018', '5', 2515112, 18, 3),
-(186, '2018', '1', 1995998, 19, 1),
-(187, '2018', '1', 3530678, 19, 2),
-(188, '2018', '1', 7545471, 19, 3),
-(189, '2018', '1', 8205095, 19, 4),
-(190, '2018', '2', 2515186, 19, 3),
-(191, '2018', '2', 3504052, 19, 4),
-(192, '2018', '3', 6824216, 19, 1),
-(193, '2018', '3', 5030432, 19, 2),
-(194, '2018', '4', 2515236, 19, 1),
-(195, '2018', '5', 5030407, 19, 1),
-(196, '2018', '5', 2515283, 19, 3),
-(197, '2018', '1', 2973485, 20, 1),
-(198, '2018', '1', 2515168, 20, 2),
-(199, '2018', '1', 4613685, 20, 3),
-(200, '2018', '1', 5427680, 20, 4),
-(201, '2018', '2', 2515188, 20, 1),
-(202, '2018', '2', 2515190, 20, 4),
-(203, '2018', '3', 2683491, 20, 1),
-(204, '2018', '3', 2730166, 20, 4),
-(205, '2018', '4', 2515258, 20, 1),
-(206, '2018', '4', 2515105, 20, 3),
-(207, '2018', '4', 2515250, 20, 4),
-(208, '2018', '5', 2515264, 20, 2),
-(209, '2018', '5', 2515137, 20, 3),
-(210, '2018', '5', 7545707, 20, 4);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_sector`
---
-
-CREATE TABLE `anuario_sector` (
-  `bindex_id` int(11) NOT NULL,
-  `materiales_basicos` double NOT NULL,
-  `servicio_comunicacion` double NOT NULL,
-  `ciclico_consumidor` double NOT NULL,
-  `defensa_consumidor` double NOT NULL,
-  `energia` double NOT NULL,
-  `servicios_financieros` double NOT NULL,
-  `cuidado_salud` double NOT NULL,
-  `acciones_industriales` double NOT NULL,
-  `bienes_raices` double NOT NULL,
-  `tecnologia` double NOT NULL,
-  `utilidades` double NOT NULL,
-  `portafolio_fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_tipoinstrumento`
---
-
-CREATE TABLE `anuario_tipoinstrumento` (
-  `id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(1, 2018, 1, 4125182, 1, 4),
+(2, 2018, 2, 12659399, 1, 2),
+(3, 2018, 2, 5566882, 1, 3),
+(4, 2018, 2, 5030380, 1, 4),
+(5, 2018, 3, 8206993, 1, 2),
+(6, 2018, 3, 2515214, 1, 3),
+(7, 2018, 4, 2515092, 1, 4),
+(8, 2018, 5, 2515123, 1, 2),
+(9, 2018, 5, 2515280, 1, 3),
+(10, 2018, 1, 2515165, 2, 1),
+(11, 2018, 1, 2691576, 2, 3),
+(12, 2018, 1, 3567548, 2, 4),
+(13, 2018, 2, 4965920, 2, 3),
+(14, 2018, 3, 2515231, 2, 1),
+(15, 2018, 3, 4573576, 2, 2),
+(16, 2018, 3, 2515202, 2, 3),
+(17, 2018, 3, 2575650, 2, 4),
+(18, 2018, 4, 2515252, 2, 1),
+(19, 2018, 4, 5030348, 2, 2),
+(20, 2018, 5, 2515266, 2, 2),
+(21, 2018, 5, 2515140, 2, 3),
+(22, 2018, 1, 9100548, 3, 3),
+(23, 2018, 1, 3977122, 3, 4),
+(24, 2018, 2, 2515175, 3, 1),
+(25, 2018, 2, 2515196, 3, 2),
+(26, 2018, 3, 2515206, 3, 3),
+(27, 2018, 3, 2515229, 3, 4),
+(28, 2018, 4, 8928222, 3, 2),
+(29, 2018, 5, 2515281, 3, 2),
+(30, 2018, 5, 5030537, 3, 4),
+(31, 2018, 1, 2515146, 4, 3),
+(32, 2018, 2, 2515182, 4, 1),
+(33, 2018, 2, 2515179, 4, 2),
+(34, 2018, 3, 1382788, 4, 1),
+(35, 2018, 3, 3671098, 4, 3),
+(36, 2018, 4, 9781108, 4, 1),
+(37, 2018, 4, 7545590, 4, 2),
+(38, 2018, 4, 2515245, 4, 3),
+(39, 2018, 5, 7545358, 4, 1),
+(40, 2018, 5, 2515273, 4, 3),
+(41, 2018, 5, 2515270, 4, 4),
+(42, 2018, 1, 2176721, 5, 3),
+(43, 2018, 1, 2515142, 5, 4),
+(44, 2018, 2, 9944828, 5, 1),
+(45, 2018, 2, 2515198, 5, 3),
+(46, 2018, 3, 3533595, 5, 2),
+(47, 2018, 3, 5030449, 5, 3),
+(48, 2018, 4, 2515257, 5, 1),
+(49, 2018, 4, 2515104, 5, 2),
+(50, 2018, 4, 2747965, 5, 3),
+(51, 2018, 5, 2515116, 5, 3),
+(52, 2018, 5, 2515263, 5, 4),
+(53, 2018, 1, 2515160, 6, 1),
+(54, 2018, 1, 1239393, 6, 4),
+(55, 2018, 2, 5417060, 6, 3),
+(56, 2018, 3, 3342214, 6, 1),
+(57, 2018, 3, 10040461, 6, 2),
+(58, 2018, 3, 2515225, 6, 3),
+(59, 2018, 4, 7047087, 6, 2),
+(60, 2018, 5, 2515267, 6, 2),
+(61, 2018, 5, 5030235, 6, 3),
+(62, 2018, 1, 7611620, 7, 2),
+(63, 2018, 3, 12978760, 7, 2),
+(64, 2018, 3, 2515218, 7, 3),
+(65, 2018, 4, 2515106, 7, 2),
+(66, 2018, 4, 2515251, 7, 4),
+(67, 2018, 5, 2515136, 7, 1),
+(68, 2018, 5, 2515117, 7, 2),
+(69, 2018, 5, 5030401, 7, 3),
+(70, 2018, 5, 10060818, 7, 4),
+(71, 2018, 1, 2515159, 8, 1),
+(72, 2018, 1, 2061517, 8, 2),
+(73, 2018, 1, 2515149, 8, 3),
+(74, 2018, 1, 2515166, 8, 4),
+(75, 2018, 2, 3550227, 8, 2),
+(76, 2018, 3, 2515226, 8, 2),
+(77, 2018, 3, 2515221, 8, 3),
+(78, 2018, 3, 9150707, 8, 4),
+(79, 2018, 4, 2515103, 8, 4),
+(80, 2018, 5, 7545364, 8, 1),
+(81, 2018, 5, 2515135, 8, 3),
+(82, 2018, 1, 1559282, 9, 1),
+(83, 2018, 2, 1700538, 9, 1),
+(84, 2018, 3, 4580198, 9, 1),
+(85, 2018, 3, 2515216, 9, 3),
+(86, 2018, 4, 2515099, 9, 4),
+(87, 2018, 1, 2515162, 10, 1),
+(88, 2018, 1, 4908404, 10, 2),
+(89, 2018, 1, 4796567, 10, 3),
+(90, 2018, 2, 2027246, 10, 1),
+(91, 2018, 2, 3478145, 10, 2),
+(92, 2018, 2, 3552645, 10, 3),
+(93, 2018, 2, 5636873, 10, 4),
+(94, 2018, 3, 4616747, 10, 2),
+(95, 2018, 3, 2515228, 10, 3),
+(96, 2018, 3, 1997131, 10, 4),
+(97, 2018, 4, 5030473, 10, 2),
+(98, 2018, 4, 5030344, 10, 3),
+(99, 2018, 5, 5030567, 10, 1),
+(100, 2018, 5, 2515129, 10, 2),
+(101, 2018, 1, 1509848, 11, 1),
+(102, 2018, 1, 2515161, 11, 2),
+(103, 2018, 1, 4913556, 11, 3),
+(104, 2018, 2, 5030373, 11, 1),
+(105, 2018, 2, 5030363, 11, 2),
+(106, 2018, 2, 2575629, 11, 4),
+(107, 2018, 3, 5030435, 11, 1),
+(108, 2018, 4, 2515097, 11, 1),
+(109, 2018, 4, 2515101, 11, 3),
+(110, 2018, 4, 4953447, 11, 4),
+(111, 2018, 5, 2515125, 11, 4),
+(112, 2018, 1, 5030321, 12, 3),
+(113, 2018, 1, 2515172, 12, 4),
+(114, 2018, 2, 2515197, 12, 1),
+(115, 2018, 2, 2515187, 12, 4),
+(116, 2018, 3, 5233026, 12, 1),
+(117, 2018, 3, 2515222, 12, 3),
+(118, 2018, 3, 5030442, 12, 4),
+(119, 2018, 4, 2515089, 12, 2),
+(120, 2018, 4, 2515091, 12, 3),
+(121, 2018, 4, 5030516, 12, 4),
+(122, 2018, 5, 2515278, 12, 4),
+(123, 2018, 1, 13113876, 13, 1),
+(124, 2018, 1, 4668102, 13, 4),
+(125, 2018, 2, 3566373, 13, 1),
+(126, 2018, 2, 5372641, 13, 2),
+(127, 2018, 3, 3250506, 13, 3),
+(128, 2018, 3, 2515208, 13, 4),
+(129, 2018, 4, 2515239, 13, 1),
+(130, 2018, 4, 2515094, 13, 2),
+(131, 2018, 4, 2515235, 13, 3),
+(132, 2018, 5, 2515288, 13, 1),
+(133, 2018, 5, 5030393, 13, 2),
+(134, 2018, 5, 2515269, 13, 4),
+(135, 2018, 1, 3946539, 14, 1),
+(136, 2018, 1, 6387546, 14, 4),
+(137, 2018, 2, 12874804, 14, 1),
+(138, 2018, 2, 3030702, 14, 2),
+(139, 2018, 2, 4847887, 14, 3),
+(140, 2018, 2, 3853989, 14, 4),
+(141, 2018, 4, 2515254, 14, 1),
+(142, 2018, 4, 4128053, 14, 3),
+(143, 2018, 4, 5030351, 14, 4),
+(144, 2018, 5, 2515128, 14, 2),
+(145, 2018, 5, 5030403, 14, 3),
+(146, 2018, 5, 5030386, 14, 4),
+(147, 2018, 1, 2515163, 15, 2),
+(148, 2018, 3, 2515217, 15, 1),
+(149, 2018, 3, 6203206, 15, 2),
+(150, 2018, 3, 2515213, 15, 3),
+(151, 2018, 3, 4909180, 15, 4),
+(152, 2018, 4, 2515237, 15, 1),
+(153, 2018, 4, 2515232, 15, 2),
+(154, 2018, 4, 5030504, 15, 4),
+(155, 2018, 5, 5030419, 15, 1),
+(156, 2018, 5, 2515289, 15, 2),
+(157, 2018, 1, 10060628, 16, 1),
+(158, 2018, 1, 5030325, 16, 2),
+(159, 2018, 1, 2515147, 16, 4),
+(160, 2018, 2, 3891028, 16, 1),
+(161, 2018, 2, 8728150, 16, 3),
+(162, 2018, 3, 6773672, 16, 2),
+(163, 2018, 3, 5030421, 16, 3),
+(164, 2018, 4, 5030368, 16, 1),
+(165, 2018, 4, 2515247, 16, 2),
+(166, 2018, 4, 2515243, 16, 4),
+(167, 2018, 5, 2515277, 16, 1),
+(168, 2018, 5, 2515131, 16, 2),
+(169, 2018, 5, 2515274, 16, 3),
+(170, 2018, 2, 2505546, 17, 1),
+(171, 2018, 2, 2515194, 17, 2),
+(172, 2018, 2, 2515192, 17, 3),
+(173, 2018, 4, 5030195, 17, 3),
+(174, 2018, 4, 1406941, 17, 4),
+(175, 2018, 1, 10151622, 18, 1),
+(176, 2018, 1, 2294153, 18, 2),
+(177, 2018, 2, 1292304, 18, 3),
+(178, 2018, 3, 4971604, 18, 2),
+(179, 2018, 3, 3105696, 18, 3),
+(180, 2018, 4, 2515241, 18, 1),
+(181, 2018, 4, 2515093, 18, 2),
+(182, 2018, 4, 2515259, 18, 4),
+(183, 2018, 5, 2515134, 18, 1),
+(184, 2018, 5, 2515130, 18, 2),
+(185, 2018, 5, 2515112, 18, 3),
+(186, 2018, 1, 1995998, 19, 1),
+(187, 2018, 1, 3530678, 19, 2),
+(188, 2018, 1, 7545471, 19, 3),
+(189, 2018, 1, 8205095, 19, 4),
+(190, 2018, 2, 2515186, 19, 3),
+(191, 2018, 2, 3504052, 19, 4),
+(192, 2018, 3, 6824216, 19, 1),
+(193, 2018, 3, 5030432, 19, 2),
+(194, 2018, 4, 2515236, 19, 1),
+(195, 2018, 5, 5030407, 19, 1),
+(196, 2018, 5, 2515283, 19, 3),
+(197, 2018, 1, 2973485, 20, 1),
+(198, 2018, 1, 2515168, 20, 2),
+(199, 2018, 1, 4613685, 20, 3),
+(200, 2018, 1, 5427680, 20, 4),
+(201, 2018, 2, 2515188, 20, 1),
+(202, 2018, 2, 2515190, 20, 4),
+(203, 2018, 3, 2683491, 20, 1),
+(204, 2018, 3, 2730166, 20, 4),
+(205, 2018, 4, 2515258, 20, 1),
+(206, 2018, 4, 2515105, 20, 3),
+(207, 2018, 4, 2515250, 20, 4),
+(208, 2018, 5, 2515264, 20, 2),
+(209, 2018, 5, 2515137, 20, 3),
+(210, 2018, 5, 7545707, 20, 4);
 
 --
 -- Volcado de datos para la tabla `anuario_tipoinstrumento`
@@ -6176,17 +5874,6 @@ CREATE TABLE `anuario_tipoinstrumento` (
 INSERT INTO `anuario_tipoinstrumento` (`id`, `nombre`) VALUES
 ('1', 'FFMM Nacional'),
 ('2', 'FFMM Internacional');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_tipoinversion`
---
-
-CREATE TABLE `anuario_tipoinversion` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `anuario_tipoinversion`
@@ -6198,17 +5885,6 @@ INSERT INTO `anuario_tipoinversion` (`id`, `nombre`) VALUES
 (3, 'Cotizaciones Obligatorias'),
 (4, 'Otros Activos');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_tipomovimiento`
---
-
-CREATE TABLE `anuario_tipomovimiento` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `anuario_tipomovimiento`
 --
@@ -6217,54 +5893,6 @@ INSERT INTO `anuario_tipomovimiento` (`id`, `nombre`) VALUES
 (1, 'saldo inicial'),
 (2, 'aporte'),
 (3, 'retiro');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `anuario_valorcuota`
---
-
-CREATE TABLE `anuario_valorcuota` (
-  `bindex_id` int(11) NOT NULL,
-  `anio` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `datos` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auth_group`
---
-
-CREATE TABLE `auth_group` (
-  `id` int(11) NOT NULL,
-  `name` varchar(80) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auth_group_permissions`
---
-
-CREATE TABLE `auth_group_permissions` (
-  `id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auth_permission`
---
-
-CREATE TABLE `auth_permission` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content_type_id` int(11) NOT NULL,
-  `codename` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `auth_permission`
@@ -6365,85 +5993,12 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (92, 'Can change session', 31, 'change_session'),
 (93, 'Can delete session', 31, 'delete_session');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auth_user`
---
-
-CREATE TABLE `auth_user` (
-  `id` int(11) NOT NULL,
-  `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `first_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(254) COLLATE utf8_unicode_ci NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `auth_user`
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
 (1, 'pbkdf2_sha256$100000$bczsdCXcvfhs$fXj6zlgV20YC05rUQvdxvEHehefVnmMiIP9LWBylE+k=', '2018-05-11 17:25:25.331824', 1, 'benjaminsc', '', '', 'benjamin.salazar17@gmail.com', 1, 1, '2018-05-11 17:24:54.493281');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auth_user_groups`
---
-
-CREATE TABLE `auth_user_groups` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `auth_user_user_permissions`
---
-
-CREATE TABLE `auth_user_user_permissions` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `django_admin_log`
---
-
-CREATE TABLE `django_admin_log` (
-  `id` int(11) NOT NULL,
-  `action_time` datetime(6) NOT NULL,
-  `object_id` longtext COLLATE utf8_unicode_ci,
-  `object_repr` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `action_flag` smallint(5) UNSIGNED NOT NULL,
-  `change_message` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `content_type_id` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `django_content_type`
---
-
-CREATE TABLE `django_content_type` (
-  `id` int(11) NOT NULL,
-  `app_label` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `model` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `django_content_type`
@@ -6482,19 +6037,6 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (30, 'contenttypes', 'contenttype'),
 (31, 'sessions', 'session');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `django_migrations`
---
-
-CREATE TABLE `django_migrations` (
-  `id` int(11) NOT NULL,
-  `app` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `applied` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Volcado de datos para la tabla `django_migrations`
 --
@@ -6517,19 +6059,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (15, 'auth', '0007_alter_validators_add_error_messages', '2018-05-11 04:18:08.932749'),
 (16, 'auth', '0008_alter_user_username_max_length', '2018-05-11 04:18:10.803076'),
 (17, 'auth', '0009_alter_user_last_name_max_length', '2018-05-11 04:18:11.673821'),
-(18, 'sessions', '0001_initial', '2018-05-11 04:18:12.469932');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `django_session`
---
-
-CREATE TABLE `django_session` (
-  `session_key` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `session_data` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `expire_date` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(18, 'sessions', '0001_initial', '2018-05-11 04:18:12.469932'),
+(19, 'anuario', '0002_auto_20180514_1021', '2018-05-14 14:27:24.788390');
 
 --
 -- Volcado de datos para la tabla `django_session`
@@ -6537,495 +6068,6 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('j4n6wsqjuinbhyj0id4ee0lvgy2it705', 'MWU3OWFkNDgzMmUzZTI0NDk4NWNiMTZjNzZlZTZlNmE3M2U0ZGYxOTp7Il9hdXRoX3VzZXJfaGFzaCI6ImI0YmZkODZiNmU4Yzk4ZDc1OGQwNjRiNWY4Zjc2NTczYTFhMDAzMTQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=', '2018-05-25 17:25:25.422081');
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `anuario_asignacionactivo`
---
-ALTER TABLE `anuario_asignacionactivo`
-  ADD PRIMARY KEY (`bindex_id`);
-
---
--- Indices de la tabla `anuario_bindex`
---
-ALTER TABLE `anuario_bindex`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_branding`
---
-ALTER TABLE `anuario_branding`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_broadcategory`
---
-ALTER TABLE `anuario_broadcategory`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_carteracliente`
---
-ALTER TABLE `anuario_carteracliente`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `anuario_carteracliente_bindex_id_8895a68e_fk_anuario_bindex_id` (`bindex_id`),
-  ADD KEY `anuario_carteracliente_cliente_id_612d39cf_fk_anuario_cliente_id` (`cliente_id`),
-  ADD KEY `anuario_carteraclien_tipoInversion_id_0d4a7a5f_fk_anuario_t` (`tipoInversion_id`);
-
---
--- Indices de la tabla `anuario_categoria`
---
-ALTER TABLE `anuario_categoria`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `anuario_categoria_broadCategory_id_e748180a_fk_anuario_b` (`broadCategory_id`),
-  ADD KEY `anuario_categoria_moneda_id_aac5227f_fk_anuario_moneda_id` (`moneda_id`);
-
---
--- Indices de la tabla `anuario_claseactivo`
---
-ALTER TABLE `anuario_claseactivo`
-  ADD PRIMARY KEY (`bindex_id`);
-
---
--- Indices de la tabla `anuario_cliente`
---
-ALTER TABLE `anuario_cliente`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_domicilio`
---
-ALTER TABLE `anuario_domicilio`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_fondo`
---
-ALTER TABLE `anuario_fondo`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `anuario_fondo_categoria_id_ca151073_fk_anuario_categoria_id` (`categoria_id`),
-  ADD KEY `anuario_fondo_domicilio_id_520d51df_fk_anuario_domicilio_id` (`domicilio_id`),
-  ADD KEY `anuario_fondo_moneda_id_0b19afe0_fk_anuario_moneda_id` (`moneda_id`);
-
---
--- Indices de la tabla `anuario_frecuenciadistribucion`
---
-ALTER TABLE `anuario_frecuenciadistribucion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_instrumento`
---
-ALTER TABLE `anuario_instrumento`
-  ADD PRIMARY KEY (`bindex_id`),
-  ADD KEY `anuario_instrumento_branding_id_37449f90_fk_anuario_branding_id` (`branding_id`),
-  ADD KEY `anuario_instrumento_fondo_id_686af8ba_fk_anuario_fondo_id` (`fondo_id`),
-  ADD KEY `anuario_instrumento_frecuenciaDistribuci_0dd3872e_fk_anuario_f` (`frecuenciaDistribucion_id`),
-  ADD KEY `anuario_instrumento_proveedor_id_25ed6ac6_fk_anuario_p` (`proveedor_id`),
-  ADD KEY `anuario_instrumento_rendimiento_id_734f999d_fk_anuario_r` (`rendimiento_id`),
-  ADD KEY `anuario_instrumento_tipoInstrumento_id_0507c0c9_fk_anuario_t` (`tipoInstrumento_id`);
-
---
--- Indices de la tabla `anuario_moneda`
---
-ALTER TABLE `anuario_moneda`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_movimiento`
---
-ALTER TABLE `anuario_movimiento`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `anuario_movimiento_bindex_id_c55b48c6_fk_anuario_bindex_id` (`bindex_id`),
-  ADD KEY `anuario_movimiento_cliente_id_f1f7c1af_fk_anuario_cliente_id` (`cliente_id`),
-  ADD KEY `anuario_movimiento_tipoInversion_id_e8cf84d0_fk_anuario_t` (`tipoInversion_id`),
-  ADD KEY `anuario_movimiento_tipoMovimiento_id_dd55e113_fk_anuario_t` (`tipoMovimiento_id`);
-
---
--- Indices de la tabla `anuario_pais`
---
-ALTER TABLE `anuario_pais`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_proveedor`
---
-ALTER TABLE `anuario_proveedor`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_rendimiento`
---
-ALTER TABLE `anuario_rendimiento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_rentafija`
---
-ALTER TABLE `anuario_rentafija`
-  ADD PRIMARY KEY (`bindex_id`);
-
---
--- Indices de la tabla `anuario_saldoactualizado`
---
-ALTER TABLE `anuario_saldoactualizado`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `anuario_saldoactualizado_bindex_id_bb408a8c_fk_anuario_bindex_id` (`bindex_id`),
-  ADD KEY `anuario_saldoactuali_cliente_id_85b3174f_fk_anuario_c` (`cliente_id`),
-  ADD KEY `anuario_saldoactuali_tipoInversion_id_53336641_fk_anuario_t` (`tipoInversion_id`);
-
---
--- Indices de la tabla `anuario_saldomensual`
---
-ALTER TABLE `anuario_saldomensual`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `anuario_saldomensual_cliente_id_cca09015_fk_anuario_cliente_id` (`cliente_id`),
-  ADD KEY `anuario_saldomensual_tipoInversion_id_be62c960_fk_anuario_t` (`tipoInversion_id`);
-
---
--- Indices de la tabla `anuario_sector`
---
-ALTER TABLE `anuario_sector`
-  ADD PRIMARY KEY (`bindex_id`);
-
---
--- Indices de la tabla `anuario_tipoinstrumento`
---
-ALTER TABLE `anuario_tipoinstrumento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_tipoinversion`
---
-ALTER TABLE `anuario_tipoinversion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_tipomovimiento`
---
-ALTER TABLE `anuario_tipomovimiento`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `anuario_valorcuota`
---
-ALTER TABLE `anuario_valorcuota`
-  ADD PRIMARY KEY (`bindex_id`);
-
---
--- Indices de la tabla `auth_group`
---
-ALTER TABLE `auth_group`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Indices de la tabla `auth_group_permissions`
---
-ALTER TABLE `auth_group_permissions`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
-  ADD KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`);
-
---
--- Indices de la tabla `auth_permission`
---
-ALTER TABLE `auth_permission`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`);
-
---
--- Indices de la tabla `auth_user`
---
-ALTER TABLE `auth_user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- Indices de la tabla `auth_user_groups`
---
-ALTER TABLE `auth_user_groups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
-  ADD KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`);
-
---
--- Indices de la tabla `auth_user_user_permissions`
---
-ALTER TABLE `auth_user_user_permissions`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
-  ADD KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`);
-
---
--- Indices de la tabla `django_admin_log`
---
-ALTER TABLE `django_admin_log`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
-  ADD KEY `django_admin_log_user_id_c564eba6_fk` (`user_id`);
-
---
--- Indices de la tabla `django_content_type`
---
-ALTER TABLE `django_content_type`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`);
-
---
--- Indices de la tabla `django_migrations`
---
-ALTER TABLE `django_migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `django_session`
---
-ALTER TABLE `django_session`
-  ADD PRIMARY KEY (`session_key`),
-  ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `anuario_bindex`
---
-ALTER TABLE `anuario_bindex`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2492;
-
---
--- AUTO_INCREMENT de la tabla `anuario_carteracliente`
---
-ALTER TABLE `anuario_carteracliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `anuario_cliente`
---
-ALTER TABLE `anuario_cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT de la tabla `anuario_frecuenciadistribucion`
---
-ALTER TABLE `anuario_frecuenciadistribucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `anuario_movimiento`
---
-ALTER TABLE `anuario_movimiento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `anuario_saldoactualizado`
---
-ALTER TABLE `anuario_saldoactualizado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
-
---
--- AUTO_INCREMENT de la tabla `anuario_saldomensual`
---
-ALTER TABLE `anuario_saldomensual`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
-
---
--- AUTO_INCREMENT de la tabla `anuario_tipoinversion`
---
-ALTER TABLE `anuario_tipoinversion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `anuario_tipomovimiento`
---
-ALTER TABLE `anuario_tipomovimiento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `auth_group`
---
-ALTER TABLE `auth_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `auth_group_permissions`
---
-ALTER TABLE `auth_group_permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `auth_permission`
---
-ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
-
---
--- AUTO_INCREMENT de la tabla `auth_user`
---
-ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `auth_user_groups`
---
-ALTER TABLE `auth_user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `auth_user_user_permissions`
---
-ALTER TABLE `auth_user_user_permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `django_admin_log`
---
-ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `django_content_type`
---
-ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT de la tabla `django_migrations`
---
-ALTER TABLE `django_migrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `anuario_asignacionactivo`
---
-ALTER TABLE `anuario_asignacionactivo`
-  ADD CONSTRAINT `anuario_asignacionactivo_bindex_id_f7bd5cae_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
-
---
--- Filtros para la tabla `anuario_carteracliente`
---
-ALTER TABLE `anuario_carteracliente`
-  ADD CONSTRAINT `anuario_carteraclien_tipoInversion_id_0d4a7a5f_fk_anuario_t` FOREIGN KEY (`tipoInversion_id`) REFERENCES `anuario_tipoinversion` (`id`),
-  ADD CONSTRAINT `anuario_carteracliente_bindex_id_8895a68e_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`),
-  ADD CONSTRAINT `anuario_carteracliente_cliente_id_612d39cf_fk_anuario_cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `anuario_cliente` (`id`);
-
---
--- Filtros para la tabla `anuario_categoria`
---
-ALTER TABLE `anuario_categoria`
-  ADD CONSTRAINT `anuario_categoria_broadCategory_id_e748180a_fk_anuario_b` FOREIGN KEY (`broadCategory_id`) REFERENCES `anuario_broadcategory` (`id`),
-  ADD CONSTRAINT `anuario_categoria_moneda_id_aac5227f_fk_anuario_moneda_id` FOREIGN KEY (`moneda_id`) REFERENCES `anuario_moneda` (`id`);
-
---
--- Filtros para la tabla `anuario_claseactivo`
---
-ALTER TABLE `anuario_claseactivo`
-  ADD CONSTRAINT `anuario_claseactivo_bindex_id_ccb59e40_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
-
---
--- Filtros para la tabla `anuario_fondo`
---
-ALTER TABLE `anuario_fondo`
-  ADD CONSTRAINT `anuario_fondo_categoria_id_ca151073_fk_anuario_categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `anuario_categoria` (`id`),
-  ADD CONSTRAINT `anuario_fondo_domicilio_id_520d51df_fk_anuario_domicilio_id` FOREIGN KEY (`domicilio_id`) REFERENCES `anuario_domicilio` (`id`),
-  ADD CONSTRAINT `anuario_fondo_moneda_id_0b19afe0_fk_anuario_moneda_id` FOREIGN KEY (`moneda_id`) REFERENCES `anuario_moneda` (`id`);
-
---
--- Filtros para la tabla `anuario_instrumento`
---
-ALTER TABLE `anuario_instrumento`
-  ADD CONSTRAINT `anuario_instrumento_bindex_id_ff5dc1d3_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`),
-  ADD CONSTRAINT `anuario_instrumento_branding_id_37449f90_fk_anuario_branding_id` FOREIGN KEY (`branding_id`) REFERENCES `anuario_branding` (`id`),
-  ADD CONSTRAINT `anuario_instrumento_fondo_id_686af8ba_fk_anuario_fondo_id` FOREIGN KEY (`fondo_id`) REFERENCES `anuario_fondo` (`id`),
-  ADD CONSTRAINT `anuario_instrumento_frecuenciaDistribuci_0dd3872e_fk_anuario_f` FOREIGN KEY (`frecuenciaDistribucion_id`) REFERENCES `anuario_frecuenciadistribucion` (`id`),
-  ADD CONSTRAINT `anuario_instrumento_proveedor_id_25ed6ac6_fk_anuario_p` FOREIGN KEY (`proveedor_id`) REFERENCES `anuario_proveedor` (`id`),
-  ADD CONSTRAINT `anuario_instrumento_rendimiento_id_734f999d_fk_anuario_r` FOREIGN KEY (`rendimiento_id`) REFERENCES `anuario_rendimiento` (`id`),
-  ADD CONSTRAINT `anuario_instrumento_tipoInstrumento_id_0507c0c9_fk_anuario_t` FOREIGN KEY (`tipoInstrumento_id`) REFERENCES `anuario_tipoinstrumento` (`id`);
-
---
--- Filtros para la tabla `anuario_movimiento`
---
-ALTER TABLE `anuario_movimiento`
-  ADD CONSTRAINT `anuario_movimiento_bindex_id_c55b48c6_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`),
-  ADD CONSTRAINT `anuario_movimiento_cliente_id_f1f7c1af_fk_anuario_cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `anuario_cliente` (`id`),
-  ADD CONSTRAINT `anuario_movimiento_tipoInversion_id_e8cf84d0_fk_anuario_t` FOREIGN KEY (`tipoInversion_id`) REFERENCES `anuario_tipoinversion` (`id`),
-  ADD CONSTRAINT `anuario_movimiento_tipoMovimiento_id_dd55e113_fk_anuario_t` FOREIGN KEY (`tipoMovimiento_id`) REFERENCES `anuario_tipomovimiento` (`id`);
-
---
--- Filtros para la tabla `anuario_rentafija`
---
-ALTER TABLE `anuario_rentafija`
-  ADD CONSTRAINT `anuario_rentafija_bindex_id_4fa6dedb_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
-
---
--- Filtros para la tabla `anuario_saldoactualizado`
---
-ALTER TABLE `anuario_saldoactualizado`
-  ADD CONSTRAINT `anuario_saldoactuali_cliente_id_85b3174f_fk_anuario_c` FOREIGN KEY (`cliente_id`) REFERENCES `anuario_cliente` (`id`),
-  ADD CONSTRAINT `anuario_saldoactuali_tipoInversion_id_53336641_fk_anuario_t` FOREIGN KEY (`tipoInversion_id`) REFERENCES `anuario_tipoinversion` (`id`),
-  ADD CONSTRAINT `anuario_saldoactualizado_bindex_id_bb408a8c_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
-
---
--- Filtros para la tabla `anuario_saldomensual`
---
-ALTER TABLE `anuario_saldomensual`
-  ADD CONSTRAINT `anuario_saldomensual_cliente_id_cca09015_fk_anuario_cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `anuario_cliente` (`id`),
-  ADD CONSTRAINT `anuario_saldomensual_tipoInversion_id_be62c960_fk_anuario_t` FOREIGN KEY (`tipoInversion_id`) REFERENCES `anuario_tipoinversion` (`id`);
-
---
--- Filtros para la tabla `anuario_sector`
---
-ALTER TABLE `anuario_sector`
-  ADD CONSTRAINT `anuario_sector_bindex_id_079b0df3_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
-
---
--- Filtros para la tabla `anuario_valorcuota`
---
-ALTER TABLE `anuario_valorcuota`
-  ADD CONSTRAINT `anuario_valorcuota_bindex_id_33204bb9_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
-
---
--- Filtros para la tabla `auth_group_permissions`
---
-ALTER TABLE `auth_group_permissions`
-  ADD CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  ADD CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`);
-
---
--- Filtros para la tabla `auth_permission`
---
-ALTER TABLE `auth_permission`
-  ADD CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
-
---
--- Filtros para la tabla `auth_user_groups`
---
-ALTER TABLE `auth_user_groups`
-  ADD CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  ADD CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
-
---
--- Filtros para la tabla `auth_user_user_permissions`
---
-ALTER TABLE `auth_user_user_permissions`
-  ADD CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  ADD CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
-
---
--- Filtros para la tabla `django_admin_log`
---
-ALTER TABLE `django_admin_log`
-  ADD CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
-  ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
