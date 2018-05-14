@@ -7,7 +7,6 @@ from django.http import HttpResponse
 import json
 import datetime
 import time
-from datetime import datetime, date, time, timedelta
 import calendar
 
 @api_view(['GET'])
@@ -42,13 +41,17 @@ def evolucionPatrimonio(request,cliente_id):
 
 @api_view(['GET'])
 def resumenCuentas(request, cliente_id):
-	actual = time.strftime("%m/%Y")
-	ls     = actual.split('/')
-	x = time.strftime("%d/%m/%Y")
-	anterior 	= x - timedelta(days=1)
-	print(x)
-	print(anterior)
-	query1 = saldoMensual.objects.filter(cliente=cliente_id, anio=ls[1],mes=[0]).values('saldoCierre','tipoInversion__nombre').order_by('tipoInversion')
+	fecha_actual = datetime.datetime.now()
+	año_actual = fecha_actual.year
+	mes_actual = fecha_actual.month
+	año_anterior = fecha_actual.year-1
+	mes_anterior = fecha_actual.month-1
+
+	if condition:
+		
+
+
+	#query1 = saldoMensual.objects.filter(cliente=cliente_id, anio=ls[1],mes=[0]).values('saldoCierre','tipoInversion__nombre').order_by('tipoInversion')
 	#query2 = saldoMensual.objects.filter(cliente=cliente_id, anio=ls[1],mes=[0]).values('saldoCierre','tipoInversion__nombre').order_by('tipoInversion')
 
 
