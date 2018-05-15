@@ -125,6 +125,7 @@ admin.site.register(pais, paisAdmin)
 
 class instrumento(models.Model):
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE, primary_key=True)
+    nombre = models.CharField(max_length=50)
     run_svs = models.CharField(max_length=50)
     clase_proveedor = models.CharField(max_length=50)
     operation_ready = models.IntegerField()
