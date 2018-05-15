@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-05-2018 a las 22:49:27
+-- Tiempo de generación: 15-05-2018 a las 16:18:54
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -2713,6 +2713,18 @@ INSERT INTO `anuario_cliente` (`id`, `nombre`) VALUES
 (18, 'javier'),
 (19, 'charles'),
 (20, 'jackson');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `anuario_countryexposure`
+--
+
+CREATE TABLE `anuario_countryexposure` (
+  `id` int(11) NOT NULL,
+  `datos` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `bindex_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -6362,7 +6374,10 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (90, 'Can delete content type', 30, 'delete_contenttype'),
 (91, 'Can add session', 31, 'add_session'),
 (92, 'Can change session', 31, 'change_session'),
-(93, 'Can delete session', 31, 'delete_session');
+(93, 'Can delete session', 31, 'delete_session'),
+(94, 'Can add country exposure', 32, 'add_countryexposure'),
+(95, 'Can change country exposure', 32, 'change_countryexposure'),
+(96, 'Can delete country exposure', 32, 'delete_countryexposure');
 
 -- --------------------------------------------------------
 
@@ -6458,6 +6473,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (10, 'anuario', 'categoria'),
 (1, 'anuario', 'claseactivo'),
 (3, 'anuario', 'cliente'),
+(32, 'anuario', 'countryexposure'),
 (23, 'anuario', 'domicilio'),
 (6, 'anuario', 'fondo'),
 (19, 'anuario', 'frecuenciadistribucion'),
@@ -6518,7 +6534,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (17, 'auth', '0009_alter_user_last_name_max_length', '2018-05-11 04:18:11.673821'),
 (18, 'sessions', '0001_initial', '2018-05-11 04:18:12.469932'),
 (19, 'anuario', '0002_auto_20180514_1021', '2018-05-14 14:27:24.788390'),
-(20, 'anuario', '0003_remove_proveedor_run', '2018-05-14 19:26:37.476359');
+(20, 'anuario', '0003_remove_proveedor_run', '2018-05-14 19:26:37.476359'),
+(21, 'anuario', '0004_countryexposure', '2018-05-15 13:56:22.474610');
 
 -- --------------------------------------------------------
 
@@ -6595,6 +6612,13 @@ ALTER TABLE `anuario_claseactivo`
 --
 ALTER TABLE `anuario_cliente`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `anuario_countryexposure`
+--
+ALTER TABLE `anuario_countryexposure`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `anuario_countryexposure_bindex_id_f44c72a8_fk_anuario_bindex_id` (`bindex_id`);
 
 --
 -- Indices de la tabla `anuario_domicilio`
@@ -6812,6 +6836,12 @@ ALTER TABLE `anuario_cliente`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT de la tabla `anuario_countryexposure`
+--
+ALTER TABLE `anuario_countryexposure`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `anuario_frecuenciadistribucion`
 --
 ALTER TABLE `anuario_frecuenciadistribucion`
@@ -6863,7 +6893,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT de la tabla `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT de la tabla `auth_user`
@@ -6893,13 +6923,13 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT de la tabla `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
@@ -6931,6 +6961,12 @@ ALTER TABLE `anuario_categoria`
 --
 ALTER TABLE `anuario_claseactivo`
   ADD CONSTRAINT `anuario_claseactivo_bindex_id_ccb59e40_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
+
+--
+-- Filtros para la tabla `anuario_countryexposure`
+--
+ALTER TABLE `anuario_countryexposure`
+  ADD CONSTRAINT `anuario_countryexposure_bindex_id_f44c72a8_fk_anuario_bindex_id` FOREIGN KEY (`bindex_id`) REFERENCES `anuario_bindex` (`id`);
 
 --
 -- Filtros para la tabla `anuario_fondo`

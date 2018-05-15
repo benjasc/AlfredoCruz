@@ -92,3 +92,6 @@ def cuentasCartolas(request,cliente_id):
 # 	query = query.filter(fecha=fecha_actual)
 #
 # 	return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
+
+def cartolasConsolidadas():
+	fecha_actual = datetime.datetime.now()

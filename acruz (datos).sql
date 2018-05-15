@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-05-2018 a las 22:51:45
+-- Tiempo de generación: 15-05-2018 a las 16:19:56
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -5991,7 +5991,10 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (90, 'Can delete content type', 30, 'delete_contenttype'),
 (91, 'Can add session', 31, 'add_session'),
 (92, 'Can change session', 31, 'change_session'),
-(93, 'Can delete session', 31, 'delete_session');
+(93, 'Can delete session', 31, 'delete_session'),
+(94, 'Can add country exposure', 32, 'add_countryexposure'),
+(95, 'Can change country exposure', 32, 'change_countryexposure'),
+(96, 'Can delete country exposure', 32, 'delete_countryexposure');
 
 --
 -- Volcado de datos para la tabla `auth_user`
@@ -6014,6 +6017,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (10, 'anuario', 'categoria'),
 (1, 'anuario', 'claseactivo'),
 (3, 'anuario', 'cliente'),
+(32, 'anuario', 'countryexposure'),
 (23, 'anuario', 'domicilio'),
 (6, 'anuario', 'fondo'),
 (19, 'anuario', 'frecuenciadistribucion'),
@@ -6061,7 +6065,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (17, 'auth', '0009_alter_user_last_name_max_length', '2018-05-11 04:18:11.673821'),
 (18, 'sessions', '0001_initial', '2018-05-11 04:18:12.469932'),
 (19, 'anuario', '0002_auto_20180514_1021', '2018-05-14 14:27:24.788390'),
-(20, 'anuario', '0003_remove_proveedor_run', '2018-05-14 19:26:37.476359');
+(20, 'anuario', '0003_remove_proveedor_run', '2018-05-14 19:26:37.476359'),
+(21, 'anuario', '0004_countryexposure', '2018-05-15 13:56:22.474610');
 
 --
 -- Volcado de datos para la tabla `django_session`
