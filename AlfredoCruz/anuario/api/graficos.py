@@ -83,12 +83,12 @@ def cuentasCartolas(request,cliente_id):
 
 	return HttpResponse(json.dumps(list,indent=4),content_type="application/json")
 
-@api_view(['GET'])
-def resumenCompleto(request,cliente_id):
-	fecha_actual = datetime.datetime.now().strftime ("%Y-%m-%d")
-
-	query = saldoActualizado.objects.values('monto')
-	query = query.filter(cliente = cliente_id)
-	query = query.filter(fecha=fecha_actual)
-
-	return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
+# @api_view(['GET'])
+# def resumenCompleto(request,cliente_id):
+# 	fecha_actual = datetime.datetime.now().strftime ("%Y-%m-%d")
+#
+# 	query = saldoActualizado.objects.values('monto')
+# 	query = query.filter(cliente = cliente_id)
+# 	query = query.filter(fecha=fecha_actual)
+#
+# 	return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")

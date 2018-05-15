@@ -254,6 +254,11 @@ class movimientoAdmin(admin.ModelAdmin):
     search_fields = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
 admin.site.register(movimiento, movimientoAdmin)
 
+class countryExposure(models.Model):
+    bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
+    datos = models.TextField() #como json
+
+
 class saldoActualizado(models.Model):
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
