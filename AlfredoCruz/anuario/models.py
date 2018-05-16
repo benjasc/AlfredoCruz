@@ -61,6 +61,8 @@ admin.site.register(domicilio, domicilioAdmin)
 class tipoInstrumento(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
     nombre = models.CharField(max_length=50)
+    def __str__(self):
+        return self.nombre
 
 class tipoInstrumentoAdmin(admin.ModelAdmin):
     list_display = ['nombre']
@@ -268,6 +270,7 @@ class saldoActualizado(models.Model):
     fecha = models.DateField()
 
 class saldoMensual(models.Model):
+    bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
     anio = models.IntegerField()

@@ -1,4 +1,4 @@
-from anuario.models import cliente, movimiento, saldoActualizado,saldoMensual
+from anuario.models import cliente, movimiento, saldoActualizado,saldoMensual, instrumento
 from rest_framework import serializers
 from django.db.models import Sum, Q,Count
 from rest_framework.decorators import api_view
@@ -83,6 +83,16 @@ def totalesConsolidados(request,cliente_id,fecha=None):
 
     return HttpResponse(json.dumps(list,indent=4),content_type="application/json")
 
-@api_view(['GET'])
-def cartolasConsolidadas(request,cliente_id):
-	fecha = datetime.datetime.now()
+
+def cartolasConsolidadas(request, cliente_id):
+	query = movimiento.objects.filter(cliente=cliente_id).values('tipoInversion__nombre', 'bindex').order_by('tipoInversion').annotate(wea=Sum('monto'))
+
+	lista = list()
+	for q in query:
+		try:
+			i = instrumento.objects.get(pk=q['bindex'])
+			lista.append([i.tipoInstrumento.nombre, i.branding.nombre, q['wea'],q['tipoInversion__nombre']])
+		except instrumento.DoesNotExist:
+			pass
+
+	return HttpResponse(json.dumps(list(lista),indent=4),content_type="application/json")

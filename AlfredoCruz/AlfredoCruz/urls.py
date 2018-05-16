@@ -45,6 +45,8 @@ urlpatterns = [
     path('api/totalesConsolidados/<cliente_id>/',totalesConsolidados),
     path('api/totalesConsolidados/<cliente_id>/<fecha>',totalesConsolidados),
     path('api/cartolasConsolidadas/<cliente_id>',cartolasConsolidadas),
+    #path('api/cartolasConsolidadas/<cliente_id>/<fecha>',cartolasConsolidadas),
+
 #-------------FIN API
 
 ]
