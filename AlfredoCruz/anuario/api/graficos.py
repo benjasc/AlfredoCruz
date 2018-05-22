@@ -84,7 +84,7 @@ def totalesConsolidados(request,cliente_id,fecha=None):
     return HttpResponse(json.dumps(list,indent=4),content_type="application/json")
 
 
-def cartolasConsolidadas(request):
+def saldoAct(request):
 
 	query = movimiento.objects.values('tipoInversion','cliente','fecha'
 	).annotate(suma=Sum(
@@ -96,26 +96,33 @@ def cartolasConsolidadas(request):
 						)
 					)
 	).order_by('cliente','fecha','tipoInversion')
-
-	lista=[]
-	fecha = ''
-	for x in query:
-		fecha = x['fecha']
-		if x['fecha']
-
-
 		#print(str(x['fecha'])+' || '+str(x['cliente'])+' || '+str(x['tipoInversion'])+' || '+str(x['suma']))
 	#return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
 
-def cartolasConsolidadas(request, cliente_id):
-	query = movimiento.objects.filter(cliente=cliente_id).values('tipoInversion__nombre', 'bindex').order_by('tipoInversion').annotate(wea=Sum('monto'))
-
+def cartolasConsolidadas(request, id):
+#obtener fondos, tipoInversion y agrupados por branding
+	querySet = movimiento.objects.filter(cliente=id).values('monto','bindex','tipoInversion__nombre')
 	lista = list()
-	for q in query:
+	lista2 = list()
+	for s in querySet:
+		print(s)
 		try:
-			i = instrumento.objects.get(pk=q['bindex'])
-			lista.append([i.tipoInstrumento.nombre, i.branding.nombre, q['wea'],q['tipoInversion__nombre']])
+			i = instrumento.objects.get(pk=s['bindex'])
+			flag = False
+			for x in lista:
+				if x[0] == i.branding.nombre and x[2] == s['tipoInversion__nombre']:
+					x[1] += s['monto']
+					flag = True
+
+			if flag == False:
+				lista.append([i.branding.nombre,s['monto'], s['tipoInversion__nombre']])
 		except instrumento.DoesNotExist:
 			pass
 
-	return HttpResponse(json.dumps(list(lista),indent=4),content_type="application/json")
+	lista.sort(key=lambda l:l[0])
+
+	'''for wea in querySet:
+		lista2.append([i.fondo.nombre, s['monto'],])
+	'''
+
+	return HttpResponse(json.dumps(lista, indent=4), content_type= "application/json")
