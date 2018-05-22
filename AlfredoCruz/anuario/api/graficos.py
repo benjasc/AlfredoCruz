@@ -1,6 +1,6 @@
 from anuario.models import cliente, movimiento, saldoActualizado,saldoMensual, instrumento
 from rest_framework import serializers
-from django.db.models import Sum, Q,Count
+from django.db.models import Sum, Q,Count,Case, CharField, Value, When, F, IntegerField
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import HttpResponse
@@ -83,6 +83,29 @@ def totalesConsolidados(request,cliente_id,fecha=None):
 
     return HttpResponse(json.dumps(list,indent=4),content_type="application/json")
 
+
+def cartolasConsolidadas(request):
+
+	query = movimiento.objects.values('tipoInversion','cliente','fecha'
+	).annotate(suma=Sum(
+					Case(
+						When(tipoMovimiento=3
+							,then=F('monto')*-1)
+							,default=F('monto')
+							,output_field=IntegerField()
+						)
+					)
+	).order_by('cliente','fecha','tipoInversion')
+
+	lista=[]
+	fecha = ''
+	for x in query:
+		fecha = x['fecha']
+		if x['fecha']
+
+
+		#print(str(x['fecha'])+' || '+str(x['cliente'])+' || '+str(x['tipoInversion'])+' || '+str(x['suma']))
+	#return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
 
 def cartolasConsolidadas(request, cliente_id):
 	query = movimiento.objects.filter(cliente=cliente_id).values('tipoInversion__nombre', 'bindex').order_by('tipoInversion').annotate(wea=Sum('monto'))
