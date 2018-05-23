@@ -100,26 +100,62 @@ def saldoAct(request):
 	#return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
 
 def cartolasConsolidadas(request, id):
-
+	fecha_actual = datetime.date.today()
 	#obtener fondos, tipoInversion y agrupados por branding
-	querySet = movimiento.objects.filter(cliente=id).values('monto','bindex','tipoInversion__nombre')
-	lista = list()
+	querySet = movimiento.objects.filter(cliente=id
+								).filter(fecha__year=fecha_actual.year,fecha__month=fecha_actual.month
+								).values('monto','bindex','tipoInversion__nombre','tipoMovimiento','fecha')
+	lista = []
+
 	for s in querySet:
-		print(s)
+		#print(s)
 		try:
+			totalAporte=0
+			totalRetiro=0
+			if s['tipoMovimiento']==3:
+				totalRetiro = s['monto']
+			else:
+				totalAporte = s['monto']
 			i = instrumento.objects.get(pk=s['bindex'])
 			flag = False
 			for x in lista:
-				if x[0] == i.branding.nombre and x[2] == s['tipoInversion__nombre']:
-					x[1] += s['monto']
+				if x['Administradora'] == i.branding.nombre and x['Tipo_inversion'] == s['tipoInversion__nombre']:
+					x['Saldo_actual'] += s['monto']
 					flag = True
 
 			if flag == False:
-				lista.append([i.branding.nombre,s['monto'], s['tipoInversion__nombre'],i.fondo.nombre_legal,])
+				#[i.branding.nombre,s['monto'], s['tipoInversion__nombre'],i.fondo.nombre_legal,totalAporte,totalRetiro]
+				lista.append({
+				'Administradora' : i.branding.nombre,
+				'Saldo_actual'   : s['monto'],
+				'Tipo_inversion': s['tipoInversion__nombre'],
+				'Fondo'	 		 : i.fondo.nombre_legal,
+				'Total_aporte'	 : totalAporte,
+				'Total_retiro'	 : totalRetiro,
+				})
 
 		except instrumento.DoesNotExist:
 			pass
 
-	lista.sort(key=lambda l:l[0])
+	lista.sort(key=lambda l:l['Administradora'])
+
+	aux =lista[0]['Administradora']
+	suma = 0
+	for l in range(len(lista)):
+		if(lista[l]['Administradora'] == aux):
+			suma += lista[l]['Saldo_actual']
+		else:
+			aux= lista[l]['Saldo_actual']
+			#lista.append([ str(lista[l-1]['Administradora']) + " - TOTAL", suma, ''])
+			lista.append({
+			'Administradora' : lista[l-1]['Administradora'],
+			'Total'   : suma,
+			})
+			suma = 0
+			suma += lista[l]['Saldo_actual']
+
+	lista.sort(key=lambda l:l['Administradora'])
+
+	print(lista)
 
 	return HttpResponse(json.dumps(lista, indent=4), content_type= "application/json")
