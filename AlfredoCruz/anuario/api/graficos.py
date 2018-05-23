@@ -100,10 +100,10 @@ def saldoAct(request):
 	#return HttpResponse(json.dumps(list(query),indent=4),content_type="application/json")
 
 def cartolasConsolidadas(request, id):
-#obtener fondos, tipoInversion y agrupados por branding
+
+	#obtener fondos, tipoInversion y agrupados por branding
 	querySet = movimiento.objects.filter(cliente=id).values('monto','bindex','tipoInversion__nombre')
 	lista = list()
-	lista2 = list()
 	for s in querySet:
 		print(s)
 		try:
@@ -115,14 +115,11 @@ def cartolasConsolidadas(request, id):
 					flag = True
 
 			if flag == False:
-				lista.append([i.branding.nombre,s['monto'], s['tipoInversion__nombre']])
+				lista.append([i.branding.nombre,s['monto'], s['tipoInversion__nombre'],i.fondo.nombre_legal,])
+
 		except instrumento.DoesNotExist:
 			pass
 
 	lista.sort(key=lambda l:l[0])
-
-	'''for wea in querySet:
-		lista2.append([i.fondo.nombre, s['monto'],])
-	'''
 
 	return HttpResponse(json.dumps(lista, indent=4), content_type= "application/json")
