@@ -142,10 +142,11 @@ def cartolasConsolidadas(request, id):
 	aux =lista[0]['Administradora']
 	suma = 0
 	for l in range(len(lista)):
+		print(lista[l]['Administradora'])
 		if(lista[l]['Administradora'] == aux):
 			suma += lista[l]['Saldo_actual']
 		else:
-			aux= lista[l]['Saldo_actual']
+			aux= lista[l]['Administradora']
 			#lista.append([ str(lista[l-1]['Administradora']) + " - TOTAL", suma, ''])
 			lista.append({
 			'Administradora' : lista[l-1]['Administradora'],
@@ -155,7 +156,5 @@ def cartolasConsolidadas(request, id):
 			suma += lista[l]['Saldo_actual']
 
 	lista.sort(key=lambda l:l['Administradora'])
-
-	print(lista)
 
 	return HttpResponse(json.dumps(lista, indent=4), content_type= "application/json")
