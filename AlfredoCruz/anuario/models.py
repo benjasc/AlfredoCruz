@@ -275,3 +275,33 @@ class saldoMensual(models.Model):
     anio = models.IntegerField()
     mes = models.IntegerField()
     saldoCierre = models.IntegerField()
+
+    def sumaAnterio(obj):
+        periodo_anterior = []
+        if obj.mes == 1:
+            periodo_anterior = [obj.anio-1, 12]
+        else:
+            periodo_anterior = [obj.anio, obj.mes-1]
+        suma = 0
+        query = saldoMensual.objects.filter(anio= periodo_anterior[0], mes= periodo_anterior[1], cliente=obj.cliente)
+        for s in query:
+            suma= suma + int(s.saldoCierre)
+        return suma
+
+    def variacion(obj): #monto saldo final - inicial
+        periodo_anterior = []
+        if obj.mes == 1:
+            periodo_anterior = [obj.anio-1, 12]
+        else:
+            periodo_anterior = [obj.anio, obj.mes-1]
+        try:
+            sa = saldoMensual.objects.get(anio= periodo_anterior[0], mes = periodo_anterior[1], tipoInversion= obj.tipoInversion, cliente = obj.cliente)
+            return obj.saldoCierre - sa.saldoCierre
+        except saldoMensual.DoesNotExist:
+            return 0
+    def porcentaje_variacion(obj):
+        aux = obj.variacion()
+        try:
+            return aux/obj.saldoCierre
+        except ZeroDivisionError:
+            return 0
