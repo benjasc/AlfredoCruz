@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento, getProveedor,getFondos,guardarSaldo
-from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding
+from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas
 #from django.contrib.auth.views import login
 
 
@@ -39,18 +39,25 @@ urlpatterns = [
 #-------------FinSaldoInicial
 
 #-------------API
-    path('api/patrimonioConsolidado/<id>/<date>', patrimonioConsolidado),
+    path('api/patrimonioConsolidado/<id>/<fecha>', patrimonioConsolidado),
+    path('api/patrimonioConsolidado/<id>', patrimonioConsolidado),
     path('api/evolucionPatrimonio/<id>/',evolucionPatrimonio),
     path('api/evolucionPatrimonio/<id>/<fecha>',evolucionPatrimonio),
     path('api/totalesConsolidados/<id>/',totalesConsolidados),
     path('api/totalesConsolidados/<id>/<fecha>',totalesConsolidados),
     path('api/cartolasConsolidadas/<id>/',cartolasConsolidadas),
+    path('api/resumenCuentas/<id>/<fecha>',resumenCuentas),
+    path('api/resumenCuentas/<id>/',resumenCuentas),
     #path('api/saldoAct/',saldoAct),
     path('api/resumenMoneda/<id>/',resumenMoneda),
     path('api/resumenFondo/<id>/',resumenFondo),
     path('api/resumenBranding/<id>/',resumenBranding),
+    path('api/resumenCompletoDia/<id>/',resumenCompletoDia),
+
+    #resumenCompletoDia
 
     path('api/graficos/<id>/',graficos),
+    path('api/graficos/<id>/<fecha>',graficos),
     #path('api/cartolasConsolidadas/<cliente_id>/<fecha>',cartolasConsolidadas),
 
 #-------------FIN API

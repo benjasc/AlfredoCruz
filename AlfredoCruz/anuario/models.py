@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from datetime import datetime, date, time, timedelta 
 '''
 # class morningstar(models.Model):
 #     id = models.CharField(max_length=15, primary_key=True)
@@ -268,6 +269,20 @@ class saldoActualizado(models.Model):
     bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
     monto = models.IntegerField()
     fecha = models.DateField()
+
+
+    def variacionDia(obj):
+        hoy = obj.fecha
+        ayer = hoy - timedelta(days=30)
+        qPasado = saldoActualizado.objects.filter(cliente=obj.cliente, fecha=ayer).values('cliente__nombre', 'monto')
+        old =0
+        for x in qPasado:
+            old += x['monto']          
+        try:
+            return ((obj.monto-old)/old)*100
+        except ZeroDivisionError:
+            return 0
+
 
 class saldoMensual(models.Model):
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
