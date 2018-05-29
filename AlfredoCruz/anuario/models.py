@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from datetime import datetime, date, time, timedelta 
+from datetime import datetime, date, time, timedelta
 '''
 # class morningstar(models.Model):
 #     id = models.CharField(max_length=15, primary_key=True)
@@ -85,10 +85,10 @@ class fondo(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
     nombre = models.CharField(max_length=50)
     nombre_legal = models.CharField(max_length=50)
-    fecha_inicio = models.DateField()
-    domicilio = models.ForeignKey(domicilio, on_delete=models.CASCADE)
+    fecha_inicio = models.DateField(null=True, blank=True)
+    domicilio = models.ForeignKey(domicilio, null=True, blank=True, on_delete=models.CASCADE)
     categoria = models.ForeignKey(categoria, on_delete=models.CASCADE)
-    moneda = models.ForeignKey(moneda, on_delete=models.CASCADE)
+    moneda = models.ForeignKey(moneda, null=True, blank=True, on_delete=models.CASCADE)
 
 class fondoAdmin(admin.ModelAdmin):
     list_display = ['nombre','nombre_legal','fecha_inicio','domicilio','categoria','moneda']#definir cuales se necesitan
@@ -121,6 +121,7 @@ admin.site.register(rendimiento, rendimientoAdmin)
 class pais(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
+    nombre_ing = models.CharField(max_length=50, null=True, blank=True)
 class paisAdmin(admin.ModelAdmin):
     list_display = ['nombre']
     search_fields = ['nombre']
@@ -128,16 +129,16 @@ admin.site.register(pais, paisAdmin)
 
 class instrumento(models.Model):
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE, primary_key=True)
-    nombre = models.CharField(max_length=50)
-    run_svs = models.CharField(max_length=50)
-    clase_proveedor = models.CharField(max_length=50)
-    operation_ready = models.IntegerField()
-    branding = models.ForeignKey(branding, on_delete=models.CASCADE)
-    frecuenciaDistribucion = models.ForeignKey(frecuenciaDistribucion, on_delete=models.CASCADE)
-    rendimiento = models.ForeignKey(rendimiento, on_delete=models.CASCADE) #Performance
-    proveedor = models.ForeignKey(proveedor, on_delete=models.CASCADE)
-    tipoInstrumento = models.ForeignKey(tipoInstrumento, on_delete=models.CASCADE)
-    fondo = models.ForeignKey(fondo, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=50, null=True, blank=True)
+    run_svs = models.CharField(max_length=50, null=True, blank=True)
+    clase_proveedor = models.CharField(max_length=50, null=True, blank=True)
+    operation_ready = models.IntegerField(null=True, blank=True)
+    branding = models.ForeignKey(branding, on_delete=models.CASCADE, null=True, blank=True)
+    frecuenciaDistribucion = models.ForeignKey(frecuenciaDistribucion, on_delete=models.CASCADE, null=True, blank=True)
+    rendimiento = models.ForeignKey(rendimiento, on_delete=models.CASCADE, null=True, blank=True) #Performance
+    proveedor = models.ForeignKey(proveedor, on_delete=models.CASCADE, null=True, blank=True)
+    tipoInstrumento = models.ForeignKey(tipoInstrumento, on_delete=models.CASCADE, null=True, blank=True)
+    fondo = models.ForeignKey(fondo, on_delete=models.CASCADE, null=True, blank=True)
 
 class instrumentoAdmin(admin.ModelAdmin):
     list_display = ['bindex','fondo','branding','frecuenciaDistribucion','rendimiento',
@@ -164,18 +165,18 @@ admin.site.register(rentaFija, rentaFijaAdmin)
 
 class sector(models.Model):#SectorExposure
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE,primary_key=True)
-    materiales_basicos = models.FloatField() #BasicMaterials
-    servicio_comunicacion = models.FloatField()#CommunicationService
-    ciclico_consumidor = models.FloatField()#consumercyclical
-    defensa_consumidor = models.FloatField() #consumerDefensive
-    energia = models.FloatField() #Energy
-    servicios_financieros = models.FloatField() #FinancialServices
-    cuidado_salud = models.FloatField()#HealthCare
-    acciones_industriales = models.FloatField()#industrials
-    bienes_raices = models.FloatField()#RealEstate
-    tecnologia = models.FloatField()#Technology
-    utilidades = models.FloatField()#Utilities
-    portafolio_fecha = models.DateField()
+    materiales_basicos = models.FloatField(null=True, blank=True) #BasicMaterials
+    servicio_comunicacion = models.FloatField(null=True, blank=True)#CommunicationService
+    ciclico_consumidor = models.FloatField(null=True, blank=True)#consumercyclical
+    defensa_consumidor = models.FloatField(null=True, blank=True) #consumerDefensive
+    energia = models.FloatField(null=True, blank=True) #Energy
+    servicios_financieros = models.FloatField(null=True, blank=True) #FinancialServices
+    cuidado_salud = models.FloatField(null=True, blank=True)#HealthCare
+    acciones_industriales = models.FloatField(null=True, blank=True)#industrials
+    bienes_raices = models.FloatField(null=True, blank=True)#RealEstate
+    tecnologia = models.FloatField(null=True, blank=True)#Technology
+    utilidades = models.FloatField(null=True, blank=True)#Utilities
+    portafolio_fecha = models.DateField(null=True, blank=True)
 class sectorAdmin(admin.ModelAdmin):
     list_display = ['materiales_basicos','servicio_comunicacion','ciclico_consumidor']#definir que atributos se ocuparan
     search_fields = ['materiales_basicos','servicio_comunicacion','ciclico_consumidor']#definir que atributos se ocuparan
@@ -183,13 +184,13 @@ admin.site.register(sector, sectorAdmin)
 
 class asignacionActivo(models.Model):#AssetAllocation
     bindex = models.OneToOneField(bindex,on_delete=models.CASCADE, primary_key=True)
-    red_bono = models.FloatField()#BondNet
-    red_efectivo = models.FloatField()#CashNet
-    red_convertible = models.FloatField()#ConvertibleNet
-    red_preferida = models.FloatField()#PreferredNet #2veces
-    red_acciones = models.FloatField()#PreferredNet
-    red_otra = models.FloatField()#OtherNet
-    portafolio_fecha = models.DateField()#portfolioDate
+    red_bono = models.FloatField(null=True, blank=True)#BondNet
+    red_efectivo = models.FloatField(null=True, blank=True)#CashNet
+    red_convertible = models.FloatField(null=True, blank=True)#ConvertibleNet
+    red_preferida = models.FloatField(null=True, blank=True)#PreferredNet
+    red_acciones = models.FloatField(null=True, blank=True)#Stocknet
+    red_otra = models.FloatField(null=True, blank=True)#OtherNet
+    portafolio_fecha = models.DateField(null=True, blank=True)#portfolioDate
 class asignacionActivoAdmin(admin.ModelAdmin):
     list_display = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
     search_fields = ['red_bono','red_efectivo','red_convertible','red_preferida','red_acciones','red_otra','portafolio_fecha']
@@ -258,11 +259,6 @@ class movimientoAdmin(admin.ModelAdmin):
     search_fields = ['id','monto','fecha','numero_cuotas','cliente','tipoInversion','tipoInversion','bindex']
 admin.site.register(movimiento, movimientoAdmin)
 
-class countryExposure(models.Model):
-    bindex = models.ForeignKey(bindex, on_delete=models.CASCADE)
-    datos = models.TextField() #como json
-
-
 class saldoActualizado(models.Model):
     cliente = models.ForeignKey(cliente, on_delete=models.CASCADE)
     tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
@@ -277,7 +273,7 @@ class saldoActualizado(models.Model):
         qPasado = saldoActualizado.objects.filter(cliente=obj.cliente, fecha=ayer).values('cliente__nombre', 'monto')
         old =0
         for x in qPasado:
-            old += x['monto']          
+            old += x['monto']
         try:
             return ((obj.monto-old)/old)*100
         except ZeroDivisionError:
@@ -320,3 +316,48 @@ class saldoMensual(models.Model):
             return aux/obj.saldoCierre
         except ZeroDivisionError:
             return 0
+
+#felipe
+class countryExposure(models.Model):
+   bindex = models.OneToOneField(bindex, on_delete=models.CASCADE, primary_key =True)
+   country_exposure = models.TextField(null=True, blank=True) #como json
+   country_exposure_equity = models.TextField(null=True, blank=True) #como json
+   country_exposure_bond = models.TextField(null=True, blank=True) #como json
+   country_exposure_convertible = models.TextField(null=True, blank=True) #como json
+
+class rentabilidad(models.Model):
+    bindex = models.OneToOneField(bindex, on_delete=models.CASCADE, primary_key =True)
+    fondo = models.ForeignKey(fondo, on_delete=models.CASCADE, null = True, blank=True)
+    #categoria = models.ForeignKey(categoria, on_delete=models.CASCADE)
+    DayEndDate = models.DateField(null = True, blank=True)
+    DayEndNAV = models.FloatField(null = True, blank=True)
+    NAVChange = models.FloatField(null = True, blank=True)
+    NAVChangePercentage = models.FloatField(null = True, blank=True)
+    Retorno = models.TextField(null=True, blank=True)
+    Rank = models.TextField(null=True, blank=True)
+    CategoryEndDate= models.DateField(null = True, blank=True)
+    CategoryReturn =  models.TextField(null=True, blank=True)
+    CategorySize =  models.TextField(null=True, blank=True)
+    PricingFrequency= models.CharField(max_length=20, null = True, blank=True)
+
+class reporte_anual_couta(models.Model):
+    bindex = models.OneToOneField(bindex, on_delete=models.CASCADE, primary_key =True)
+    AnnualReportDate = models.DateField(null = True, blank=True)
+    NetExpenseRatio = models.FloatField(null = True, blank=True)
+    AnnualReportPerformanceFee = models.FloatField(null = True, blank=True)
+    InterimNetExpenseRatioDate = models.DateField(null = True, blank=True)
+    InterimNetExpenseRatio = models.FloatField(null = True, blank=True)
+
+class precio_actual(models.Model): #Current Price
+    bindex = models.OneToOneField(bindex, on_delete=models.CASCADE, primary_key =True)
+    CurrencyISO3 = models.ForeignKey(moneda, on_delete=models.CASCADE, null=True, blank=True)
+    DayEndNAVDate = models.DateField(null = True, blank=True)
+    DayEndNAV =models.FloatField(null = True, blank=True)
+    MonthEndNAVDate = models.DateField(null = True, blank=True)
+    MonthEndNAV = models.FloatField(null = True, blank=True)
+    UnsplitNAV = models.FloatField(null = True, blank=True)
+    NAV52wkHigh = models.FloatField(null = True, blank=True)
+    NAV52wkHighDate = models.DateField(null = True, blank=True)
+    NAV52wkLow = models.FloatField(null = True, blank=True)
+    NAV52wkLowDate = models.DateField(null = True, blank=True)
+    PerformanceReturnSource = models.CharField(max_length=20, null = True, blank=True)

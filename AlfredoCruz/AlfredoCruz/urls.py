@@ -19,6 +19,9 @@ from django.urls import path
 from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento, getProveedor,getFondos,guardarSaldo
 from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas,resumenCompletoMes
 #from django.contrib.auth.views import login
+#import felipe
+from anuario.view.morningstar import country_exposure, global_sector, asset_allocation, daily_performance, anual_report_fees, current_price, fund_info
+from anuario.view.datos import importar_datos
 
 
 
@@ -62,6 +65,19 @@ urlpatterns = [
     path('api/graficos/<id>/<fecha>',graficos),
     #path('api/cartolasConsolidadas/<cliente_id>/<fecha>',cartolasConsolidadas),
 
+
 #-------------FIN API
+
+#-------------API XML
+    path('xml/country_exposure/', country_exposure),
+    path('xml/global_sector/', global_sector),
+    path('xml/asset_allocation/', asset_allocation),
+    path('xml/daily_performance/', daily_performance),
+    path('xml/anual_report_fees/', anual_report_fees),
+    path('xml/current_price/', current_price),
+    path('xml/fund_info/', fund_info),#1
+
+    path('perfil/datos/importar/', importar_datos),
+
 
 ]

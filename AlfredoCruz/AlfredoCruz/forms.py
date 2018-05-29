@@ -23,3 +23,10 @@ class ModalForm2(forms.Form):#movimiento
     monto2 = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={"class" : "form-control", 'placeholder': ''}))
     tipoInversion2  = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= tipoInversion.objects.values_list('id','nombre').order_by('id'))
     tipoMovimiento2 = forms.ChoiceField(required=False, widget=forms.Select(attrs={"class" : "form-control"}), choices= tipoMovimiento.objects.values_list('id','nombre').filter(id__gte=2))
+
+class Formimportarlista(forms.Form):
+    archivo = forms.FileField(required=False)
+    fixedincome = forms.FileField(required=False)
+    assetallocation = forms.FileField(required=False)
+    sectorexposure = forms.FileField(required=False)
+    countryexposure = forms.FileField(required=False)

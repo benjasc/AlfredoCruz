@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -104,6 +105,16 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+CRONJOBS  = [
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.fund_info' ),
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.country_exposure' ),
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.global_sector' ),
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.asset_allocation' ),
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.daily_performance' ),
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.anual_report_fees' ),
+    ( ' */5 * * * * ' , 'anuario.view.morningstar.current_price' ),
 ]
 
 
