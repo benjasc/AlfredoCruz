@@ -17,10 +17,10 @@ def evolucionPatrimonio(request,id,fecha=None):
         print(fecha)
     else:
         fecha= datetime.today().strftime("%d-%m-%Y")
- 		'''   
+ 		'''
     ls=fecha.split('-')
     #fecha = (ls[2]+'-' +ls[1]+'-'+ls[0])
- 
+
 
     anio_actual = ls[2]
     mes_actual = ls[1]
@@ -50,7 +50,7 @@ def totalesConsolidados(request,id,fecha=None):
 	ls=fecha.split('-')
 	anio_actual = ls[2]
 	mes_actual = ls[1]
-    
+
 #    if fecha == None:
     #    fecha = datetime.datetime.now()
 
@@ -82,14 +82,16 @@ def totalesConsolidados(request,id,fecha=None):
 	return lista
 	#return HttpResponse(json.dumps(lista,indent=4),content_type="application/json")
 
-def cartolasConsolidadas(request, id):
+def cartolasConsolidadas(request, id,fecha=None):
+	if fecha is None:
+		fecha = datetime.today().strftime("%d-%m-%Y")
 
-	#obtener fondos, tipoInversion y agrupados por branding
-	
-	#fecha = datetime.today().strftime("%Y-%m-%d")
+	ls = fecha.split('-')
+	anio= ls[2]
+	mes = ls[1]
 	#print(fecha)
-
-	querySet = movimiento.objects.filter(cliente=id).values('monto','bindex','tipoInversion__nombre','tipoMovimiento')
+	#OK
+	querySet = movimiento.objects.filter(cliente=id,fecha__year=anio,fecha__month=mes).values('monto','bindex','tipoInversion__nombre','tipoMovimiento')
 	lista = []
 
 	for s in querySet:
@@ -131,35 +133,38 @@ def cartolasConsolidadas(request, id):
 			pass
 
 	lista.sort(key=lambda l:l['administradora'])
+	try:
+		aux =lista[0]['administradora']
+		suma = 0
+		totalAportes=0
+		totalRetiros=0
+		for l in range(len(lista)+1):
 
-	aux =lista[0]['administradora']
-	suma = 0
-	totalAportes=0
-	totalRetiros=0
-	for l in range(len(lista)+1):
+			if(lista[l]['administradora'] == aux):
+				suma += lista[l]['saldoActual']
+				totalAportes+=lista[l]['totalAporte']
+				totalRetiros+=lista[l]['totalRetiro']
+			else:
+				aux= lista[l]['administradora']
+				#lista.append([ str(lista[l-1]['Administradora']) + " - TOTAL", suma, ''])
+				lista.append({
+				'administradora' : lista[l-1]['administradora'],
+				'saldoActual'   : suma,
+				'totalAporte'	 : totalAportes,
+				'totalRetiro'	 : totalRetiros,
+				})
+				totalAportes=0
+				totalAportes+=lista[l]['totalAporte']
+				totalRetiros=0
+				totalRetiros+=lista[l]['totalRetiro']
+				suma = 0
+				suma += lista[l]['saldoActual']
 
-		if(lista[l]['administradora'] == aux):
-			suma += lista[l]['saldoActual']
-			totalAportes+=lista[l]['totalAporte']
-			totalRetiros+=lista[l]['totalRetiro']
-		else:
-			aux= lista[l]['administradora']
-			#lista.append([ str(lista[l-1]['Administradora']) + " - TOTAL", suma, ''])
-			lista.append({
-			'administradora' : lista[l-1]['administradora'],
-			'saldoActual'   : suma,
-			'totalAporte'	 : totalAportes,
-			'totalRetiro'	 : totalRetiros,
-			})
-			totalAportes=0
-			totalAportes+=lista[l]['totalAporte']
-			totalRetiros=0
-			totalRetiros+=lista[l]['totalRetiro']
-			suma = 0
-			suma += lista[l]['saldoActual']
-
-	lista.sort(key=lambda l:l['administradora'])
-	#lista.insert(0,'cartolas Consolidadas')
+		lista.sort(key=lambda l:l['administradora'])
+		lista.insert(0,'cartolas Consolidadas')
+		#return lista
+	except IndexError:
+		pass
 	return lista
 	#return HttpResponse(json.dumps(lista,indent=4),content_type="application/json")
 
@@ -191,7 +196,7 @@ def resumenFondo(request, id):
 	for l in lista:
 		l['porcentaje'] = l['porcentaje']*100/aux
 	lista.insert(0,'resumen Fondo')
-	return lista 
+	return lista
 
 def resumenMoneda(request, id):
 	querySet = movimiento.objects.filter(cliente=id)
@@ -222,7 +227,7 @@ def resumenMoneda(request, id):
 		l['porcentaje'] = l['porcentaje']*100/aux
 
 	lista.insert(0,'resumen Moneda')
-	
+
 	return lista
 
 def resumenBranding(request, id):
@@ -259,10 +264,10 @@ def patrimonioConsolidado(request, id, fecha=None):
 	lista = ['patrimonio Consolidado']
 	if fecha is None:
 		fecha=datetime.today().strftime("%d-%m-%Y")
-		
+
 	ls = fecha.split('-')
 	fecha = ls[2]+'-' +ls[1]+'-'+ls[0]
-	
+
 	query = saldoActualizado.objects.filter(cliente=id, fecha=fecha ).values('cliente__nombre', 'monto', 'tipoInversion__nombre').order_by('tipoInversion')
 	for s in query:
 		lista.append({
@@ -297,7 +302,7 @@ def resumenCuentas(request, id, fecha=None):
 
 def resumenCompletoDia(request, id):
 	lista = ['resumenCompletoDia']
-	
+
 	hoy = date.today()
 	qPresente = saldoActualizado.objects.filter(cliente=id, fecha=hoy)
 	for s in qPresente:
@@ -307,7 +312,38 @@ def resumenCompletoDia(request, id):
 			})
 	return lista
 	#return HttpResponse( json.dumps(lista))
-	
+
+def resumenCompletoMes(request, id):
+	fecha = (str(datetime.today().strftime("%m-%Y"))).split('-')
+	actual = 0
+	lista= []
+	diferencia = 0
+	mes = int(fecha[0])-1
+	anio = int(fecha[1])
+	if mes==0 :
+		mes = 12
+		anio = anio-1
+
+
+	querySet = saldoMensual.objects.filter(cliente=id, anio=anio, mes=mes)
+	suma = 0
+	for s in querySet:
+		actual += s.saldoCierre
+		suma = s.sumaAnterio()
+		print(actual)
+		print(suma)
+	try:
+		diferencia = ((actual-suma)/suma)*100
+	except ZeroDivisionError:
+		pass
+
+	lista.append({'actual': actual,
+				  'diferencia %': diferencia})
+	lista.insert( 0, "resumen Completo Mes")
+
+	return lista
+	#return HttpResponse(json.dumps(lista, sort_keys= True, indent=4), content_type= "application/json")
+
 
 def graficos(request,id,fecha=None):#en este metodo llamamos a todos los metodos con sus respectivos graficos
 	a=patrimonioConsolidado(request, id, fecha=None)
@@ -315,11 +351,12 @@ def graficos(request,id,fecha=None):#en este metodo llamamos a todos los metodos
 	c=resumenCuentas(request, id)
 	d=totalesConsolidados(request, id,fecha=None)
 	e=resumenCompletoDia(request, id)
-	f=resumenFondo(request, id)
-	g=resumenMoneda(request, id)
-	h=resumenBranding(request, id)
-	resumen=['resumenes', f,g,h]
-	i=cartolasConsolidadas(request, id)
-	x=[a,b,c,d,e,resumen,i]
+	f=resumenCompletoMes(request, id)
+	g=resumenFondo(request, id)
+	h=resumenMoneda(request, id)
+	i=resumenBranding(request, id)
+	resumen=['resumenes', g,h,i]
+	j=cartolasConsolidadas(request, id,fecha=None)
+	x=[a,b,c,d,e,f,resumen,j]
 
 	return HttpResponse(json.dumps(x,indent=4),content_type="application/json")

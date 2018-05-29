@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
 from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento, getProveedor,getFondos,guardarSaldo
-from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas
+from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas,resumenCompletoMes
 #from django.contrib.auth.views import login
 
 
@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/totalesConsolidados/<id>/',totalesConsolidados),
     path('api/totalesConsolidados/<id>/<fecha>',totalesConsolidados),
     path('api/cartolasConsolidadas/<id>/',cartolasConsolidadas),
+    path('api/cartolasConsolidadas/<id>/<fecha>',cartolasConsolidadas),
     path('api/resumenCuentas/<id>/<fecha>',resumenCuentas),
     path('api/resumenCuentas/<id>/',resumenCuentas),
     #path('api/saldoAct/',saldoAct),
@@ -53,6 +54,7 @@ urlpatterns = [
     path('api/resumenFondo/<id>/',resumenFondo),
     path('api/resumenBranding/<id>/',resumenBranding),
     path('api/resumenCompletoDia/<id>/',resumenCompletoDia),
+    path('api/resumenCompletoMes/<id>/',resumenCompletoMes),
 
     #resumenCompletoDia
 
