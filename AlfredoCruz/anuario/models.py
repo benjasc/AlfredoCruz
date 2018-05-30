@@ -83,11 +83,11 @@ admin.site.register(proveedor, proveedorAdmin)
 
 class fondo(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
-    nombre = models.CharField(max_length=50)
-    nombre_legal = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50,null=True, blank=True)
+    nombre_legal = models.CharField(max_length=50,null=True, blank=True)
     fecha_inicio = models.DateField(null=True, blank=True)
     domicilio = models.ForeignKey(domicilio, null=True, blank=True, on_delete=models.CASCADE)
-    categoria = models.ForeignKey(categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(categoria,null=True, blank=True, on_delete=models.CASCADE)
     moneda = models.ForeignKey(moneda, null=True, blank=True, on_delete=models.CASCADE)
 
 class fondoAdmin(admin.ModelAdmin):
