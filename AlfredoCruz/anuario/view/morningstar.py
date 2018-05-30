@@ -1067,7 +1067,7 @@ def fund_info():
             except AttributeError:
                 prov =None
 
-
+            print(mstar.morningstar_id)
             try:
                 i =instrumento.objects.get(bindex=b)
             except instrumento.DoesNotExist:
@@ -1084,6 +1084,7 @@ def fund_info():
                 i.nombre = FundStandardName
                 i.fondo = f
                 i.save()
+
 
 
             #soup = BeautifulSoup(page.content, 'lxml')

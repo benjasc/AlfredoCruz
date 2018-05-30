@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento, getProveedor,getFondos,guardarSaldo
 from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas,resumenCompletoMes
+from anuario.api.pais import apiPaises
+from anuario.api.movimiento import apiMovimiento
 #from django.contrib.auth.views import login
 #import felipe
 from anuario.view.morningstar import country_exposure, global_sector, asset_allocation, daily_performance, anual_report_fees, current_price, fund_info
@@ -41,7 +43,7 @@ urlpatterns = [
     path('guardarSaldo/',guardarSaldo),
 #-------------FinSaldoInicial
 
-#-------------API
+#-------------API graficos
     path('api/patrimonioConsolidado/<id>/<fecha>', patrimonioConsolidado),
     path('api/patrimonioConsolidado/<id>', patrimonioConsolidado),
     path('api/evolucionPatrimonio/<id>/',evolucionPatrimonio),
@@ -58,15 +60,17 @@ urlpatterns = [
     path('api/resumenBranding/<id>/',resumenBranding),
     path('api/resumenCompletoDia/<id>/',resumenCompletoDia),
     path('api/resumenCompletoMes/<id>/',resumenCompletoMes),
-
-    #resumenCompletoDia
-
     path('api/graficos/<id>/',graficos),
     path('api/graficos/<id>/<fecha>',graficos),
-    #path('api/cartolasConsolidadas/<cliente_id>/<fecha>',cartolasConsolidadas),
-
 
 #-------------FIN API
+
+#-------------API MODELOS
+    path('api/pais/',apiPaises),
+    path('api/pais/<id>/',apiPaises),
+    path('api/movimiento/',apiMovimiento),
+    path('api/movimiento/<id>/',apiMovimiento),
+#-------------FIN API MODELOS
 
 #-------------API XML
     path('xml/country_exposure/', country_exposure),
