@@ -92,18 +92,20 @@ def apiMovimiento(request,id=None):
 
         try:
             f = fondo.objects.get(nombre=nombre_fondo)
+
         except fondo.DoesNotExist:
             f = None
         
 
 
         try:
-            i = instrumento.objects.filter(proveedor=prov, tipoInstrumento=tinstr, fondo=f, clase_proveedor=clase_proveedor)[:1]
-            b=i[0].bindex
+            i = instrumento.objects.values('bindex').filter(proveedor=prov, tipoInstrumento=tinstr, fondo=f, clase_proveedor=clase_proveedor)
+            bindex_id = bindex.objects.get(pk=i[0]['bindex'])
         except instrumento.DoesNotExist:
             i = None
-            b = None
-
-        mov = movimiento.objects.get(monto=monto,fecha=fecha,numero_cuotas=numero_cuotas,bindex=b,cliente=c,tipoMovimiento=tm,tipoInversion=ti)
+            bindex_id = None
+        
+        mov = movimiento(monto=monto,fecha=fecha,numero_cuotas=numero_cuotas,bindex=bindex_id,cliente=c,tipoMovimiento=tm,tipoInversion=ti)
         mov.save()
         return Response({'mensaje':'Movimiento guardado exitosamente'})
+        
