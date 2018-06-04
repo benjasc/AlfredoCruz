@@ -15,23 +15,50 @@ def apiCliente(request,id=None):
 			except cliente.DoesNotExist:
 				query = {"mensaje":"No existen datos"}
 		else:
-			query = cliente.objects.all().values('id','nombre','Amaterno','Apaterno')
+			query = list(cliente.objects.all().values('id','nombre','Amaterno','Apaterno'))
 
 		return HttpResponse(json.dumps(query,indent=4),content_type="application/json")
 
 	elif request.method == 'POST':
-		idcli = request.data['idcliente']
-		nombre = request.data['nombre']
-		Apaterno = request.data['Apaterno']
-		Amaterno = request.data['Amaterno']
-		cli = cliente(id=idcli,Apaterno=Apaterno,Amaterno=Amaterno)
-		cli.save()
-		return Response({'mensaje':'Registro guardado con exito'})
+		try:
+			idcli = request.data['idcliente']
+			nombre = request.data['nombre']
+			Apaterno = request.data['Apaterno']
+			Amaterno = request.data['Amaterno']
+			mensaje = ""
+			query = cliente.objects.filter(id=idcli)
+			if idcli == '' or nombre=='' or Apaterno=='' or Amaterno=='':
+				mensaje = {"mensaje":"Debes completar todos los campos"}
+
+			elif query.count()>0 :
+				mensaje = {"mensaje":"El cliente que intentas crear ya existe"}
+
+			else:
+				cli = cliente(id=idcli,nombre=nombre,Apaterno=Apaterno,Amaterno=Amaterno)
+				cli.save()
+				mensaje = {"mensaje":"Datos guardados exitosamente"}
+
+		except:
+			pass
+
+		return HttpResponse(json.dumps(mensaje,indent=4),content_type="application/json")
 
 	elif request.method == 'PUT':
-		nombre = request.data['nombre']
-		Apaterno = request.data['Apaterno']
-		Amaterno = request.data['Amaterno']
-		cli = cliente(id=id,nombre=nombre,Apaterno=Apaterno,Amaterno=Amaterno)
-		cli.save()
-		return Response({'mensaje':'Registro actualizado con exito'})
+		try:
+			idcli = request.data['idcliente']
+			nombre = request.data['nombre']
+			Apaterno = request.data['Apaterno']
+			Amaterno = request.data['Amaterno']
+			mensaje = ""
+			if idcli == '' or nombre=='' or Apaterno=='' or Amaterno=='':
+				mensaje = {"mensaje":"Debes completar todos los campos"}
+
+			else:
+				cli = cliente(id=idcli,nombre=nombre,Apaterno=Apaterno,Amaterno=Amaterno)
+				cli.save()
+				mensaje = {"mensaje":"Datos actualizados exitosamente"}
+
+		except:
+			pass
+
+		return HttpResponse(json.dumps(mensaje,indent=4),content_type="application/json")
