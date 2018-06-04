@@ -20,6 +20,9 @@ from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, ti
 from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas,resumenCompletoMes
 from anuario.api.pais import apiPaises
 from anuario.api.movimiento import apiMovimiento
+from anuario.api.tipoInversion import apiTipoInversion
+from anuario.api.tipoMovimiento import apiTipoMovimiento
+from anuario.api.tipoInstrumento import apiTipoInstrumento
 #from django.contrib.auth.views import login
 #import felipe
 from anuario.view.morningstar import country_exposure, global_sector, asset_allocation, daily_performance, anual_report_fees, current_price, fund_info
@@ -70,6 +73,12 @@ urlpatterns = [
     path('api/pais/<id>/',apiPaises),
     path('api/movimiento/',apiMovimiento),
     path('api/movimiento/<id>/',apiMovimiento),
+    path('api/tipo_inversion/',apiTipoInversion),
+    path('api/tipo_inversion/<id>/',apiTipoInversion),
+    path('api/tipo_movimiento/',apiTipoMovimiento),
+    path('api/tipo_movimiento/<id>/',apiTipoMovimiento),
+    path('api/tipo_instrumento/',apiTipoInstrumento),
+    path('api/tipo_instrumento/<id>/',apiTipoInstrumento),
 #-------------FIN API MODELOS
 
 #-------------API XML

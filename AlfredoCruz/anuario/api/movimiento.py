@@ -46,10 +46,10 @@ def apiMovimiento(request,id=None):
     elif request.method == 'POST':
 
         monto=request.data['monto']
-        
+
         numero_cuotas=request.data['cuotas']
         fecha=request.data['fecha']
-        
+
         #bindex
         proveedor2=request.data['proveedor']
         tipoinstrumento=request.data['tipoInstrumento']
@@ -88,14 +88,14 @@ def apiMovimiento(request,id=None):
             prov = proveedor.objects.get(nombre=proveedor2)
         except proveedor.DoesNotExist:
             prov = None
-        
+
 
         try:
             f = fondo.objects.get(nombre=nombre_fondo)
 
         except fondo.DoesNotExist:
             f = None
-        
+
 
 
         try:
@@ -104,8 +104,7 @@ def apiMovimiento(request,id=None):
         except instrumento.DoesNotExist:
             i = None
             bindex_id = None
-        
+
         mov = movimiento(monto=monto,fecha=fecha,numero_cuotas=numero_cuotas,bindex=bindex_id,cliente=c,tipoMovimiento=tm,tipoInversion=ti)
         mov.save()
-        return Response({'mensaje':'Movimiento guardado exitosamente'})
-        
+        return Response({'mensaje':'Datos guardados con exito'})
