@@ -23,6 +23,7 @@ from anuario.api.movimiento import apiMovimiento
 from anuario.api.tipoInversion import apiTipoInversion
 from anuario.api.tipoMovimiento import apiTipoMovimiento
 from anuario.api.tipoInstrumento import apiTipoInstrumento
+from anuario.api.cliente import apiCliente
 #from django.contrib.auth.views import login
 #import felipe
 from anuario.view.morningstar import country_exposure, global_sector, asset_allocation, daily_performance, anual_report_fees, current_price, fund_info
@@ -79,6 +80,8 @@ urlpatterns = [
     path('api/tipo_movimiento/<id>/',apiTipoMovimiento),
     path('api/tipo_instrumento/',apiTipoInstrumento),
     path('api/tipo_instrumento/<id>/',apiTipoInstrumento),
+    path('api/cliente/',apiCliente),
+    path('api/cliente/<id>/',apiCliente),
 #-------------FIN API MODELOS
 
 #-------------API XML

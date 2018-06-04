@@ -228,7 +228,10 @@ class tipoMovimientoAdmin(admin.ModelAdmin):
 admin.site.register(tipoMovimiento, tipoMovimientoAdmin)
 
 class cliente(models.Model):
+    id = models.CharField(max_length=15, primary_key=True)
     nombre = models.CharField(max_length=50)
+    Apaterno = models.CharField(max_length=50, null=True, blank=True)
+    Amaterno = models.CharField(max_length=50, null=True, blank=True)
     #tipoInversion = models.ForeignKey(tipoInversion, on_delete=models.CASCADE)
 class clienteAdmin(admin.ModelAdmin):
     list_display = ['id','nombre']
