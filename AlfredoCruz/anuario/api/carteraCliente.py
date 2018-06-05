@@ -10,7 +10,7 @@ def apiCarteraCliente(request,id=None):
 	if request.method == 'GET':
 		if id is not None:
 			try:
-				mensaje = ""
+				
 				lista=[]
 				query = carteraCliente.objects.values('id','fecha','cliente__nombre','tipoInversion__nombre').filter(pk=id)
 				for x in query:
@@ -28,22 +28,24 @@ def apiCarteraCliente(request,id=None):
 
 		else:
 			try:
-
 				lista=[]
-				query = carteraCliente.objects.values('id','fecha','cliente__nombre','tipoInversion__nombre').filter(pk=id)
-				for x in query:
-					fecha = str(x['fecha'])
-					lista.append({
-						'id':x['id'],
-	                    'monto':x['monto'],
-	                    'fecha':fecha,
-	                    'cliente':x['cliente__nombre'],
-	                    'tipoInversion':x['tipoInversion__nombre'],  
-						})
+				query = carteraCliente.objects.all().values('id','monto','fecha','cliente__nombre','tipoInversion__nombre')
+				if query.count()>0:
+					for x in query:
+						fecha = str(x['fecha'])
+						lista.append({
+							'id':x['id'],
+		                    'monto':x['monto'],
+		                    'fecha':fecha,
+		                    'cliente':x['cliente__nombre'],
+		                    'tipoInversion':x['tipoInversion__nombre'],  
+							})
+				else:
+					lista = {"mensaje":"No existen datos"}
 			except carteraCliente.DoesNotExist:
-				query = {"mensaje":"No existen datos"}
+				pass
 
-		return HttpResponse(json.dumps(query,indent=4),content_type="application/json")
+		return HttpResponse(json.dumps(lista,indent=4),content_type="application/json")
 
 
                 
