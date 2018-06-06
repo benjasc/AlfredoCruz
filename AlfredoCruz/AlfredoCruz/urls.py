@@ -25,6 +25,9 @@ from anuario.api.tipoMovimiento import apiTipoMovimiento
 from anuario.api.tipoInstrumento import apiTipoInstrumento
 from anuario.api.cliente import apiCliente
 from anuario.api.carteraCliente import apiCarteraCliente
+from anuario.api.saldoActualizado import apiSaldoActualizado
+from anuario.api.saldoMensual import apiSaldoMensual
+
 #from django.contrib.auth.views import login
 #import felipe
 from anuario.view.morningstar import country_exposure, global_sector, asset_allocation, daily_performance, anual_report_fees, current_price, fund_info
@@ -85,6 +88,10 @@ urlpatterns = [
     path('api/cliente/<id>/',apiCliente),
     path('api/cartera_cliente/',apiCarteraCliente),
     path('api/cartera_cliente/<id>/',apiCarteraCliente),
+    path('api/saldo_actualizado/',apiSaldoActualizado),
+    path('api/saldo_actualizado/<id>/',apiSaldoActualizado),
+    path('api/saldo_mensual/',apiSaldoMensual),
+    path('api/saldo_mensual/<id>/',apiSaldoMensual),
 #-------------FIN API MODELOS
 
 #-------------API XML
