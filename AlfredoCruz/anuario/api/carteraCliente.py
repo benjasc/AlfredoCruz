@@ -46,7 +46,7 @@ def apiCarteraCliente(request,id=None):
 		return HttpResponse(json.dumps(lista,indent=4),content_type="application/json")
 
 	elif request.method == 'POST':
-		flag = False
+		flag = True
 		mensaje = ""
 		fecha= request.data['fecha']
 		saldo= request.data['saldo']
@@ -62,7 +62,7 @@ def apiCarteraCliente(request,id=None):
 		else:
 
 			try:
-				c = cliente.objects.get(nombre=cli)
+				c = cliente.objects.filter(nombre=cli)
 				if c.count()>0:
 					flag = True
 				else:
@@ -71,29 +71,31 @@ def apiCarteraCliente(request,id=None):
 				c = None
 
 			try:
-				ti = tipoInversion.objects.get(nombre=tipoinversion)
+				ti = tipoInversion.objects.filter(nombre=tipoinversion)
 				if ti.count()>0 and flag==True:
+					flag = True
+				else:
+					flag= False
 
 
 			except tipoInversion.DoesNotExist:
 				ti = None
 
 			try:
-				f = fondo.objects.get(nombre=nombre_fondo)
+				f = fondo.objects.filter(nombre=nombre_fondo)
+				print(f[0].nombre)
+				print(clase_proveedor)
+				if f.count()>0 and flag==True:
+					flag = True
+				else:
+					flag= False
 			except fondo.DoesNotExist:
 				f = None
 
 			try:
-				i = instrumento.objects.values('bindex').filter(fondo=f,clase_proveedor=clase_proveedor)
-				b = bindex.objects.get(pk=i[0]['bindex'])
-			except bindex.DoesNotExist:
-				mensaje={"mensaje":"Datos incorrectos"}
-
-			try:
-
-				carteracli = carteraCliente(fecha=fecha,monto=saldo,cliente=c,tipoInversion=ti,bindex=b)
-				carteracli.save()
-				mensaje = {"mensaje":"Datos guardados con exito"}
+				if flag==True:
+					print('llego')
+					inst = instrumento.objects.values('bindex').filter(fondo=f,clase_proveedor=clase_proveedor)
+					print(inst[0])
 			except:
 				pass
-		return HttpResponse(json.dumps(mensaje,indent=4),content_type="application/json")
