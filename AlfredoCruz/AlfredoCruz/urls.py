@@ -27,6 +27,11 @@ from anuario.api.cliente import apiCliente
 from anuario.api.carteraCliente import apiCarteraCliente
 from anuario.api.saldoActualizado import apiSaldoActualizado
 from anuario.api.saldoMensual import apiSaldoMensual
+from anuario.api.asignacionActivo import apiAsignacionActivo
+from anuario.api.bindex import apiBindex
+from anuario.api.branding import apiBranding
+from anuario.api.broadCategory import apiBroadCategory
+
 
 #from django.contrib.auth.views import login
 #import felipe
@@ -92,6 +97,14 @@ urlpatterns = [
     path('api/saldo_actualizado/<id>/',apiSaldoActualizado),
     path('api/saldo_mensual/',apiSaldoMensual),
     path('api/saldo_mensual/<id>/',apiSaldoMensual),
+    path('api/asignacion_activo/',apiAsignacionActivo),
+    path('api/asignacion_activo/<id>/',apiAsignacionActivo),
+    path('api/bindex/',apiBindex),
+    path('api/bindex/<id>/',apiBindex),
+    path('api/branding/',apiBranding),
+    path('api/branding/<id>/',apiBranding),
+    path('api/broadCategory/',apiBroadCategory),
+    path('api/broadCategory/<id>/',apiBroadCategory),
 #-------------FIN API MODELOS
 
 #-------------API XML

@@ -31,7 +31,7 @@ def apiCliente(request,id=None):
 				mensaje = {"mensaje":"Debes completar todos los campos"}
 
 			elif query.count()>0 :
-				mensaje = {"mensaje":"El cliente que intentas crear ya existe"}
+				mensaje = {"mensaje":"El activo que intentas crear ya existe"}
 
 			else:
 				cli = cliente(id=idcli,nombre=nombre,Apaterno=Apaterno,Amaterno=Amaterno)

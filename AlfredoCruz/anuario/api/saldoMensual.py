@@ -47,45 +47,37 @@ def apiSaldoMensual(request,id=None):
 	elif request.method == 'POST':
 		flag = True
 		mensaje = ""
-		fecha= request.data['fecha']
-		monto= request.data['monto']
+
+		anio= request.data['anio']
+		mes= request.data['mes']
+		saldoCierre=request.data['saldoCierre']
 
 		cli= request.data['cliente']
 		tipoinversion = request.data['tipoInversion']
 
-		nombre_fondo = request.data['fondo']
-		clase_proveedor = request.data['clase_proveedor']
 
-		if fecha=='' or monto=='' or cli=='' or tipoinversion=='' or nombre_fondo =='' or clase_proveedor=='':
+		if anio=='' or mes=='' or cli=='' or tipoinversion=='' or saldoCierre =='':
 			mensaje = {"mensaje":"Debes completar todos los campos"}
 		else:
-			f = fondo.objects.filter(nombre=nombre_fondo)
-			if f.count()>0:
-				flag = True
-			else:
+			try:
+				c = cliente.objects.get(nombre=cli)
+			except cliente.DoesNotExist:
 				flag = False
 
-			ti = tipoInversion.objects.filter(nombre=tipoinversion)
-			if ti.count()>0 and flag ==True:
-				flag = True
-			else:
+			try:
+				if flag==True:
+					ti = tipoInversion.objects.get(nombre=tipoinversion)
+			except tipoInversion.DoesNotExist:
 				flag = False
 
-			c = cliente.objects.filter(nombre=cli)
-			if c.count()>0 and flag ==True:
-				flag = True
-			else:
-				flag = False
-
-			if flag==True:
-				inst = instrumento.objects.filter(fondo=f[0],clase_proveedor=clase_proveedor)
-				if inst.count()>0:
-					b =  bindex.objects.get(pk=inst[0].bindex_id)
-					salact = saldoActualizado(monto=monto,fecha=fecha,cliente=c[0],tipoInversion=ti[0],bindex=b)
-					salact.save()
+			try:
+				if flag==True:
+					salmen=saldoMensual(anio=anio,mes=mes,saldoCierre=saldoCierre,tipoInversion=ti,cliente=c)
+					salmen.save()
 					mensaje = {"mensaje":"Datos guardados con exito"}
+
 				else:
 					mensaje = {"mensaje":"error en los datos"}
-			else:
-				mensaje = {"mensaje":"error en los datos"}
+			except:
+				mensaje = {"mensaje":"error en los datos2"}
 		return HttpResponse(json.dumps(mensaje,indent=4),content_type="application/json")
