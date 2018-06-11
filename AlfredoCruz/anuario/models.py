@@ -343,7 +343,7 @@ class rentabilidad(models.Model):
     CategorySize =  models.TextField(null=True, blank=True)
     PricingFrequency= models.CharField(max_length=20, null = True, blank=True)
 
-class reporte_anual_couta(models.Model):
+class reporte_anual_cuota(models.Model):
     bindex = models.OneToOneField(bindex, on_delete=models.CASCADE, primary_key =True)
     AnnualReportDate = models.DateField(null = True, blank=True)
     NetExpenseRatio = models.FloatField(null = True, blank=True)

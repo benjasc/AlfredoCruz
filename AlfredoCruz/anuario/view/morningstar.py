@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from bs4 import BeautifulSoup, element, SoupStrainer
 
-from anuario.models import countryExposure, pais, bindex, sector, asignacionActivo, rentabilidad, fondo, categoria, moneda, reporte_anual_couta, precio_actual, broadCategory, instrumento, branding, frecuenciaDistribucion, rendimiento, tipoInstrumento, proveedor, domicilio
+from anuario.models import countryExposure, pais, bindex, sector, asignacionActivo, rentabilidad, fondo, categoria, moneda, reporte_anual_cuota, precio_actual, broadCategory, instrumento, branding, frecuenciaDistribucion, rendimiento, tipoInstrumento, proveedor, domicilio
 
 accesscode = "wng36fxdhjnqdejq8iduqh5spo8ukiyk"
 
@@ -770,9 +770,9 @@ def anual_report_fees():
 
 
             try:
-                r =reporte_anual_couta.objects.get(bindex=b)
-            except reporte_anual_couta.DoesNotExist:
-                r =reporte_anual_couta(bindex=b)
+                r =reporte_anual_cuota.objects.get(bindex=b)
+            except reporte_anual_cuota.DoesNotExist:
+                r =reporte_anual_cuota(bindex=b)
                 r.save()
 
             r.AnnualReportDate = AnnualReportDate

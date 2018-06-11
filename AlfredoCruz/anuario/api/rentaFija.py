@@ -1,6 +1,6 @@
 import json
 from django.conf.urls import url, include
-from anuario.models import countryExposure,fondo,instrumento,bindex,precio_actual,moneda
+from anuario.models import rentaFija,bindex,instrumento,fondo
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 
@@ -10,48 +10,43 @@ def apiRentaFija(request,id=None):
 		if id is not None:
 			try:
 				lista=[]
-				query =precio_actual.objects.values('bsed','bsem','bsmd','bsym','cred','UnsplitNAV','NAV52wkHigh','NAV52wkHighDate','NAV52wkLow','NAV52wkLowDate','PerformanceReturnSource').get(pk=id)
+				query =rentaFija.objects.values('bsed','bsem','bsmd','bsym','cred','crem','crmd','crym','portafolio_fecha').get(pk=id)
 				lista.append({
-					'DayEndNAVDate':str(query['DayEndNAVDate']),
-					'DayEndNAV':query['DayEndNAV'],
-					'MonthEndNAVDate':str(query['MonthEndNAVDate']),
-					'MonthEndNAV':query['MonthEndNAV'],
-					'UnsplitNAV':query['UnsplitNAV'],
-					'NAV52wkHigh':query['NAV52wkHigh'],
-					'NAV52wkHighDate':str(query['NAV52wkHighDate']),
+					'bsed':query['bsed'],
+					'bsem':query['bsem'],
+					'bsmd':query['bsmd'],
+					'bsym':query['bsym'],
+					'cred':query['cred'],
+					'crmd':query['crmd'],
+					'crem':query['crem'],
+					'crym':query['crym'],
+					'portafolio_fecha':str(query['portafolio_fecha']),
 
-					'NAV52wkLow':query['NAV52wkLow'],
-					'NAV52wkLowDate':str(query['NAV52wkLowDate']),
-					'PerformanceReturnSource':query['PerformanceReturnSource'],
-					'moneda':query['CurrencyISO3__nombre']
 					})
-			except precio_actual.DoesNotExist:
+			except rentaFija.DoesNotExist:
 				lista = {"mensaje":"No existen datos"}
 
 		else:
 			try:
 				lista=[]
-				query = precio_actual.objects.all().values('CurrencyISO3__nombre','DayEndNAVDate','DayEndNAV','MonthEndNAVDate','MonthEndNAV','UnsplitNAV','NAV52wkHigh','NAV52wkHighDate','NAV52wkLow','NAV52wkLowDate','PerformanceReturnSource')
+				query = rentaFija.objects.all().values('bsed','bsem','bsmd','bsym','cred','crem','crmd','crym','portafolio_fecha')
 				if query.count()>0:
 					for x in query:
 						lista.append({
-							'DayEndNAVDate':str(x['DayEndNAVDate']),
-							'DayEndNAV':x['DayEndNAV'],
-							'MonthEndNAVDate':str(x['MonthEndNAVDate']),
-							'MonthEndNAV':x['MonthEndNAV'],
-							'UnsplitNAV':x['UnsplitNAV'],
-							'NAV52wkHigh':x['NAV52wkHigh'],
-							'NAV52wkHighDate':str(x['NAV52wkHighDate']),
-
-							'NAV52wkLow':x['NAV52wkLow'],
-							'NAV52wkLowDate':str(x['NAV52wkLowDate']),
-							'PerformanceReturnSource':x['PerformanceReturnSource'],
-							'moneda':x['CurrencyISO3__nombre']
+							'bsed':x['bsed'],
+							'bsem':x['bsem'],
+							'bsmd':x['bsmd'],
+							'bsym':x['bsym'],
+							'cred':x['cred'],
+							'crem':x['crem'],
+							'crmd':x['crmd'],
+							'crym':x['crym'],
+							'portafolio_fecha':str(x['portafolio_fecha']),
 							})
 				else:
 					lista = {"mensaje":"No existen datos"}
 
-			except precio_actual.DoesNotExist:
+			except rentaFija.DoesNotExist:
 				pass
 
 
@@ -62,23 +57,21 @@ def apiRentaFija(request,id=None):
 		mensaje = ""
 		flag=True
 
-		DayEndNAVDate = request.data['DayEndNAVDate']
-		DayEndNAV= request.data['DayEndNAV']
-		MonthEndNAVDate=request.data['MonthEndNAVDate']
-		MonthEndNAV = request.data['MonthEndNAV']
-		UnsplitNAV = request.data['UnsplitNAV']
-		NAV52wkHigh= request.data['NAV52wkHigh']
-		NAV52wkHighDate=request.data['NAV52wkHighDate']
-		NAV52wkLow = request.data['NAV52wkLow']
-		NAV52wkLowDate=request.data['NAV52wkLowDate']
-		PerformanceReturnSource = request.data['PerformanceReturnSource']
+		bsed = request.data['bsed']
+		bsem= request.data['bsem']
+		bsmd=request.data['bsmd']
+		bsym = request.data['bsym']
+		cred = request.data['cred']
+		crem= request.data['crem']
+		crmd=request.data['crmd']
+		crym = request.data['crym']
+		portafolio_fecha=request.data['portafolio_fecha']
 
-		mon= request.data['moneda']
 
 		nombre_fondo = request.data['fondo']
 		clase_proveedor = request.data['clase_proveedor']
 
-		if DayEndNAVDate=='' or DayEndNAV==''or MonthEndNAVDate==''or MonthEndNAV==''or UnsplitNAV==''or NAV52wkHigh==''or NAV52wkHighDate==''or NAV52wkLow==''or NAV52wkLowDate==''or PerformanceReturnSource=='' or mon=='':
+		if bsed=='' or bsem==''or bsmd==''or bsym==''or cred==''or crem==''or crmd==''or crym==''or portafolio_fecha=='':
 			mensaje = {"mensaje":"Debes completar todos los campos"}
 		else:
 			try:
@@ -94,27 +87,17 @@ def apiRentaFija(request,id=None):
 				flag = False
 				mensaje = {"mensaje":"error en los datos"}
 
-			try:
-				if flag==True:
-					m = moneda.objects.get(nombre=mon)
-			except moneda.DoesNotExist:
-				flag = False
-				mensaje = {"mensaje":"error en los datos"}
 
 			try:
 				if flag==True:
 					b = bindex.objects.get(pk=i.bindex_id)
-					query = precio_actual.objects.filter(bindex=b,DayEndNAVDate=DayEndNAVDate,DayEndNAV=DayEndNAV,MonthEndNAVDate=MonthEndNAVDate,MonthEndNAV=MonthEndNAV
-					,UnsplitNAV=UnsplitNAV,NAV52wkHigh=NAV52wkHigh,NAV52wkHighDate=NAV52wkHighDate,NAV52wkLow=NAV52wkLow, NAV52wkLowDate= NAV52wkLowDate
-					,PerformanceReturnSource=PerformanceReturnSource,CurrencyISO3=m)
+					query = rentaFija.objects.filter(bindex=b,bsed=bsed,bsem=bsem,bsmd=bsmd,bsym=bsym,cred=cred,crem=crem,crmd=crmd,crym=crym,portafolio_fecha=portafolio_fecha)
 					if query.count()>0:
 						mensaje = {"mensaje":"El cliente que intentas crear ya existe"}
 					else:
 						b = bindex.objects.get(pk=i.bindex_id)
-						preact = precio_actual(bindex=b,DayEndNAVDate=DayEndNAVDate,DayEndNAV=DayEndNAV,MonthEndNAVDate=MonthEndNAVDate,MonthEndNAV=MonthEndNAV
-						,UnsplitNAV=UnsplitNAV,NAV52wkHigh=NAV52wkHigh,NAV52wkHighDate=NAV52wkHighDate,NAV52wkLow=NAV52wkLow, NAV52wkLowDate= NAV52wkLowDate
-						,PerformanceReturnSource=PerformanceReturnSource,CurrencyISO3=m)
-						preact.save()
+						renfij = rentaFija(bindex=b,bsed=bsed,bsem=bsem,bsmd=bsmd,bsym=bsym,cred=cred,crem=crem,crmd=crmd,crym=crym,portafolio_fecha=portafolio_fecha)
+						renfij.save()
 						mensaje = {"mensaje":"Datos guardados con exito"}
 			except bindex.DoesNotExist:
 				mensaje = {"mensaje":"error en los datos"}

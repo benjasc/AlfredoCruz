@@ -42,6 +42,9 @@ from anuario.api.precioActual import apiPrecioActual
 from anuario.api.proveedor import apiProveedor
 from anuario.api.rendimiento import apiRendimiento
 from anuario.api.rentaFija import apiRentaFija
+from anuario.api.reporteAnualCuota import apiReporteAnualCuota
+from anuario.api.sector import apiSector
+
 
 
 
@@ -144,6 +147,11 @@ urlpatterns = [
     path('api/rendimiento/<id>/',apiRendimiento),
     path('api/renta_fija/',apiRentaFija),
     path('api/renta_fija/<id>/',apiRentaFija),
+    path('api/reporte_anual_cuota/',apiReporteAnualCuota),
+    path('api/reporte_anual_cuota/<id>/',apiReporteAnualCuota),
+    path('api/sector/',apiSector),
+    path('api/sector/<id>/',apiSector),
+
 #-------------FIN API MODELOS
 
 #-------------API XML
