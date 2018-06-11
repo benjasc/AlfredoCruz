@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
-from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento, getProveedor,getFondos,guardarSaldo
+from anuario.views import login, perfil, index, SaldoInicial, tipoMovimiento, tipoInversion,Instrumento,getFondos,guardarSaldo,getCliente, editarCliente, getBranding, getBroadcategory, getPais, editarPais, getDomicilio, editarDomicilio, getMoneda, getTipoInstrumento, editarTipoInstrumento, getFrecuencia, editarFrecuencia, getRendimiento, getProveedor, getTipoInversion, editarTipoInversion, getTipoMovimiento, editarTipoMovimiento, getBindex, editarBindex, getAsignacionActivo, editarAsignacionActivo, getCarteraCliente, editarCarteraCliente, getCategoria, editarCategoria, getFondo, editarFondo, getInstrumento, editarInstrumento, getMovimiento, editarMovimiento, getReporteAnualCouta, editarReporteAnualCouta, getSector, editarSector, getSaldoMensual, editarSaldoMensual, getSaldoActualizado, editarSaldoActualizado
 from anuario.api.graficos import evolucionPatrimonio,patrimonioConsolidado,totalesConsolidados, cartolasConsolidadas,graficos,resumenMoneda,resumenFondo,resumenBranding,resumenCompletoDia, resumenCuentas,resumenCompletoMes
 from anuario.api.pais import apiPaises
 from anuario.api.movimiento import apiMovimiento
@@ -67,16 +67,17 @@ urlpatterns = [
     path('index/',index,name='index'),
 
     path('SaldoInicial/',SaldoInicial,name='index'),
-    path('tipoMovimiento/',tipoMovimiento,name='index'),
-    path('tipoInversion/',tipoInversion,name='index'),
-    path('Instrumento/',Instrumento,name='index'),
+    #path('tipoMovimiento/',tipoMovimiento,name='index'),
+    #path('tipoInversion/',tipoInversion,name='index'),
+    #path('Instrumento/',Instrumento,name='index'),
 #-------------movimiento-----> SaldoInicial
-    path('proveedor/',getProveedor),
+    #path('proveedor/',getProveedor),
     path('fondos/',getFondos),
     path('guardarSaldo/',guardarSaldo),
 #-------------FinSaldoInicial
 
 #-------------API graficos
+
     path('api/patrimonioConsolidado/<id>/<fecha>', patrimonioConsolidado),
     path('api/patrimonioConsolidado/<id>', patrimonioConsolidado),
     path('api/evolucionPatrimonio/<id>/',evolucionPatrimonio),
@@ -97,7 +98,6 @@ urlpatterns = [
     path('api/graficos/<id>/<fecha>',graficos),
 
 #-------------FIN API
-
 #-------------API MODELOS
     path('api/pais/',apiPaises),
     path('api/pais/<id>/',apiPaises),
@@ -153,6 +153,98 @@ urlpatterns = [
     path('api/sector/<id>/',apiSector),
 
 #-------------FIN API MODELOS
+#-------------CRUD's
+#-------------CRUD
+    path('cliente/',getCliente),
+    path('cliente/editar/<id>', editarCliente),
+    path('cliente/editar/', editarCliente),
+
+    path('bindex/',getBindex),
+    path('bindex/editar/<id>',editarBindex),
+    path('bindex/editar/',editarBindex),
+
+    path('branding/',getBranding),
+
+    path('broadcategory/',getBroadcategory),
+
+    path('carteraCliente/',getCarteraCliente),
+    path('carteraCliente/editar/<id>',editarCarteraCliente),
+    path('carteraCliente/editar/',editarCarteraCliente),
+
+    path('categoria/',getCategoria),
+    path('categoria/editar/<id>',editarCategoria),
+    path('categoria/editar/',editarCategoria),
+
+    path('pais/',getPais),
+    path('pais/editar/<id>',editarPais),
+    path('pais/editar/',editarPais),
+
+    path('proveedor/',getProveedor),
+
+    path('domicilio/',getDomicilio),
+    path('domicilio/editar/<id>',editarDomicilio),
+    path('domicilio/editar/',editarDomicilio),
+
+    path('fondo/',getFondo),
+    path('fondo/editar/<id>',editarFondo),
+    path('fondo/editar/',editarFondo),
+
+    path('moneda/',getMoneda),
+
+    path('movimiento/',getMovimiento),
+    path('movimiento/editar/<id>',editarMovimiento),
+    path('movimiento/editar/',editarMovimiento),
+
+    path('frecuencia/',getFrecuencia),
+    path('frecuencia/editar/<id>',editarFrecuencia),
+    path('frecuencia/editar/',editarFrecuencia),
+
+    path('instrumento/',getInstrumento),
+    path('instrumento/editar/<id>',editarInstrumento),
+    path('instrumento/editar/',editarInstrumento),
+
+    path('rendimiento/',getRendimiento),
+
+    #reporteAnualCouta
+    path('reporteAnualCouta/',getReporteAnualCouta),
+    path('reporteAnualCouta/editar/<id>',editarReporteAnualCouta),
+    path('reporteAnualCouta/editar/',editarReporteAnualCouta),
+
+    path('saldoActualizado/',getSaldoActualizado),
+    path('saldoActualizado/editar/<id>',editarSaldoActualizado),
+    path('saldoActualizado/editar/',editarSaldoActualizado),
+
+    path('saldoMensual/',getSaldoMensual),
+    path('saldoMensual/editar/<id>',editarSaldoMensual),
+    path('saldoMensual/editar/',editarSaldoMensual),
+
+    path('tipoInstrumento/',getTipoInstrumento),
+    path('tipoInstrumento/editar/<id>',editarTipoInstrumento),
+    path('tipoInstrumento/editar/',editarTipoInstrumento),
+
+    path('tipoInversion/',getTipoInversion),
+    path('tipoInversion/editar/<id>',editarTipoInversion),
+    path('tipoInversion/editar/',editarTipoInversion),
+
+    path('tipoMovimiento/',getTipoMovimiento),
+    path('tipoMovimiento/editar/<id>',editarTipoMovimiento),
+    path('tipoMovimiento/editar/',editarTipoMovimiento),
+
+    path('asignacionActivo/',getAsignacionActivo),
+    path('asignacionActivo/editar/<id>',editarAsignacionActivo),
+    path('asignacionActivo/editar/',editarAsignacionActivo),
+
+    path('sector/',getSector),
+    path('sector/editar/<id>',editarSector),
+    path('sector/editar/',editarSector),
+#-------------FinCrud
+
+
+
+
+
+#-------------FIN CRUD's
+
 
 #-------------API XML
     path('xml/country_exposure/', country_exposure),
@@ -164,6 +256,7 @@ urlpatterns = [
     path('xml/fund_info/', fund_info),#1
 
     path('perfil/datos/importar/', importar_datos),
+
 
 
 ]

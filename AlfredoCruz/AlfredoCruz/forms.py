@@ -30,3 +30,39 @@ class Formimportarlista(forms.Form):
     assetallocation = forms.FileField(required=False)
     sectorexposure = forms.FileField(required=False)
     countryexposure = forms.FileField(required=False)
+    
+class formCliente(forms.Form):
+    nombre = forms.CharField(widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    apellido_paterno = forms.CharField(widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    apellido_materno   = forms.CharField(widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formPais(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    nombre_ingles = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formDomicilio(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formTipoInstrumento(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formFrecuenciaDistribucion(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formTipoInversion(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formTipoMovimiento(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formBindex(forms.Form):
+    nombre = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+
+class formAsignacionActivo(forms.Form):
+    bono = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    efectivo = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    convertible = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    preferida = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    acciones = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    otra = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))
+    fecha = forms.CharField(required=False, widget=forms.TextInput(attrs={"class" : "form-control", 'placeholder': ''}))

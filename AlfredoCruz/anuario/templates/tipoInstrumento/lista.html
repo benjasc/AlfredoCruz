@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Alfredo Cruz | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  {% include 'libheader.html' %}
+  {% include "header.html" %}
+  {% include "sidebar.html" %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Dashboard
+        <small>Panel de Control</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    {% if resp == '1' %}
+        <p class="btn-success" >Guardado</p>
+    {% endif %}
+    {% if resp == '2' %}
+        <p class="btn-danger" >No existe</p>
+     {% endif %}
+
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-12">
+         <!-- quick email widget -->
+          <div class="box box-info">
+            <div class="box-header">
+              <i class="fa fa-user"></i>
+
+              <h3 class="box-title">Tipo Instrumento</h3>
+
+            </div>
+      <div class="row">
+        <section class="col-lg-12">
+            <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-max-with">
+                            <thead>
+                              <tr>
+                                 <td class="text-left">Nombre</td>
+                                 <td class="text-left"></td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <form action="?{{url}}" method="GET" id="filter_rep">
+                                <input type="hidden" value = "{{ page }}", name="page">
+
+
+                                <td class="text-left"><input type="text" name="filter_Nom" value="{{ filter_Nom|default:'' }}" placeholder="Nombre" id="filter_Nom" class="input-text" style="width:100%"/></td>
+
+
+                                  <td class="text-left" >
+                                <button type="submit" id="button-filter" class="btn btn-primary" data-toggle="tooltip" title="Buscar" ><i class="fa fa-search"></i><a href=""></a></button>
+
+                                </td>
+                              </form>
+                            </tr>
+                            {% if tipoInstrumento %}
+                            {% for t in tipoInstrumento %}
+                            <tr>
+
+                                <td class="text-left" >{{ t.nombre }}</td>
+
+                             <td class="text-left" >
+                                 <button type="button" id="button-filter" onclick="location.href='editar/{{t.id }}'" class="btn btn-primary" data-toggle="tooltip" title="Editar" ><i class="fa fa-edit"></i></button>
+
+
+
+
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td class="text-center" colspan="100">  No hay resultados </td>
+                            </tr>
+                            {% endif %}
+                           </tbody>
+                        </table>
+                    </div>
+        <div class="row">
+          <div>
+
+
+          <div class="col-sm-6 text-left">
+              <div class="pagination">
+                  <span class="step-links">
+                      {% if lista.has_previous %}
+
+                          {% if filter_name  %}
+
+                          <a href="?filter_name={{ filter_user }}&page={{ lista.previous_page_number }}"><< </a>
+                          {% else %}
+                          <a href="?page={{ lista.previous_page_number }}"><< </a>
+                          {% endif %}
+
+                      {% endif %}
+
+                      <span class="current">
+                          Pag. {{ lista.number }} - {{ lista.paginator.num_pages }}
+                      </span>
+
+                      {% if lista.has_next %}
+                          {% if url %}
+                          <a href='?{{url}}page={{ lista.next_page_number }}'>>></a>
+                          {% else %}
+                          <a href="?page={{ lista.next_page_number }}">>></a>
+                          {% endif %}
+                      {% endif %}
+                  </span>
+              </div>
+          </div>
+        </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        </div>
+      </div>
+          </div>
+
+        </section>
+
+      </div>
+    </section>
+  </div>
+  <!-- /.content-wrapper -->
+
+
+{% include "asidebar.html" %}
+
+{% include 'footer.html' %}
+</body>
+</html>
