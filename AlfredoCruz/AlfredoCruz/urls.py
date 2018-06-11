@@ -31,6 +31,23 @@ from anuario.api.asignacionActivo import apiAsignacionActivo
 from anuario.api.bindex import apiBindex
 from anuario.api.branding import apiBranding
 from anuario.api.broadCategory import apiBroadCategory
+from anuario.api.categoria import apiCategoria
+from anuario.api.countryExposure import apiCountryExposure
+from anuario.api.domicilio import apiDomicilio
+from anuario.api.fondo import apiFondo
+from anuario.api.frecuenciaDistribucion import apiFrecuenciaDistribucion
+from anuario.api.instrumento import apiInstrumento
+from anuario.api.moneda import apiMoneda
+from anuario.api.precioActual import apiPrecioActual
+from anuario.api.proveedor import apiProveedor
+from anuario.api.rendimiento import apiRendimiento
+from anuario.api.rentaFija import apiRentaFija
+
+
+
+
+
+
 
 
 #from django.contrib.auth.views import login
@@ -105,6 +122,28 @@ urlpatterns = [
     path('api/branding/<id>/',apiBranding),
     path('api/broadCategory/',apiBroadCategory),
     path('api/broadCategory/<id>/',apiBroadCategory),
+    path('api/categoria/',apiCategoria),
+    path('api/categoria/<id>/',apiCategoria),
+    path('api/country_exposure/',apiCountryExposure),
+    path('api/country_exposure/<id>/',apiCountryExposure),
+    path('api/domicilio/',apiDomicilio),
+    path('api/domicilio/<id>/',apiDomicilio),
+    path('api/fondo/',apiFondo),
+    path('api/fondo/<id>/',apiFondo),
+    path('api/frecuencia_distribucion/',apiFrecuenciaDistribucion),
+    path('api/frecuencia_distribucion/<id>/',apiFrecuenciaDistribucion),
+    path('api/instrumento/',apiInstrumento),
+    path('api/instrumento/<id>/',apiInstrumento),
+    path('api/moneda/',apiMoneda),
+    path('api/moneda/<id>/',apiMoneda),
+    path('api/precio_actual/',apiPrecioActual),
+    path('api/precio_actual/<id>/',apiPrecioActual),
+    path('api/proveedor/',apiProveedor),
+    path('api/proveedor/<id>/',apiProveedor),
+    path('api/rendimiento/',apiRendimiento),
+    path('api/rendimiento/<id>/',apiRendimiento),
+    path('api/renta_fija/',apiRentaFija),
+    path('api/renta_fija/<id>/',apiRentaFija),
 #-------------FIN API MODELOS
 
 #-------------API XML
